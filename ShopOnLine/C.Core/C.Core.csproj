@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A2D8B32-B88F-45AD-AA97-A61BF0C917CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C.Core</RootNamespace>
+    <AssemblyName>C.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TV.DbHelper">
+      <HintPath>..\..\TV.DbHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseController\BaseController.cs" />
+    <Compile Include="Common\CommonHelper.cs" />
+    <Compile Include="Common\Config.cs" />
+    <Compile Include="Common\Format.cs" />
+    <Compile Include="Common\GuidUnique.cs" />
+    <Compile Include="Common\ProductMultiUpload.cs" />
+    <Compile Include="Common\StringHelper.cs" />
+    <Compile Include="CustomController\CustomController.cs" />
+    <Compile Include="ExModel\CartItem.cs" />
+    <Compile Include="ExModel\TreeView.cs" />
+    <Compile Include="Helper\EmailHelper.cs" />
+    <Compile Include="Model\landDistrict.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\landProvince.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\landQuanHuyen.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\landTinhThanh.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LoaiPhieuNhap.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtDepartment.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtPosition.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtRole.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtSubstitute.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtSubstituteDetail.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtUnit.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtUnitManager.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtUser.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtUserConfig.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtUserConfigDetail.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\qtUserRole.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shAboutu.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shAgent.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shBanner.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shCategory.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shCategoryImage.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shColor.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shComment.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shGoodReceiptIsuue.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shGoodReceiptIsuueDetail.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shIdeaCustomer.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shMember.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shNew.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShopOnlineDb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopOnlineDb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShopOnlineDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShopOnlineDb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopOnlineDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShopOnlineDb1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopOnlineDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shOrder.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shOrderDetail.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shOrderHistory.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shPrice.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shProduct.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shProductImage.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shProductSet.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shSale.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shSaleDetail.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shSetSize.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shSex.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ThongBao.cs">
+      <DependentUpon>ShopOnlineDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\DanhMuc\IdeaCustomerService.cs" />
+    <Compile Include="Service\DanhMuc\shGoodReceiptIsuueDetailService.cs" />
+    <Compile Include="Service\DanhMuc\shOrderDetailService.cs" />
+    <Compile Include="Service\DanhMuc\shOrderService.cs" />
+    <Compile Include="Service\DanhMuc\shCategoryImageService.cs" />
+    <Compile Include="Service\DanhMuc\shCommentService.cs" />
+    <Compile Include="Service\DanhMuc\shBannerService.cs" />
+    <Compile Include="Service\DanhMuc\shAboutService.cs" />
+    <Compile Include="Service\DanhMuc\shAgentService.cs" />
+    <Compile Include="Service\DanhMuc\shOrderHistoryService.cs" />
+    <Compile Include="Service\DanhMuc\shGoodReceiptIsuueService.cs" />
+    <Compile Include="Service\DanhMuc\LoaiPhieuNhapService.cs" />
+    <Compile Include="Service\DanhMuc\shSaleDetailService.cs" />
+    <Compile Include="Service\DanhMuc\shSaleService.cs" />
+    <Compile Include="Service\DanhMuc\ThongBaoService.cs" />
+    <Compile Include="Service\DanhMuc\shSizeService.cs" />
+    <Compile Include="Service\DanhMuc\shSectionService.cs" />
+    <Compile Include="Service\DanhMuc\shProductImageService.cs" />
+    <Compile Include="Service\DanhMuc\shProductService.cs" />
+    <Compile Include="Service\DanhMuc\shNewService.cs" />
+    <Compile Include="Service\DanhMuc\shSexService.cs" />
+    <Compile Include="Service\DanhMuc\shMemberService.cs" />
+    <Compile Include="Service\DanhMuc\shCategoryService.cs" />
+    <Compile Include="Service\QuanTri\landDistrictService.cs" />
+    <Compile Include="Service\QuanTri\landProvinceService.cs" />
+    <Compile Include="Service\QuanTri\qtRoleService.cs" />
+    <Compile Include="Service\QuanTri\qtSubstituteDetailService.cs" />
+    <Compile Include="Service\QuanTri\qtSubstitutesService.cs" />
+    <Compile Include="Service\QuanTri\qtUnitManagerService.cs" />
+    <Compile Include="Service\QuanTri\qtUserConfigDetailService.cs" />
+    <Compile Include="Service\QuanTri\qtUserRoleService.cs" />
+    <Compile Include="Service\QuanTri\qtDepartmentService.cs" />
+    <Compile Include="Service\QuanTri\qtUnitService.cs" />
+    <Compile Include="Service\QuanTri\qtPositionService.cs" />
+    <Compile Include="Service\QuanTri\qtUserConfigService.cs" />
+    <Compile Include="Service\QuanTri\qtUserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="Service\QuanLySanPham\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Model\ShopOnlineDb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ShopOnlineDb1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="bin\Debug\C.Core.dll.config" />
+    <None Include="bin\Debug\C.UI.dll.config" />
+    <None Include="Model\ShopOnlineDb.edmx.diagram">
+      <DependentUpon>ShopOnlineDb.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C.UI\C.UI.csproj">
+      <Project>{7D25DD11-130A-4397-939B-2DF759538FF4}</Project>
+      <Name>C.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\C.Core.dll" />
+    <Content Include="bin\Debug\C.Core.pdb" />
+    <Content Include="bin\Debug\C.UI.dll" />
+    <Content Include="bin\Debug\C.UI.pdb" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.xml" />
+    <Content Include="bin\Debug\Microsoft.Web.Mvc.dll" />
+    <Content Include="bin\Debug\MvcContrib.dll" />
+    <Content Include="bin\Debug\System.Web.Mvc.dll" />
+    <Content Include="bin\Debug\System.Web.Mvc.xml" />
+    <Content Include="bin\Debug\System.Web.Razor.dll" />
+    <Content Include="bin\Debug\System.Web.Razor.xml" />
+    <Content Include="bin\Debug\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\Debug\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\Debug\TV.DbHelper.dll" />
+    <Content Include="Model\ShopOnlineDb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ShopOnlineDb.edmx</DependentUpon>
+      <LastGenOutput>ShopOnlineDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\ShopOnlineDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ShopOnlineDb.edmx</DependentUpon>
+      <LastGenOutput>ShopOnlineDb.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

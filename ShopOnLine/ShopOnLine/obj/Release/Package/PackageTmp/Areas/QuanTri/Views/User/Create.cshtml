@@ -1,0 +1,249 @@
+﻿@model C.Core.Model.qtUser
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Thêm mới người dùng";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin người dùng
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/QuanTri/User/Index">Quản trị</a></li>
+        <li class="active">Quản lý người dùng</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/User/Index");
+            @Html.AntiForgeryToken()
+            @Html.Hidden("UserId")
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            <div class="form-horizontal">
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.Label("Tên người dùng :") (<span class="required">*</span>)
+                        @Html.TextBox("UserName", null, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Tên đăng nhập:") (<span class="required">*</span>)
+                        @Html.TextBox("UserLogin", null, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Mật khẩu:") (<span class="required">*</span>)
+                        @Html.Password("Password", Model.Password, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.Label("Email :")
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            @Html.TextBox("Email", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Số điện thoại:")
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            @Html.TextBox("Tel", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Thứ tự hiển thị:")
+                        @Html.TextBox("SortOrder", null, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.Label("Thuộc đơn vị :") (<span class="required">*</span>)
+                        <div id="drl_UnitId">
+                            @{
+                                Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Units.cshtml", new SelectList(new List<SelectListItem>()));
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Thuộc phòng ban:") (<span class="required">*</span>)
+                        <div id="drl_Department">
+                            @{
+                                Html.RenderPartial("Departments", (SelectList)ViewBag.DepartmentId as SelectList);
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Chức vụ:") (<span class="required">*</span>)
+                        <div id="drl_Position">
+                            @{
+                                Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Positions.cshtml", new SelectList(new List<SelectListItem>()));
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-md-3" style="margin-top:10pt">
+                        @Html.CheckBox("IsAdmin") <label for="IsAdmin">Là quản trị</label>
+                    </div>
+                    <div class="col-md-3" style="margin-top:10pt">
+                        @{
+                            if (Model.UserId > 0)
+                            {
+                                @Html.CheckBox("Status")
+                            }
+                            else
+                            {
+                                @Html.CheckBox("Status", true)
+                            }
+                        }
+                        <label for="Status">Còn sử dụng</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="box-footer">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnSave", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        function ThayDoiDonVi(UnitId) {
+            $.ajax({
+                url: '@Url.Action("Departments")',
+                data: {
+                    UnitId: UnitId,
+                    DepartmentId: $('#DepartmentId').val()
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_Department').html(data);
+                }
+            });
+        }
+
+        function ThayDoiPhong(UnitId, DepartmentId) {
+
+        }
+
+        $(document).ready(function () {
+
+            $('#UnitId').select2();
+            $('#DepartmentId').select2();
+            $('#PositionId').select2();
+
+            $.ajax({
+                url: '@Url.Action("Units", "DanhMucDungChung")',
+                data: {
+                    UnitId: '@Model.UnitId',
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_UnitId').html(data);
+
+                    $('#UnitId').on('change', function (e) {
+                        ThayDoiDonVi($('#UnitId').val());
+                    });
+                }
+            });
+
+
+            $.ajax({
+                url: '@Url.Action("Positions", "DanhMucDungChung")',
+                data: {
+                    PositionId: '@Model.PositionId',
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_Position').html(data);
+
+                }
+            });
+
+            $('#DepartmentId').on('change', function (e) {
+                ThayDoiPhong($('#UnitId').val(), $('#DepartmentId').val());
+            });
+
+            $('#UnitId').on('change', function (e) {
+                ThayDoiDonVi($('#UnitId').val());
+            });
+
+            $('#formview form').validate({
+                messages: {
+                    UserName: {
+                        required: 'Tên người dùng không được bỏ trống'
+                    },
+                    UserLogin: {
+                        required: 'Tên đăng nhập không được bỏ trống'
+                    },
+                    Password: {
+                        required: 'Password không được bỏ trống'
+                    },
+                    UnitId: {
+                        required: 'Chưa chọn đơn vị'
+                    },
+                    DepartmentId: {
+                        required: 'Chưa chọn phòng ban'
+                    },
+                    PositionId: {
+                        required: 'Chưa chọn chức vụ'
+                    },
+                    Email: {
+                        email: "Chưa đúng định dạng Email (xxx@gmail.com)"
+                    }
+                },
+                rules: {
+                    UserName: {
+                        required: true
+                    },
+                    UserLogin: {
+                        required: true
+                    },
+                    Password: {
+                        required: true
+                    },
+                    UnitId: {
+                        required: true
+                    },
+                    DepartmentId: {
+                        required: true
+                    },
+                    PositionId: {
+                        required: true
+                    },
+                    Email: {
+                        email: true
+                    }
+                }
+            });
+
+        });
+
+
+
+    </script>
+}

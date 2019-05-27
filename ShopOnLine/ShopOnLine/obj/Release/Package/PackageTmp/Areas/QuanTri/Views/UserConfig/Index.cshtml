@@ -1,0 +1,72 @@
+﻿@model IPagedList<C.Core.Model.qtUserConfig>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.QuanTri.Helper;
+@{
+    ViewBag.Title = "Danh sách nhóm người dùng theo chức năng đơn vị";
+}
+<section class="content-header">
+    <h1>
+        Cấu hình người dùng theo đơn vị
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Cấu hình người dùng</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary"  id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/UserConfig/Index");
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="tree-view">
+                        @Html.Raw(ViewBag.DonVi)
+                       
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+
+                        @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus")
+                        @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+
+                    </div>
+                    @Html.Grid(Model).Columns(column =>
+               {
+                   column.For(m => Html.htmlCheckBox("cbxItem", m.UserConfigId)).Attributes(style => "width:5%;text-align:center;").Named(Html.htmlCheckBox("cbxList").ToString());
+                   column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+                   column.For(m => Html.ActionLink(m.AppName, "Create", new { id = m.UserConfigId })).Named("Tên nhóm").Attributes(style => "width:30%");
+                   column.For(m => m.AppCode).Named("Mã nhóm").Attributes(style => "width:30%");
+                   //column.For(m => Html.TenDonVi(m.UnitId)).Named("Đơn vị").Attributes(style => "width:30%");
+               }).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.qtUserConfig>(10)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+                    <div class="form-group">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicCustomPage)
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+</section>
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#tree").treeview();
+            $('#Create').click(function () {
+                document.location = '@Url.Action("Create")';
+            });
+            $('#Delete').click(function () {
+                $("#formview form").attr('action', '@Url.Action("Delete")');
+                $("#formview form").submit();
+            });
+        });
+
+    </script>
+}
+

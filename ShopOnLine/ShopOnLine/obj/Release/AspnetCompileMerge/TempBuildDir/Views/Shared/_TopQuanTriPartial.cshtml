@@ -1,0 +1,89 @@
+﻿@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.DanhMuc.Helper;
+<a href="#" class="logo">
+    <span class="logo-mini"><b></b></span>
+    <span class="logo-lg"><b>Everpia</b></span>
+</a>
+
+<nav class="navbar navbar-static-top">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only"></span>
+    </a>
+    <div class="txt-banner" style="text-transform:uppercase">
+        <span>
+            @Html.UnitName(Convert.ToInt32(@User.Identity.GetUserLogin().Unitid))
+            <br />
+        </span>
+        PHẦN MỀM QUẢN LÝ ĐƠN HÀNG
+    </div>
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+            <li class="dropdown notifications-menu user-menu">
+                <a onclick="ThongBao(this)" title="Xem thông báo" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-bell-o"></i>
+                    <span class="label label-warning" id="Notify_Count">0</span>
+                </a>
+                <ul class="dropdown-menu" id="div-thongbao" style="width:300px">
+                </ul>
+            </li>
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="@Html.GetFileImage(User.Identity.GetUserLogin().Userid)" class="user-image" alt="User Image">
+                    <span class="hidden-xs">@User.Identity.GetUserLogin().Username</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="user-header">
+                        <img src="@Html.GetFileImage(User.Identity.GetUserLogin().Userid)" class="img-circle" alt="User Image">
+                        <p>
+                            @Html.UserName(User.Identity.GetUserLogin().Userid)
+                            <small>@Html.PositionName(Convert.ToInt32(User.Identity.GetUserLogin().Positionid))
+                            </small>
+                        </p>
+                    </li>
+
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a href="/QuanTri/UserInfo/Index" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Cá nhân</a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="/LoginAdmin/Logout" class="btn btn-default btn-flat"><i class='fa fa-sign-out'> </i> Đăng xuất</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    $.ajax({
+        url: '/Home/Notify',
+        data: {
+        },
+        type: 'POST',
+        dataType: "html",
+        success: function (data) {
+            $('#div-thongbao').html(data);
+
+        },
+        complete: function (data) {
+        }
+    });
+
+    $.ajax({
+        url: '/Home/Notify_Count',
+        data: {
+        },
+        type: 'POST',
+        dataType: "json",
+        success: function (data) {
+            $('#Notify_Count').html(data);
+
+        },
+        complete: function (data) {
+        }
+    });
+
+
+</script>

@@ -1,0 +1,576 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopOnlineDb" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="qtDepartment">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="Self.FK_qtUserRole_qtDepartments" FromRole="qtDepartments" ToRole="qtUserRole" />
+    <NavigationProperty Name="qtUsers" Relationship="Self.FK_qtUsers_qtDepartments" FromRole="qtDepartments" ToRole="qtUsers" />
+  </EntityType>
+  <EntityType Name="qtPosition">
+    <Key>
+      <PropertyRef Name="PositionId" />
+    </Key>
+    <Property Name="PositionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PositionName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="Self.FK_qtUserRole_qtPositions" FromRole="qtPositions" ToRole="qtUserRole" />
+    <NavigationProperty Name="qtUsers" Relationship="Self.FK_qtUsers_qtPositions" FromRole="qtPositions" ToRole="qtUsers" />
+  </EntityType>
+  <EntityType Name="qtRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Application" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDete" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="Self.FK_qtUserRole_qtRoles" FromRole="qtRoles" ToRole="qtUserRole" />
+  </EntityType>
+  <EntityType Name="qtUnit">
+    <Key>
+      <PropertyRef Name="UnitId" />
+    </Key>
+    <Property Name="UnitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="UnitCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="LevelCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="Self.FK_qtUserRole_qtUnits" FromRole="qtUnits" ToRole="qtUserRole" />
+    <NavigationProperty Name="qtUsers" Relationship="Self.FK_qtUsers_qtUnits" FromRole="qtUnits" ToRole="qtUsers" />
+  </EntityType>
+  <EntityType Name="qtUserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="PositionId" Type="Int32" />
+    <Property Name="Application" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtDepartment" Relationship="Self.FK_qtUserRole_qtDepartments" FromRole="qtUserRole" ToRole="qtDepartments" />
+    <NavigationProperty Name="qtPosition" Relationship="Self.FK_qtUserRole_qtPositions" FromRole="qtUserRole" ToRole="qtPositions" />
+    <NavigationProperty Name="qtRole" Relationship="Self.FK_qtUserRole_qtRoles" FromRole="qtUserRole" ToRole="qtRoles" />
+    <NavigationProperty Name="qtUnit" Relationship="Self.FK_qtUserRole_qtUnits" FromRole="qtUserRole" ToRole="qtUnits" />
+  </EntityType>
+  <EntityType Name="qtUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ImageFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAdmin" Type="Boolean" />
+    <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="PositionId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtDepartment" Relationship="Self.FK_qtUsers_qtDepartments" FromRole="qtUsers" ToRole="qtDepartments" />
+    <NavigationProperty Name="qtPosition" Relationship="Self.FK_qtUsers_qtPositions" FromRole="qtUsers" ToRole="qtPositions" />
+    <NavigationProperty Name="qtUnit" Relationship="Self.FK_qtUsers_qtUnits" FromRole="qtUsers" ToRole="qtUnits" />
+  </EntityType>
+  <EntityType Name="shCart">
+    <Key>
+      <PropertyRef Name="CartId" />
+    </Key>
+    <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CartName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MemberId" Type="Int32" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CartStatus" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCartDetails" Relationship="Self.FK_shCartDetail_shCart" FromRole="shCart" ToRole="shCartDetail" />
+  </EntityType>
+  <EntityType Name="shCartDetail">
+    <Key>
+      <PropertyRef Name="CartDetailId" />
+    </Key>
+    <Property Name="CartDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CartDetailName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MemberId" Type="Int32" />
+    <Property Name="CartId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Prices" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCart" Relationship="Self.FK_shCartDetail_shCart" FromRole="shCartDetail" ToRole="shCart" />
+    <NavigationProperty Name="shMember" Relationship="Self.FK_shCartDetail_shMembers" FromRole="shCartDetail" ToRole="shMembers" />
+    <NavigationProperty Name="shProduct" Relationship="Self.FK_shCartDetail_shProducts" FromRole="shCartDetail" ToRole="shProducts" />
+  </EntityType>
+  <EntityType Name="shCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProducts" Relationship="Self.FK_shProducts_shCategory" FromRole="shCategory" ToRole="shProducts" />
+  </EntityType>
+  <EntityType Name="shColor">
+    <Key>
+      <PropertyRef Name="ColorId" />
+    </Key>
+    <Property Name="ColorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ColorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shComment">
+    <Key>
+      <PropertyRef Name="CommentId" />
+    </Key>
+    <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Contents" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shMember" Relationship="Self.FK_shComments_shMembers" FromRole="shComments" ToRole="shMembers" />
+    <NavigationProperty Name="shProduct" Relationship="Self.FK_shComments_shProducts" FromRole="shComments" ToRole="shProducts" />
+  </EntityType>
+  <EntityType Name="shMember">
+    <Key>
+      <PropertyRef Name="MemberId" />
+    </Key>
+    <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MemberLogin" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ImageFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCartDetails" Relationship="Self.FK_shCartDetail_shMembers" FromRole="shMembers" ToRole="shCartDetail" />
+    <NavigationProperty Name="shComments" Relationship="Self.FK_shComments_shMembers" FromRole="shMembers" ToRole="shComments" />
+  </EntityType>
+  <EntityType Name="shNew">
+    <Key>
+      <PropertyRef Name="NewId" />
+    </Key>
+    <Property Name="NewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Descriptions" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="ImageFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Summary" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Contents" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shPrice">
+    <Key>
+      <PropertyRef Name="PriceId" />
+    </Key>
+    <Property Name="PriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shProductImage">
+    <Key>
+      <PropertyRef Name="ProductImageId" />
+    </Key>
+    <Property Name="ProductImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FileNameGoc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProduct" Relationship="Self.FK_shProductImage_shProducts" FromRole="shProductImage" ToRole="shProducts" />
+  </EntityType>
+  <EntityType Name="shProduct">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PriceCurrent" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PercentCurrent" Type="Int32" />
+    <Property Name="PriceAfterPercents" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ViewsProduct" Type="Int32" />
+    <Property Name="ProductStatus" Type="Int32" />
+    <Property Name="SortOrderby" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCartDetails" Relationship="Self.FK_shCartDetail_shProducts" FromRole="shProducts" ToRole="shCartDetail" />
+    <NavigationProperty Name="shCategory" Relationship="Self.FK_shProducts_shCategory" FromRole="shProducts" ToRole="shCategory" />
+    <NavigationProperty Name="shComments" Relationship="Self.FK_shComments_shProducts" FromRole="shProducts" ToRole="shComments" />
+    <NavigationProperty Name="shProductImages" Relationship="Self.FK_shProductImage_shProducts" FromRole="shProducts" ToRole="shProductImage" />
+    <NavigationProperty Name="shSaleDetails" Relationship="Self.FK_shSaleDetail_shProducts" FromRole="shProducts" ToRole="shSaleDetail" />
+  </EntityType>
+  <EntityType Name="shSale">
+    <Key>
+      <PropertyRef Name="SaleId" />
+    </Key>
+    <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="SaleStatus" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shSaleDetails" Relationship="Self.FK_shSaleDetail_shSale" FromRole="shSale" ToRole="shSaleDetail" />
+  </EntityType>
+  <EntityType Name="shSaleDetail">
+    <Key>
+      <PropertyRef Name="SaleDetailId" />
+    </Key>
+    <Property Name="SaleDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="SaleId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Percents" Type="Int32" />
+    <Property Name="PriceAfterPercents" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SaleAttach" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProduct" Relationship="Self.FK_shSaleDetail_shProducts" FromRole="shSaleDetail" ToRole="shProducts" />
+    <NavigationProperty Name="shSale" Relationship="Self.FK_shSaleDetail_shSale" FromRole="shSaleDetail" ToRole="shSale" />
+  </EntityType>
+  <EntityType Name="shSize">
+    <Key>
+      <PropertyRef Name="SizeId" />
+    </Key>
+    <Property Name="SizeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="SizeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_qtUserRole_qtDepartments">
+    <End Role="qtDepartments" Type="Self.qtDepartment" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtDepartments">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtDepartments">
+    <End Role="qtDepartments" Type="Self.qtDepartment" Multiplicity="0..1" />
+    <End Role="qtUsers" Type="Self.qtUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtDepartments">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="qtUsers">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtPositions">
+    <End Role="qtPositions" Type="Self.qtPosition" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtPositions">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtPositions">
+    <End Role="qtPositions" Type="Self.qtPosition" Multiplicity="0..1" />
+    <End Role="qtUsers" Type="Self.qtUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtPositions">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="qtUsers">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtRoles">
+    <End Role="qtRoles" Type="Self.qtRole" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtRoles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtUnits">
+    <End Role="qtUnits" Type="Self.qtUnit" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUnits">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtUnits">
+    <End Role="qtUnits" Type="Self.qtUnit" Multiplicity="0..1" />
+    <End Role="qtUsers" Type="Self.qtUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUnits">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="qtUsers">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCartDetail_shCart">
+    <End Role="shCart" Type="Self.shCart" Multiplicity="0..1" />
+    <End Role="shCartDetail" Type="Self.shCartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shCart">
+        <PropertyRef Name="CartId" />
+      </Principal>
+      <Dependent Role="shCartDetail">
+        <PropertyRef Name="CartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCartDetail_shMembers">
+    <End Role="shMembers" Type="Self.shMember" Multiplicity="0..1" />
+    <End Role="shCartDetail" Type="Self.shCartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shMembers">
+        <PropertyRef Name="MemberId" />
+      </Principal>
+      <Dependent Role="shCartDetail">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCartDetail_shProducts">
+    <End Role="shProducts" Type="Self.shProduct" Multiplicity="0..1" />
+    <End Role="shCartDetail" Type="Self.shCartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shCartDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shProducts_shCategory">
+    <End Role="shCategory" Type="Self.shCategory" Multiplicity="0..1" />
+    <End Role="shProducts" Type="Self.shProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shCategory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="shProducts">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shComments_shMembers">
+    <End Role="shMembers" Type="Self.shMember" Multiplicity="0..1" />
+    <End Role="shComments" Type="Self.shComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shMembers">
+        <PropertyRef Name="MemberId" />
+      </Principal>
+      <Dependent Role="shComments">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shComments_shProducts">
+    <End Role="shProducts" Type="Self.shProduct" Multiplicity="1" />
+    <End Role="shComments" Type="Self.shComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shComments">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shProductImage_shProducts">
+    <End Role="shProducts" Type="Self.shProduct" Multiplicity="0..1" />
+    <End Role="shProductImage" Type="Self.shProductImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shProductImage">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSaleDetail_shProducts">
+    <End Role="shProducts" Type="Self.shProduct" Multiplicity="0..1" />
+    <End Role="shSaleDetail" Type="Self.shSaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shSaleDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSaleDetail_shSale">
+    <End Role="shSale" Type="Self.shSale" Multiplicity="0..1" />
+    <End Role="shSaleDetail" Type="Self.shSaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shSale">
+        <PropertyRef Name="SaleId" />
+      </Principal>
+      <Dependent Role="shSaleDetail">
+        <PropertyRef Name="SaleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopOnline" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="qtDepartments" EntityType="Self.qtDepartment" />
+    <EntitySet Name="qtPositions" EntityType="Self.qtPosition" />
+    <EntitySet Name="qtRoles" EntityType="Self.qtRole" />
+    <EntitySet Name="qtUnits" EntityType="Self.qtUnit" />
+    <EntitySet Name="qtUserRoles" EntityType="Self.qtUserRole" />
+    <EntitySet Name="qtUsers" EntityType="Self.qtUser" />
+    <EntitySet Name="shCarts" EntityType="Self.shCart" />
+    <EntitySet Name="shCartDetails" EntityType="Self.shCartDetail" />
+    <EntitySet Name="shCategories" EntityType="Self.shCategory" />
+    <EntitySet Name="shColors" EntityType="Self.shColor" />
+    <EntitySet Name="shComments" EntityType="Self.shComment" />
+    <EntitySet Name="shMembers" EntityType="Self.shMember" />
+    <EntitySet Name="shNews" EntityType="Self.shNew" />
+    <EntitySet Name="shPrices" EntityType="Self.shPrice" />
+    <EntitySet Name="shProductImages" EntityType="Self.shProductImage" />
+    <EntitySet Name="shProducts" EntityType="Self.shProduct" />
+    <EntitySet Name="shSales" EntityType="Self.shSale" />
+    <EntitySet Name="shSaleDetails" EntityType="Self.shSaleDetail" />
+    <EntitySet Name="shSizes" EntityType="Self.shSize" />
+    <AssociationSet Name="FK_qtUserRole_qtDepartments" Association="Self.FK_qtUserRole_qtDepartments">
+      <End Role="qtDepartments" EntitySet="qtDepartments" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtDepartments" Association="Self.FK_qtUsers_qtDepartments">
+      <End Role="qtDepartments" EntitySet="qtDepartments" />
+      <End Role="qtUsers" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtPositions" Association="Self.FK_qtUserRole_qtPositions">
+      <End Role="qtPositions" EntitySet="qtPositions" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtPositions" Association="Self.FK_qtUsers_qtPositions">
+      <End Role="qtPositions" EntitySet="qtPositions" />
+      <End Role="qtUsers" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtRoles" Association="Self.FK_qtUserRole_qtRoles">
+      <End Role="qtRoles" EntitySet="qtRoles" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtUnits" Association="Self.FK_qtUserRole_qtUnits">
+      <End Role="qtUnits" EntitySet="qtUnits" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtUnits" Association="Self.FK_qtUsers_qtUnits">
+      <End Role="qtUnits" EntitySet="qtUnits" />
+      <End Role="qtUsers" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCartDetail_shCart" Association="Self.FK_shCartDetail_shCart">
+      <End Role="shCart" EntitySet="shCarts" />
+      <End Role="shCartDetail" EntitySet="shCartDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCartDetail_shMembers" Association="Self.FK_shCartDetail_shMembers">
+      <End Role="shMembers" EntitySet="shMembers" />
+      <End Role="shCartDetail" EntitySet="shCartDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCartDetail_shProducts" Association="Self.FK_shCartDetail_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shCartDetail" EntitySet="shCartDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shProducts_shCategory" Association="Self.FK_shProducts_shCategory">
+      <End Role="shCategory" EntitySet="shCategories" />
+      <End Role="shProducts" EntitySet="shProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shComments_shMembers" Association="Self.FK_shComments_shMembers">
+      <End Role="shMembers" EntitySet="shMembers" />
+      <End Role="shComments" EntitySet="shComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shComments_shProducts" Association="Self.FK_shComments_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shComments" EntitySet="shComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shProductImage_shProducts" Association="Self.FK_shProductImage_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shProductImage" EntitySet="shProductImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSaleDetail_shProducts" Association="Self.FK_shSaleDetail_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shSaleDetail" EntitySet="shSaleDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSaleDetail_shSale" Association="Self.FK_shSaleDetail_shSale">
+      <End Role="shSale" EntitySet="shSales" />
+      <End Role="shSaleDetail" EntitySet="shSaleDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

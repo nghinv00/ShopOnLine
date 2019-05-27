@@ -1,0 +1,401 @@
+﻿@model List<CartItem>
+@using C.Core.ExModel;
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/Site.js"></script>
+<script src="~/Scripts/details.js"></script>
+<link href="~/Content/common.css" rel="stylesheet" />
+<script src="~/Scripts/jquery/jquery.validate.min.js"></script>
+
+@{
+    string ThemVaoGioHang = "display:none;";
+    string HinhThucShip = "display:none;";
+
+    if (Model.Count() == 0 || ViewBag.p == OrderStatus.ThemVaoGioHang.GetHashCode())
+    {
+        ThemVaoGioHang = "";
+        HinhThucShip = "display:none;";
+    }
+    else
+    {
+        ThemVaoGioHang = "display:none;";
+        HinhThucShip = "";
+    }
+    string PhiGiaoHang = "0";
+
+    if (Model.Count() > 0)
+    {
+        var price = SizeHelper.ListProductPrice_Quantity(Model as List<CartItem>, 0, 0, 0);
+
+        if (price < Config.FeeTotal)
+        {
+            PhiGiaoHang = Format.FormatDecimalToString(Config.FeeShip);
+        }
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("p")
+    <input type="hidden" name="SizeGuid" id="SizeGuid" />
+    <input type="hidden" name="SoLuong" id="SoLuong" />
+
+    <table style="width:100%" class="grid">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" class="minimal" name="cbxList" id="cbxList">
+                </th>
+                <th colspan="2"> Tên sản phẩm</th>
+                <th>Mục sản phẩm</th>
+                <th>Kích thước</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        @{
+            if (Model != null && Model.Count() > 0)
+            {
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach (var item in Model as List<CartItem>)
+                        {
+                            <tr class="gridrow">
+                                <td style="width:5%;text-align:center;">
+                                    <input type="checkbox" class="minimal" name="cbxItem" id="cbxItem" value="@item.Product.ProductGuid">
+                                </td>
+                                <td style="width:25%" colspan="2">
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            @Html.ProductCartOrder(item.Product.Image)
+                                        </div>
+                                        <div class="col-md-8">
+                                            <a href="@item.Product.MetaTitle-@item.Product.ProductId" title="Chi tiết sản phẩm ">@item.Product.ProductName</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="width:10%">
+                                    @Html.SectionName(item.SectionGuid)
+                                </td>
+                                <td style="width:10%">
+                                    @Html.SizeName(item.SizeGuid)
+                                </td>
+                                <td style="width:10%" class="text-align-right">
+                                    @Html.ProductPrice(item.SizeGuid)
+                                </td>
+                                <td style="width:10%" class="text-align-right">
+                                    @Html.SoLuong(item.Product.ProductGuid, item.SectionGuid, item.SizeGuid, item.Quantity)
+                                </td>
+                                <td style="width:10%">
+                                    @Html.ProductPrice_Quantity(item.SizeGuid, item.Quantity)
+                                    @*@Html.ListProductPrice_Quantity(Model as List<CartItem>, 0, 0, Convert.ToDecimal(PhiGiaoHang))*@
+                                    VNĐ
+                                </td>
+                                <td style="width:5%" class="text-align-center">
+                                    <a href="javascript:void(0)" onclick="Xoa('@item.Product.ProductGuid', '@item.SectionGuid', '@item.SizeGuid')" title="Xóa sản phẩm"> Xóa   </a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td colspan="8"><span>Bạn chưa chọn bất kỳ sản phẩm nào</span></td>
+                    </tr>
+                </tbody>
+            }
+        }
+
+    </table>
+    <div id="content-buy">
+        <div id="content-one" style="@ThemVaoGioHang">
+            <div class="prompt-wrap">
+                <ul style="list-style: outside;">
+                    <li>Giao hàng miễn phí cho các đơn hàng có tổng tiền từ 2,000,000 VNĐ trở lên.</li>
+                    <li>Giá các mục sản phẩm trong giỏ hàng được tính toán dựa trên giá mua kết hợp.</li>
+                    <li>Sẽ phải trả một phụ phí nếu hủy đơn hàng khi trạng thái là "Sẵn sàng giao hàng".</li>
+                </ul>
+            </div>
+            <div class="score-wrap">
+                <ul>
+                    <li>
+                        <span>Thành tiền của @Model.Count() mục</span>  <span class="price">
+                            @Html.ListProductPrice_Quantity(Model as List<CartItem>, 0, 0, 0) VNĐ
+                        </span>
+                    </li>
+                    <li> <span>Mặt hàng giảm giá</span>  <span class="dis-price">-@Format.FormatDecimalToString(0) VNĐ</span> </li>
+                    <li> <span>Giảm giá điểm thưởng</span>  <span class="dis-price">-@Format.FormatDecimalToString(10000) VNĐ</span> </li>
+                    <li>
+                        <span>Phí giao hàng</span>  <span class="price">
+                            <span>@PhiGiaoHang VNĐ</span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="total-score">
+                    <span>Tổng tiền</span>  <span class="price">
+                        @{
+                            <span>
+                                @Html.ListProductPrice_Quantity(Model as List<CartItem>, 0, 0, Convert.ToDecimal(PhiGiaoHang))
+                            </span>
+                        }
+                        VNĐ
+                    </span>
+                </div>
+                <div class="btn-wrap" style="@ThemVaoGioHang">
+                    <a class="btnp-rev action" href="/" title="Tiếp tục mua hàng"><span>Tiếp tục mua hàng</span></a>
+                    <a class="btn-next action" href="javascript:void(0)" title="Thanh toán" id="buy-product"><span>Thanh toán</span></a> <br>
+                    <div style="margin-top: 15px; font-weight: bold;">
+                        <a class="btn-clear" href="javascript:void(0)" onclick="DeleteAll()" title="Xóa trống giỏ hàng" id=""><span>Xóa trống giỏ hàng</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="content-two">
+        <div class="form-group" style="padding-left: 50px; @HinhThucShip">
+            <div class="trans-wrap">
+                <span class="lb">Giao hàng</span>
+                <div class="text-wrap">
+                    <div class="radio-wrap">
+                        <label>
+                            <input name="ship_type" value="1" checked="checked" type="radio"><span>Giao hàng tận nơi</span>
+                        </label>
+                    </div>
+                    <div class="prompt-wrap">
+                        <ul>
+                            <li>Giao hàng miễn phí cho các đơn hàng từ 2,000,000 VNĐ trở lên.</li>
+                            <li>Các đơn hàng dưới 2,000,000 VNĐ phải trả phí giao hàng là 50,000 VNĐ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-wrap">
+                <div class="lb">Thanh toán</div>
+                <div class="text-wrap">
+                    <div class="radio-wrap">
+                        <label>
+                            <input class="pay_type" name="pay_type" value="@PayType.ThuPhiTanNoi.GetHashCode()" type="radio">
+                            <span> Thu phí tận nơi</span>
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                            <input class="pay_type" name="pay_type" value="@PayType.ChuyenKhoanNganHang.GetHashCode()" type="radio">
+                            <span>Chuyển khoản Ngân hàng hoặc Internet Banking (<font color="#FF0000">*</font>)</span>
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                            <input class="pay_type" name="pay_type" value="@PayType.ShowRoomDaiLy.GetHashCode()" type="radio">
+                            <span>Tại Showroom đại lý</span>
+                        </label>
+                    </div>
+                    <p>
+                        (<font color="#FF0000">*</font>) Quý khách có thể đến bất kì Phòng giao dịch ngân hàng, ATM hoặc sử dụng tính năng Internet Banking để chuyển tiền vào tài khoản sau:<br>
+                        Tài khoản ViettinBank: 0000 0000 00000<br>
+                        Tên TK: Nguyễn Văn Nghị<br>
+                        Chi nhánh Thanh Xuân<br>
+                        <br>
+                        Lưu ý:<br>
+                        - Khi chuyển khoản quý khách vui lòng ghi rõ mã số đơn hàng, hoặc địa chỉ email người đặt hàng <br>
+                        - Chúng tôi sẽ tiến hành giao hàng ngay sau khi nhận được thanh toán
+                    </p>
+                </div>
+            </div>
+            <div class="purchaser-wrap">
+                <div class="lb">Thông tin người nhận</div>
+                <div class="fill-table bg-skin">
+                    <div class="col-md-12 no-padding margin-bottom-10">
+                        <div class="lb">Họ tên</div>
+                        <div class="box">
+                            <div class="col-md-3 no-padding-left">
+                                <input class="form-control" name="order_name" id="order_name" type="text" placeholder="Họ tên người gửi">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding margin-bottom-10">
+                        <div class="lb">Địa chỉ (<font color="#FF0000">*</font>) </div>
+                        <div class="box">
+                            <div class="col-md-12 no-padding-left">
+                                <div class="col-md-3 no-padding-left">
+                                    <div id="Province">
+                                        @{ Html.RenderPartial("~/Views/Common/Province.cshtml", ViewBag.City as SelectList); }
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div id="District">
+                                        @{ Html.RenderPartial("~/Views/Common/District.cshtml", ViewBag.Town as SelectList); }
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" name="order_address" id="order_address" type="text" placeholder="Số nhà, tên đường, phố ...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding margin-bottom-10">
+                        <div class="lb">Điện thoại (<font color="#FF0000">*</font>)</div>
+                        <div class="box">
+                            <div class="col-md-3 no-padding-left">
+                                <input class="form-control" name="order_phone" id="order_phone" type="text" placeholder="Số điện thoại liên lạc...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding margin-bottom-10">
+                        <div class="lb">E-mail</div>
+                        <div class="box">
+                            <div class="col-md-3 no-padding-left">
+                                <input class="form-control" name="order_email" id="order_email" type="text" placeholder="Email...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding margin-bottom-10">
+                        <div class="lb">Ghi chú</div>
+                        <div class="box">
+                            <div class="col-md-3 no-padding-left">
+                                <input class="form-control" name="base_remark" id="base_remark" type="text" placeholder="Ghi chú...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-wrap" style="margin-left: 20%;">
+                <a class="action" href="#" title="Xác nhận" id="confirm"><span>Xác nhận</span></a>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function giam(SizeGuid) {
+        $('#SizeGuid').val(SizeGuid);
+        $('#SoLuong').val('-1');
+        $('#list-item form').attr('action', '@Url.Action("Index")');
+        $('#list-item form').submit();
+    }
+
+    function tang(SizeGuid) {
+        $('#SizeGuid').val(SizeGuid);
+        $('#SoLuong').val('1');
+        $('#list-item form').attr('action', '@Url.Action("Index")');
+        $('#list-item form').submit();
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("dsProduct")',
+            data: {
+                page: page,
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#list-item').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+
+    function Xoa(ProductGuid, SectionGuid, SizeGuid) {
+        Cart.DeleteItemCart(ProductGuid, SectionGuid, SizeGuid);
+    }
+
+    function DeleteAll() {
+        Cart.DeleteAll();
+    }
+
+    $('#buy-product').on('click', function (e) {
+        var item = '@Model.Count()';
+        if (item <= 0) {
+            alert('Vui lòng chọn hàng hóa trước khi thanh toán')
+            return;
+        }
+        $('#p').val('@OrderStatus.HinhThucShip.GetHashCode()');
+        $('#list-item  form').submit();
+    });
+
+    $('#City').on('change', function (e) {
+        var City = $('#City').val()
+        LoadTown(City);
+
+        $('#Town').on('change', function (e) {
+
+        });
+    });
+    $('#Town').on('change', function (e) {
+
+    });
+
+    function LoadTown(ProvinceId) {
+         $.ajax({
+            url: '@Url.Action("District", "Common")',
+            data: {
+                ProvinceId: ProvinceId
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                 $('#District').html(data);
+            }
+        });
+    }
+
+    // validate
+    $('#list-item form').validate({
+        messages: {
+            pay_type: {
+                required: 'Hình thức thanh toán không được bỏ trống'
+            },
+            order_address: {
+                required: 'Địa chỉ nhận sản phẩm không được bỏ trống'
+            },
+            order_phone: {
+                required: 'Số điện thoại liên hệ không được bỏ trống'
+            }
+        },
+        rules: {
+            pay_type: {
+                required: true
+            },
+            order_address: {
+                required: true
+            },
+            order_phone: {
+                required: true
+            }
+        }
+    });
+
+    $('#confirm').on('click', function (e) {
+        if ($('#list-item  form').valid())
+        {
+
+            $('#list-item  form').attr('action', '@Url.Action("Order" +
+                                                 "" +
+                                                 "")');
+            $('#list-item  form').submit();
+
+        }
+    });
+</script>
+

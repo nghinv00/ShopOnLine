@@ -1,0 +1,165 @@
+﻿@using C.Membership.Helper;
+<div id="vnt-header">
+    <div class="wrapper">
+        <div class="vnt-logo">
+            <h1>
+                <a onmousedown="return rwt(this,'advertise',1)" href='#' target='_parent' title=''>
+                    @*<img src='~/SongHongVn/vnt_upload/weblink/logo_song_hong_1.svg' width='149' alt='' class='png' />*@
+                    <img src='~/SongHongVn/vnt_upload/weblink/thiet-ke-logo-thuong-hieu-chan-ga-goi-dem-minson.jpg' width='149' alt='' class='png' />
+                    
+                </a>
+            </h1>
+        </div>
+
+        <div class="header-main">
+            <style>
+                .gird_Support {
+                    text-align: center;
+                    font-weight: bold;
+                    margin-bottom: 0px !important;
+                }
+            </style>
+            <div class="header-icon">
+                <ul>
+                    <li class="iconSupport" title="Chia sẻ">
+                        <div class="divIcon"></div>
+                        <div class="divSupport">
+                            <ul>
+                                <li><a href='javascript:void(0);' target='_blank'></a> </li>
+                                <li><a href='javascript:void(0);' target='_blank'></a> </li>
+                                <li><a href='javascript:void(0);' target='_blank'></a> </li>
+                                <li><a href='javascript:void(0);' target='_blank'></a> </li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </li>
+
+                    <li class="iconSearch" title="Tìm kiếm">
+                        <div class="divIcon"></div>
+
+                        <script language="javascript">
+
+                            function check_search(f) {
+                                var key_default = "Từ khóa";
+                                var keyword = f.keyword.value;
+                                var key_len = f.keyword.value.length;
+                                if ((keyword == key_default) || (keyword == '')) {
+                                    alert("Vui lòng nhập từ khóa");
+                                    f.keyword.focus();
+                                    return false;
+                                }
+                                if (key_len < 2) {
+                                    alert("Từ khóa tới thiểu là 2 ký tự");
+                                    f.keyword.focus();
+                                    return false;
+                                }
+                                return true;
+                            }
+
+                            
+                        </script>
+
+                        <div class="formSearch">
+                            <div>
+                                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "box_search", @name = "formSearch", @id = "formSearch" }))
+                                {
+                                    <div class="input-group">
+                                        <input name="keyword" id="keyword" type="text" class="text_search form-control"
+                                               onfocus="if(this.value=='Từ khóa') this.value='';" onBlur="if(this.value=='') this.value='Từ khóa';"
+                                               value="Từ khóa" placeholder="Từ khóa" />
+
+                                        <span class="input-group-btn">
+                                            <button id="btn-search" name="btn-search" type="submit" class="btn" value="Tìm"><span>Tìm</span></button>
+                                        </span>
+                                    </div>
+                                    <input name="do_search" value="1" type="hidden" />
+                                }
+
+
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="iconSocial" title="Cá nhân">
+                        <div class="divIcon"></div>
+                        <div class="divSupport">
+                            <div class="gird_Support">
+                                <div class="row_support">
+                                    @{
+                                        if (!string.IsNullOrEmpty(User.Identity.GetMemberLogin().MemberGuid) || !string.IsNullOrWhiteSpace(User.Identity.GetMemberLogin().MemberGuid))
+                                        {
+                                            <div class="i-email">
+                                                <a href="/thong-tin-ca-nhan" title="Tài khoản của tôi"> Thông tin cá nhân </a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="i-email">
+                                                <a href="/dang-nhap" title="Đăng nhập"> Đăng nhập</a>
+                                            </div>
+                                        }
+                                    }
+
+                                    <div class="i-email">
+                                        <a href="/dang-xuat" title="Đăng xuất"> Đăng xuất</a>
+                                    </div>
+
+                                    <div class="i-email">
+                                        <a href="/dang-ky" title="Đăng ký"> Đăng ký</a>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="cart" title="Giỏ hàng">
+                        <a href="/gio-hang" target="_blank" style="font-size : 20px; color: white;">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="vnt-menutop">
+                <ul>
+                    <li><a href="/" target="_self">Trang chủ</a></li>
+                    <li><a href="/gioi-thieu" target="_self">Giới thiệu</a></li>
+                    <li>
+                        <a href="/san-pham" target="_self">Sản phẩm</a>
+                        <div class="submenu" id="products"></div>
+                    </li>
+                    <li><a href="/dai-ly" target="_self">Đại lý</a></li>
+                    @*<li><a href="/bang-gia" target="_self">Bảng giá</a></li>*@
+                    <li><a href="/tin-tuc" target="_self">Tin tức &amp; Sự kiện</a></li>
+                    <li><a href="/lien-he" target="_self">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+<script>
+
+    // load childmenu in san-pham
+    $.ajax({
+        url: '@Url.Action("MenuProduct" , "Home")',
+        data: { },
+        type: 'POST',
+        dataType: "html",
+        success: function (data) {
+            $('#products').html(data);
+        },
+        complete: function (data) {
+
+        },
+        error: function (data) {
+            $("#products").html("Dữ liệu không tìm thấy")
+        }
+    });
+
+</script>

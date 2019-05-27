@@ -1,0 +1,59 @@
+﻿<div class="wrapper">
+    <div class="search_dealer">
+        <form action="#" id="search_dealer" method="POST" onsubmit="return Search(this,'vn');">
+            <input type="hidden" name="dealer" id="dealer" value="vn/dai-ly.html" />
+
+            <div class="rInput">
+                <div class="rTitle">Tìm đại lý <span>SÔNG HỒNG</span> gần nhất</div>
+            </div>
+            <div class="rInput">
+                <div id="Province">
+                    @Html.DropDownList("City", Model as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control", @onchange = "changeCity(this.value)" })
+                </div>
+            </div>
+            <div class="rInput">
+                <div id="District">
+                    @Html.DropDownList("Town", Model as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control", @onchange = "changeTown(this.value)" })
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Nhập tên đường, hoặc tên đại lý ..." name="address" id="address" class="form-control">
+                <span class="input-group-btn">
+                    <button type="button" name="btn-submit" id="btn-submit" class="btn submit" value="">
+                        <span>Tìm kiếm đại lý</span>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    function changeCity(ProvinceId) {
+        $('#DistrictId').val(ProvinceId);
+        LoadTown(ProvinceId);
+        
+    }
+
+    function changeTown(DistrictId) {
+        var ProvinceId = $('#DistrictId').val();
+    }
+
+    function LoadTown(ProvinceId) {
+        $.ajax({
+            url: '/Common/District',
+            data: {
+                ProvinceId: ProvinceId
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#District').html(data);
+            }
+        });
+    }
+
+    $('#btn-submit').on('click', function (e) {
+        window.location.href = '/dai-ly?id=' + $('#City').val() + '&state=' + $('#Town').val() + '&key=' + $('#address').val();
+    });
+</script>

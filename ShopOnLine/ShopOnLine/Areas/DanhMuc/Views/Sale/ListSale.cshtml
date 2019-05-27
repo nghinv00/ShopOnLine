@@ -1,0 +1,108 @@
+﻿@model IPagedList<C.Core.Model.shSale>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+<div class="form-group">
+
+    @Html.Grid(Model).Columns(column =>
+            {
+                column.For(m => Html.htmlCheckBox("cbxItem", m.SaleGuid)).Named(Html.htmlCheckBox("cbxList").ToString()).Attributes(style => "width:5%;text-align:center;");
+                column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+
+                column.Custom(@<div class="dropdown">
+                    <div class="sett" data-toggle="dropdown"></div>
+                    <ul class="dropdown-menu sett_dropdown-caret">
+                        <li class="pop_arrow_new"></li>
+                        @{
+                            <li><a href="/DanhMuc/Sale/Create/@item.SaleGuid"><i class='fa fa-edit'> Hiệu chỉnh </i></a></li>
+                            <li><a href="javascript:DeleteUser(@item.SaleGuid)"><i class='fa fa-trash-o'> Xóa </i></a></li>
+                        }
+                    </ul>
+                </div>).Named("Thao tác").Attributes(style => "text-align:center;width:5%");
+
+
+                        column.For(m => m.SaleName).Named("Tên").Attributes(style => "width:15%");
+                        column.For(m => m.SaleCode).Named("Mã").Attributes(style => "width:7%");
+                        column.For(m => Html.CachTinhGiaTriKhuyenMai(m.CachTinhGiaTriKhuyenMai.GetValueOrDefault(C.Core.Common.CachTinhGiaTriKhuyenMai.GiamTheoPhanTramGiaTri.GetHashCode())))
+                                    .Named("Cách tính").Attributes(style => "width:13%");
+
+                        column.For(m => Html.FormatGiaTriKhuyenMai(m.CachTinhGiaTriKhuyenMai, m.GiaTri)).Named("Giá trị").Attributes(style => "width:7%");
+                        column.For(m => m.StartTime.GetValueOrDefault(DateTime.Now).ToString("dd-MM") + " - " +
+                m.EndTime.GetValueOrDefault(DateTime.Now).ToString("dd-MM")).Named("Thời gian áp dụng").Attributes(style => "width:8%");
+
+                        column.For(m => Html.TrangThaiKhuyenMai(m.SaleStatus.GetValueOrDefault(C.Core.Common.CachTinhGiaTriKhuyenMai.GiamTheoPhanTramGiaTri.GetHashCode())))
+                                            .Named("Trạng thái").Attributes(style => "width:10%; text-align:center;");
+
+                        column.For(m => Html.UserName(m.UserId)).Named("Người tạo").Attributes(style => "width:15%");
+
+                    }).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.shSale>(C.Core.Common.Config.PAGE_SIZE_20)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ")", PagedListRenderOptions.ClassicCustomPage)
+</div>
+
+<script type="text/javascript">
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("ListCategory")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#DanhMuc').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+
+    @*$(".pagination > li >a").click(function () {
+
+        var trangthaixuly = $('#TrangThaiVanBan').val();
+            $.ajax({
+                url: '@Url.Action("VanBanLanhDaoDonVi_Partial")',
+                data: {
+                    page: $(this).html(),
+                    TrangThaiVanBan: $('#TrangThaiVanBan').val(),
+                    SoKyHieu: $('#SoKyHieu').val(),
+                    TrichYeu: $('#TrichYeu').val()
+                },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus) {
+                    $('#dsVanBan').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                },
+                complete: function (data) {
+                    $("#loader").fadeOut();
+                }
+            });
+    });*@
+
+</script>

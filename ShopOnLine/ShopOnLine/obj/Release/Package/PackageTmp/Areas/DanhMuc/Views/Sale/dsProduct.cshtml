@@ -1,0 +1,43 @@
+﻿@model IEnumerable<C.Core.Model.shProduct>
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Common;
+
+
+
+<table id="example1" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th width="5%">  <input type="hidden" value="@ViewBag.SizeAdd" id="SizeAdd" name="SizeAdd" /> STT </th>
+            <th width="80%"> Tên sản phẩm </th>
+            <th width="15%"> # </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int sodem = 1;
+            foreach (var item in Model as IEnumerable<shProduct>)
+            {
+                <tr>
+                    <td>
+                        @sodem
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td class="trang-thai">
+                        <div class="thao-tac">
+                            <a data-toggle="tooltip" title="" data-original-title="Xóa mặt hàng">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                sodem++;
+            }
+        }
+    </tbody>
+</table>

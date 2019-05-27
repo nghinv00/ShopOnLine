@@ -1,0 +1,75 @@
+﻿@model IPagedList<C.Core.Model.shCategory>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.Core.Common;
+@using C.DanhMuc.Helper;
+<div class="form-group">
+
+    @Html.Grid(Model).Columns(column =>
+    {
+        column.For(m => Html.htmlCheckBox("cbxItem", m.CategoryGuid)).Named(Html.htmlCheckBox("cbxList").ToString()).Attributes(style => "width:5%;text-align:center;");
+        column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+        column.Custom(@<div class="dropdown">
+            <div class="sett" data-toggle="dropdown"></div>
+            <ul class="dropdown-menu sett_dropdown-caret">
+                <li class="pop_arrow_new"></li>
+                @{
+                                if (CommonHelper.KiemTraTaiKhoanCoPhaiLanhDaoDonVi(User.Identity.GetUserLogin().Userid, Config.LANH_DAO_DON_VI) == null)
+                                {
+                        <li><a href="javascript:ChuyenToiNhanVienTheoDoi('@item.CategoryGuid')"><i class='fa fa-comment-o'> Chuyển tới nhân viên theo dõi</i></a></li>
+                                }
+
+                    <li><a href="/DanhMuc/Category/Create/@item.CategoryGuid"><i class='fa fa-edit'> Hiệu chỉnh </i></a></li>
+                    <li><a href="javascript:DeleteUser(@item.CategoryGuid)"><i class='fa fa-trash-o'> Xóa </i></a></li>
+                }
+            </ul>
+        </div>).Named("Thao tác").Attributes(style => "text-align:center;width:5%");
+    column.For(m => Html.DanhMucCha(m.CategoryGuid, m.CategoryName)).Named("Tên danh mục").Attributes(style => "width:15%");
+    column.For(m => Html.NhanVienXuLyDanhMuChinh(m)).Named("NV Theo dõi").Attributes(style => "width:15%; text-align: center;");
+    column.For(m => m.Status.GetValueOrDefault(false) ? "Hoạt động" : "Không hoạt động").Named("Trạng thái").Attributes(style => "width:10%");
+}).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.shCategory>(C.Core.Common.Config.PAGE_SIZE_10)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ")", PagedListRenderOptions.ClassicCustomPage)
+</div>
+
+<script type="text/javascript">
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("ListCategory")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#DanhMuc').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+</script>

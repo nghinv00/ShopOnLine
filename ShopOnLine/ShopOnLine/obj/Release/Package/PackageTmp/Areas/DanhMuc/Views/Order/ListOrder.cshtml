@@ -1,0 +1,151 @@
+﻿@model IPagedList<C.Core.Model.shOrder>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.Core.Common;
+@using C.DanhMuc.Helper;
+
+<div class="form-group">
+    @Html.Grid(Model).Columns(column =>
+    {
+        column.For(m => Html.htmlCheckBox_DataToggle("cbxOne", m.OrderGuid, "Danh sách sản phẩm thuộc đơn hàng")).Named(Html.htmlCheckBox("cbxList").ToString()).Attributes(style => "width:5%;text-align:center;");
+        column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+        column.Custom(@<div>
+            <ul class="task-icon">
+                <li>
+                    <a class="css-coment" href="javascript:HienThiBaiViet('@item.OrderGuid')"
+                       data-toggle="tooltip" title="" data-original-title="Xem chi tiết đơn hàng">
+                        <i class="fa fa-file-text-o fa-lg"></i>
+                        <span order="@item.OrderId" class="about-child label label-warning"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>).Named("#").Attributes(style => "text-align:center;width:5%");
+        column.Custom(@<div class="dropdown">
+            <div class="sett" data-toggle="dropdown"></div>
+            <ul class="dropdown-menu sett_dropdown-caret">
+                <li class="pop_arrow_new"></li>
+                @{
+
+                                if (item.OrderStatus == OrderStatus.DangXuLy.GetHashCode())
+                                {
+
+                                    if (CommonHelper.KiemTraTaiKhoanCoPhaiLanhDaoDonVi(User.Identity.GetUserLogin().Userid, Config.LANH_DAO_DON_VI) == null)
+                                    {
+                            <li><a href="javascript:ChuyenToiNhanVienXuLy('@item.OrderGuid')"><i class='fa fa-edit'> Chuyển xử lý đơn hàng</i></a></li>
+                                    }
+                        <li><a href="javascript:OrderProcessing('@item.OrderGuid')"><i class='fa fa-edit'> Xử lý đơn hàng</i></a></li>
+                        <li><a href="javascript:DeleteOrder('@item.OrderGuid')"><i class='fa fa-trash-o'> Hủy đơn hàng</i></a></li>
+                                }
+                                else if (item.OrderStatus == OrderStatus.DangGiaoHang.GetHashCode() ||
+                            item.OrderStatus == OrderStatus.DaGiaoHang_ChuaXacNhan.GetHashCode() ||
+                            item.OrderStatus == OrderStatus.DaGiaoHang_DaXacNhan.GetHashCode())
+                                {
+                        <li><a href="javascript:OrderProcessing('@item.OrderGuid')"><i class='fa fa-edit'> Xử lý đơn hàng </i></a></li>
+                        <li><a href="javascript:DeleteOrder('@item.OrderGuid')"><i class='fa fa-trash-o'> Hủy đơn hàng </i></a></li>
+                                }
+                                else if (item.OrderStatus == OrderStatus.HuyDonHang.GetHashCode())
+                                {
+
+                                }
+                }
+            </ul>
+        </div>).Named("Thao tác").Attributes(style => "text-align:center;width:5%");
+        column.For(m => Html.MemberName(m.MemberGuid)).Named("Tên tài khoản").Attributes(style => "width:10%");
+        column.For(m => Html.ThongTinDatHang(m.FullName, m.Phone, m.Address, m.Email)).Named("Thông tin đặt hàng").Attributes(style => "width:15%");
+        column.For(m => Format.FormatDecimalToString(m.FeeShip.GetValueOrDefault(0)) + "  VNĐ").Named("Phí ship").Attributes(style => "width:5%; text-align:right;");
+        column.For(m => Format.FormatDecimalToString(m.Total.GetValueOrDefault(0)) + "  VNĐ").Named("Thành tiền").Attributes(style => "width:10%; text-align:right;");
+        column.For(m => Html.PayType(m.PayType)).Named("Phương thức thanh toán").Attributes(style => "width:10%; text-align: center;");
+        column.For(m => Html.NhanVienXuLyChinh(m.UserId)).Named("NV Theo dõi").Attributes(style => "width:10%; text-align: center;");
+
+        column.For(m => Html.OrderStatusName(m.OrderStatus)).Named("Trạng thái").Attributes(style => "width:10%; text-align: center;");
+
+    }).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.shOrder>(C.Core.Common.Config.PAGE_SIZE_20)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ")", PagedListRenderOptions.ClassicCustomPage)
+</div>
+
+<script type="text/javascript">
+
+    $('input[name=cbxOne]').on('change', function (e) {
+        var AboutGuid = $(this).val();
+        $('.tr-about').hide();
+        $('input[name=cbxOne]').not(this).prop('checked', false);
+        var tr_current = $(this).parent().parent('tr');
+        if ($(this).is(":checked")) {
+            if (tr_current.next('tr').hasClass('tr-about')) { // đã load dữ liệu
+                $(tr_current).next('tr').show();
+                $(tr_current).next('tr').children('td').children('div').slideDown({
+                    progress: function () {
+
+                    }
+                });
+            }
+            else {  // Chưa có dữ liệu
+                $.ajax({
+                    url: '/DanhMuc/Order/DsChildOrder',
+                    data: { OrderGuid: $(this).val() },
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $(tr_current).after(data);
+                        $(tr_current).next('tr').slideDown();
+                        $(tr_current).next('tr').children('td').children('div').slideDown();
+                    },
+                    error: function () {
+                        $(tr_current).after(
+                                "<tr class='tr-about' style='display:none;'><td colspan='13'> <span class='required'><b> Chưa có thông tin mặt hàng </b></span> </td> </tr>"
+                                );
+                        $(tr_current).next('tr').slideDown('slow');
+                    }
+                });
+            }
+        } else {
+            $(tr_current).next('tr').children('td').children('div').slideUp({
+                complete: function () {
+                    $(tr_current).next('tr').hide();
+                }
+            });
+        }
+    });
+
+
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("ListOrder")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#DanhMuc').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+</script>

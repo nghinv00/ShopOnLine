@@ -1,0 +1,175 @@
+﻿@using C.Core.Model;
+@using C.UI.Tool;
+@using C.Core.Service;
+@using C.UI.Helpers;
+
+@model IEnumerable<shCategory>
+<div class="table-roll container-treeview" style="">
+    <div class="product-child-title header-treeview">
+        Nếu có chọn sản phẩm, chương trình khuyến mãi này chỉ áp dụng cho các sản phẩm trong danh sách bên dưới
+        @Html.Hidden("ProductAdd")
+    </div>
+    <div class="body-treeview">
+        <div id="cot1">
+            <div id="product-ui">
+                @if (Model != null)
+                {
+                    IEnumerable<shCategory> dsParent = Model.Where(x => string.IsNullOrEmpty(x.ParentId) || string.IsNullOrWhiteSpace(x.ParentId));
+                    <ul class="treeview">
+                        @foreach (var item in dsParent as IEnumerable<shCategory>)
+                        {
+                            <li class="li-parent1" id="li-parent1-@item.CategoryId">
+                                <input type="checkbox" name="CagegoryParent1" value="@item.CategoryGuid"
+                                       id="input-parent1-@item.CategoryId" categoryid="@item.CategoryId" />
+                                <a categoryid="@item.CategoryGuid">
+                                    <span for="input-parent1-@item.CategoryId">@item.CategoryName</span>
+                                </a>
+                                <ul class="treeview child" id="treeview-child1-@item.CategoryId">
+                                    @{
+                                        IEnumerable<shCategory> dsChild = Model.Where(x => x.ParentId == item.CategoryGuid);
+                                        foreach (var child in dsChild as IEnumerable<shCategory>)
+                                        {
+                                            <li class="li-child1" id="li-child1-@child.CategoryId">
+                                                <input type="checkbox" name="CagegoryChild1" id="input-child1-@item.CategoryGuid" value="@child.CategoryGuid"
+                                                       categoryguid="@child.CategoryGuid" categoryid="@child.CategoryId"
+                                                       total="@(dsChild.Count())" parentid="@item.CategoryId" />
+                                                <a category="@item.CategoryGuid">
+                                                    <span for="input-child1-@item.CategoryGuid">@child.CategoryName</span>
+                                                </a>
+                                                <ul class="treeview child" id="treeview-child2-@child.CategoryGuid">
+                                                    @{
+                                                        IEnumerable<shProduct> dsChild2 = (new shProductService()).DanhSachProduct().Where(x => x.CategoryGuid == child.CategoryGuid);
+                                                        foreach (var product in dsChild2)
+                                                        {
+                                                            <li class="li-child2" id="li-child2-@product.ProductId">
+                                                                <label>
+                                                                    <input type="checkbox" name="ProductGuid1" productguid="@product.ProductGuid"
+                                                                           productid="@product.ProductId" value="@product.ProductGuid" />
+                                                                    @product.ProductName
+                                                                </label>
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+            @Html.Button("Thêm sản phẩm", "btn btn-success", "btnAddProduct", "fa fa-plus-square")
+        </div>
+
+        <div id="cot2">
+            <div id="dsNhap">
+                @{ Html.RenderPartial("dsProduct", (IEnumerable<C.Core.Model.shProduct>)(new List<C.Core.Model.shProduct>())); }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #cot1 {
+        width: 40%;
+        float: left;
+        /*float:right;*/
+        /*margin-right: 60%;*/
+    }
+
+    #cot2 {
+        margin-left: 40%;
+        /*width: 60%;
+        float: right;*/
+    }
+</style>
+
+
+<script>
+    $('ul.treeview li.li-parent1 input').on('click', function (e) {
+        var category = $(this).attr('categoryid');
+
+        if ($(this).is(':checked')) {
+            $('ul.treeview li#li-parent1-' + category + ' input').prop('checked', true);
+        }
+        else {
+            $('ul.treeview li#li-parent1-' + category + ' input').prop('checked', false);
+        }
+
+    });
+
+    $('ul.treeview li.li-parent1 a').on('click', function (e) {
+        var target = $('.treeview li.li-parent1 a');
+
+        var check = $(this).next().hasClass('child');
+
+        if (check) {
+            $(this).next().removeClass('child');
+        }
+        else {
+            $(this).next().addClass('child');
+        }
+    });
+
+    $('ul.treeview li.li-child1 input').on('click', function (e) {
+        var parentid = $(this).attr('parentid');
+        var categoryid = $(this).attr('categoryid');
+        if ($(this).is(':checked')) {
+            // 1  input cha
+            var total = $(this).attr('total');
+            var dsCheck = $('ul#treeview-child1-' + parentid + ' li.li-child1 input[name=CagegoryChild1]:checked').length;
+            if (total == dsCheck) {
+                $('input#input-parent1-' + parentid + '').prop('checked', true);
+            }
+            else {
+                $('input#input-parent1-' + parentid + '').prop('checked', false);
+            }
+            // 2.  input con
+
+            $('ul.treeview li#li-child1-' + categoryid + ' input').prop('checked', true);
+
+        }
+        else {
+            // 1. Input cha
+            $('input#input-parent1-' + parentid + '').prop('checked', false);
+            // 2. input con
+            $('ul.treeview li#li-child1-' + categoryid + ' input').prop('checked', false);
+        }
+    });
+
+    $('#btnAddProduct').on('click', function (e) {
+        console.log('1')
+        $('#loader').fadeIn();
+        var ProductAdd = '';
+
+        $('input[name=ProductGuid1]:checked').each(function (e) {
+            var productguid = $(this).attr('productguid');
+            var productid = $(this).attr('productid');
+            var val = $(this).val();
+            ProductAdd += productguid + ';';
+        });
+
+        $('#ProductAdd').val(ProductAdd);
+
+        $.ajax({
+            url: '@Url.Action("dsProduct")',
+            data: {
+                ProductAdd: ProductAdd
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#dsNhap').html(data);
+            },
+            complete: function () {
+                $('#loader').fadeOut('fast');
+            },
+            error: function () {
+                $('#loader').fadeOut('fast');
+            }
+        });
+
+    });
+</script>

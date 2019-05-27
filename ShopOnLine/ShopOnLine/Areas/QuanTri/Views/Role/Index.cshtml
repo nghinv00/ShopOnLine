@@ -1,0 +1,192 @@
+﻿@model IPagedList<C.Core.Model.qtDepartment>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Phân quyền chức năng";
+}
+<section class="content-header">
+    <h1>
+        Phân quyền người dùng
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Hệ thống</a></li>
+        <li class="active">Phân quyền</li>
+    </ol>
+</section>
+<section class="content">
+    <input type="hidden" id="locationId" value="" />
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/Role/Index");
+            <div class="row">
+                <div class="form-group">
+
+                    <div class="col-md-4">
+                        @Html.Label("Đơn vị:")
+                        @Html.DropDownList("UnitId", null, "-- Chọn đơn vị---", new { @class = "form-control" })
+                        <input type="hidden" id="UnitHide" value="@ViewBag.Unit" />
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Thuộc phòng:")
+                        <div id="dsPhongBan">
+                            @Html.Action("GetDepartment", "Role", new { unitId = ViewBag.Unit, depId = ViewBag.Dep })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Label("Chức vụ", new { @class = "control-label" })
+                        @Html.DropDownList("PositionID", null, "--- Chọn chức vụ ---", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <br />
+                @Html.Raw(ViewBag.RoleList)
+
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.Button("Ghi lại", "btn btn-primary", "Create", "fa fa-save")
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="RoleList" />
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+
+            var dep = $('#DepartmentId').val();
+            var pos = $('#PositionID').val();
+            var unit = $('#UnitHide').val();
+            $("#UnitId").select2();
+            $("#DepartmentId").select2();
+            $("#PositionID").select2();
+            $('#UnitId').change(function () {
+                if ($('#UnitId').val() != "") {
+                    $.ajax({
+                        url: '@Url.Action("GetDepartmentByUnitId", "Role")',
+                        data: { unitId: $('#UnitId').val() },
+                        type: 'GET',
+                        success: function (data) {
+                            $("#dsPhongBan").html(data);
+                        },
+                        complete: function () {
+                            $("#DepartmentId").select2();
+                        }
+                    });
+                }
+            });
+            $('#DepartmentId').change(function () {
+                if ($('#DepartmentId').val() != "" && $('#PositionID').val() != "" && $('#UnitId').val() != "")
+                    $('#formview form').submit();
+            });
+            $('#PositionID').change(function () {
+                if ($('#DepartmentId').val() != "" && $('#PositionID').val() != "" && $('#UnitId').val() != "")
+                    $('#formview form').submit();
+            });
+
+
+            $('#Create').click(function () {
+                if ($('#DepartmentId').val() == "") {
+                    alert('Bạn phải chọn phòng ban');
+                    return false;
+                }
+                if ($('#PositionID').val() == "") {
+                    alert('Bạn phải chọn chức vụ');
+                    return false;
+                }
+                if ($('#UnitId').val() == "") {
+                    alert('Bạn phải chọn đơn vị');
+                    return false;
+                }
+                var listMap = '';
+                $('.form-group table.grid tbody input[id$=cbx__]').each(function () {
+                    var cmd = $(this);
+                    if (cmd.is(':checked')) {
+                        //alert(cmd.attr('idata'));
+                        listMap = listMap + cmd.attr('value') + ',';
+                    }
+                });
+                $('input[name=RoleList]').val(listMap.substring(0, listMap.length - 1));
+                $("#formview form").attr('action', '@Url.Action("Create")');
+                $("#formview form").submit();
+            });
+
+            $("#formview #checkall").click(function () {
+                if ($(this).prop('checked') == true) {
+                    $("input[name='cbx[]']").each(function () {
+                        $(this).prop('checked', true)
+                    });
+                }
+                else {
+                    $("input[name='cbx[]']").each(function () {
+                        $(this).prop('checked', false)
+                    });
+                }
+            });
+
+            $("#table-role > tbody > tr").click(function (event) {
+                var tag = $(this).children('td').children('input[type=checkbox]');
+                if (event.target.type != 'checkbox')
+                {
+                    if (tag.prop('checked') == true) {
+                        tag.prop("checked", false);
+                    }
+                    else {
+                        tag.prop("checked", true);
+                    }
+                    AutoCheck(tag);
+                }
+                else
+                    AutoCheck(tag);
+            })
+
+            // Autocheck child or parent
+            function AutoCheck(tag)
+            {
+                if($(tag).hasClass("cbx-parent"))
+                {
+                    CheckChild(tag);
+                }
+                else
+                {
+                    CheckParent(tag);
+                }
+            }
+
+            // Check or uncheck the Checkbox-Child when the checkbox-parent change(click)
+            function CheckChild(tagparent)
+            {
+                if ($(tagparent).prop('checked') == true) {
+                    $("input[type=checkbox][parentId=" + $(tagparent).val() + "]:not(:checked)").prop("checked", true);
+                } else {
+                    $("input[type=checkbox][parentId=" + $(tagparent).val() + "]:checked").prop("checked", false);
+                }
+            }
+
+            // Check or uncheck the Checkbox_parent when checkbox-chile change
+            function CheckParent(tagchild) {
+                if ($(tagchild).prop('checked') == true)
+                {
+                    $("input[type=checkbox][value=" + $(tagchild).attr('parentid') + "]").prop('checked', true);
+                }
+                else
+                {
+                    if ($("input[type=checkbox][parentid=" + $(tagchild).attr('parentid') + "]:checked").length <= 0)
+                    {
+                        $("input[type=checkbox][value=" + $(tagchild).attr('parentid') + "]").prop('checked', false);
+                    }
+                }
+            }
+        });
+    </script>
+}
+

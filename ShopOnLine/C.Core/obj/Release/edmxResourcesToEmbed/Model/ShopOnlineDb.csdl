@@ -1,0 +1,1066 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ShopOnlineDb" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="landDistricts" EntityType="ShopOnlineModel.landDistrict" />
+    <EntitySet Name="landProvinces" EntityType="ShopOnlineModel.landProvince" />
+    <EntitySet Name="landQuanHuyens" EntityType="ShopOnlineModel.landQuanHuyen" />
+    <EntitySet Name="landTinhThanhs" EntityType="ShopOnlineModel.landTinhThanh" />
+    <EntitySet Name="LoaiPhieuNhaps" EntityType="ShopOnlineModel.LoaiPhieuNhap" />
+    <EntitySet Name="qtDepartments" EntityType="ShopOnlineModel.qtDepartment" />
+    <EntitySet Name="qtPositions" EntityType="ShopOnlineModel.qtPosition" />
+    <EntitySet Name="qtRoles" EntityType="ShopOnlineModel.qtRole" />
+    <EntitySet Name="qtSubstitutes" EntityType="ShopOnlineModel.qtSubstitute" />
+    <EntitySet Name="qtSubstituteDetails" EntityType="ShopOnlineModel.qtSubstituteDetail" />
+    <EntitySet Name="qtUnitManagers" EntityType="ShopOnlineModel.qtUnitManager" />
+    <EntitySet Name="qtUnits" EntityType="ShopOnlineModel.qtUnit" />
+    <EntitySet Name="qtUserConfigs" EntityType="ShopOnlineModel.qtUserConfig" />
+    <EntitySet Name="qtUserConfigDetails" EntityType="ShopOnlineModel.qtUserConfigDetail" />
+    <EntitySet Name="qtUserRoles" EntityType="ShopOnlineModel.qtUserRole" />
+    <EntitySet Name="qtUsers" EntityType="ShopOnlineModel.qtUser" />
+    <EntitySet Name="shAboutus" EntityType="ShopOnlineModel.shAboutu" />
+    <EntitySet Name="shAgents" EntityType="ShopOnlineModel.shAgent" />
+    <EntitySet Name="shBanners" EntityType="ShopOnlineModel.shBanner" />
+    <EntitySet Name="shCategories" EntityType="ShopOnlineModel.shCategory" />
+    <EntitySet Name="shCategoryImages" EntityType="ShopOnlineModel.shCategoryImage" />
+    <EntitySet Name="shColors" EntityType="ShopOnlineModel.shColor" />
+    <EntitySet Name="shComments" EntityType="ShopOnlineModel.shComment" />
+    <EntitySet Name="shGoodReceiptIsuues" EntityType="ShopOnlineModel.shGoodReceiptIsuue" />
+    <EntitySet Name="shGoodReceiptIsuueDetails" EntityType="ShopOnlineModel.shGoodReceiptIsuueDetail" />
+    <EntitySet Name="shMembers" EntityType="ShopOnlineModel.shMember" />
+    <EntitySet Name="shNews" EntityType="ShopOnlineModel.shNew" />
+    <EntitySet Name="shOrderDetails" EntityType="ShopOnlineModel.shOrderDetail" />
+    <EntitySet Name="shOrderHistories" EntityType="ShopOnlineModel.shOrderHistory" />
+    <EntitySet Name="shPrices" EntityType="ShopOnlineModel.shPrice" />
+    <EntitySet Name="shProductImages" EntityType="ShopOnlineModel.shProductImage" />
+    <EntitySet Name="shProducts" EntityType="ShopOnlineModel.shProduct" />
+    <EntitySet Name="shProductSets" EntityType="ShopOnlineModel.shProductSet" />
+    <EntitySet Name="shSaleDetails" EntityType="ShopOnlineModel.shSaleDetail" />
+    <EntitySet Name="shSetSizes" EntityType="ShopOnlineModel.shSetSize" />
+    <EntitySet Name="shSexes" EntityType="ShopOnlineModel.shSex" />
+    <AssociationSet Name="FK_landDistrict_landProvince" Association="ShopOnlineModel.FK_landDistrict_landProvince">
+      <End Role="landProvince" EntitySet="landProvinces" />
+      <End Role="landDistrict" EntitySet="landDistricts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtDepartments" Association="ShopOnlineModel.FK_qtUserRole_qtDepartments">
+      <End Role="qtDepartment" EntitySet="qtDepartments" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtDepartments" Association="ShopOnlineModel.FK_qtUsers_qtDepartments">
+      <End Role="qtDepartment" EntitySet="qtDepartments" />
+      <End Role="qtUser" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtPositions" Association="ShopOnlineModel.FK_qtUserRole_qtPositions">
+      <End Role="qtPosition" EntitySet="qtPositions" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtPositions" Association="ShopOnlineModel.FK_qtUsers_qtPositions">
+      <End Role="qtPosition" EntitySet="qtPositions" />
+      <End Role="qtUser" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtRoles" Association="ShopOnlineModel.FK_qtUserRole_qtRoles">
+      <End Role="qtRole" EntitySet="qtRoles" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtUnits" Association="ShopOnlineModel.FK_qtUserRole_qtUnits">
+      <End Role="qtUnit" EntitySet="qtUnits" />
+      <End Role="qtUserRole" EntitySet="qtUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtUnits" Association="ShopOnlineModel.FK_qtUsers_qtUnits">
+      <End Role="qtUnit" EntitySet="qtUnits" />
+      <End Role="qtUser" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shAboutus_qtUsers" Association="ShopOnlineModel.FK_shAboutus_qtUsers">
+      <End Role="qtUser" EntitySet="qtUsers" />
+      <End Role="shAboutu" EntitySet="shAboutus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCategoryImage_shCategory" Association="ShopOnlineModel.FK_shCategoryImage_shCategory">
+      <End Role="shCategory" EntitySet="shCategories" />
+      <End Role="shCategoryImage" EntitySet="shCategoryImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shProducts_shCategory" Association="ShopOnlineModel.FK_shProducts_shCategory">
+      <End Role="shCategory" EntitySet="shCategories" />
+      <End Role="shProduct" EntitySet="shProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shComments_shMembers" Association="ShopOnlineModel.FK_shComments_shMembers">
+      <End Role="shMember" EntitySet="shMembers" />
+      <End Role="shComment" EntitySet="shComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shComments_shProducts" Association="ShopOnlineModel.FK_shComments_shProducts">
+      <End Role="shProduct" EntitySet="shProducts" />
+      <End Role="shComment" EntitySet="shComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shOrderDetail_shProducts" Association="ShopOnlineModel.FK_shOrderDetail_shProducts">
+      <End Role="shProduct" EntitySet="shProducts" />
+      <End Role="shOrderDetail" EntitySet="shOrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shPrices_shSize" Association="ShopOnlineModel.FK_shPrices_shSize">
+      <End Role="shSetSize" EntitySet="shSetSizes" />
+      <End Role="shPrice" EntitySet="shPrices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shProductImage_shProducts" Association="ShopOnlineModel.FK_shProductImage_shProducts">
+      <End Role="shProduct" EntitySet="shProducts" />
+      <End Role="shProductImage" EntitySet="shProductImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSaleDetail_shProducts" Association="ShopOnlineModel.FK_shSaleDetail_shProducts">
+      <End Role="shProduct" EntitySet="shProducts" />
+      <End Role="shSaleDetail" EntitySet="shSaleDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSection_shProducts" Association="ShopOnlineModel.FK_shSection_shProducts">
+      <End Role="shProduct" EntitySet="shProducts" />
+      <End Role="shProductSet" EntitySet="shProductSets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSize_shSection" Association="ShopOnlineModel.FK_shSize_shSection">
+      <End Role="shProductSet" EntitySet="shProductSets" />
+      <End Role="shSetSize" EntitySet="shSetSizes" />
+    </AssociationSet>
+    <EntitySet Name="shIdeaCustomers" EntityType="ShopOnlineModel.shIdeaCustomer" />
+    <AssociationSet Name="FK_shOrderDetail_shSetSize" Association="ShopOnlineModel.FK_shOrderDetail_shSetSize">
+      <End Role="shSetSize" EntitySet="shSetSizes" />
+      <End Role="shOrderDetail" EntitySet="shOrderDetails" />
+    </AssociationSet>
+    <EntitySet Name="shOrders" EntityType="ShopOnlineModel.shOrder" />
+    <EntitySet Name="shSales" EntityType="ShopOnlineModel.shSale" />
+    <AssociationSet Name="FK_shOrder_shMembers1" Association="ShopOnlineModel.FK_shOrder_shMembers1">
+      <End Role="shMember" EntitySet="shMembers" />
+      <End Role="shOrder" EntitySet="shOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shOrderDetail_shOrder" Association="ShopOnlineModel.FK_shOrderDetail_shOrder">
+      <End Role="shOrder" EntitySet="shOrders" />
+      <End Role="shOrderDetail" EntitySet="shOrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSaleDetail_shSale1" Association="ShopOnlineModel.FK_shSaleDetail_shSale1">
+      <End Role="shSale" EntitySet="shSales" />
+      <End Role="shSaleDetail" EntitySet="shSaleDetails" />
+    </AssociationSet>
+    <EntitySet Name="ThongBaos" EntityType="ShopOnlineModel.ThongBao" />
+  </EntityContainer>
+  <EntityType Name="landDistrict">
+    <Key>
+      <PropertyRef Name="DistrictId" />
+    </Key>
+    <Property Name="DistrictId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProvinceId" Type="Int32" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" />
+    <NavigationProperty Name="landProvince" Relationship="ShopOnlineModel.FK_landDistrict_landProvince" FromRole="landDistrict" ToRole="landProvince" />
+  </EntityType>
+  <EntityType Name="landProvince">
+    <Key>
+      <PropertyRef Name="ProvinceId" />
+    </Key>
+    <Property Name="ProvinceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <NavigationProperty Name="landDistricts" Relationship="ShopOnlineModel.FK_landDistrict_landProvince" FromRole="landProvince" ToRole="landDistrict" />
+  </EntityType>
+  <EntityType Name="landQuanHuyen">
+    <Key>
+      <PropertyRef Name="ID_Quan" />
+    </Key>
+    <Property Name="ID_Quan" Type="Int32" Nullable="false" />
+    <Property Name="TenQuan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ID_Tinh" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="landTinhThanh">
+    <Key>
+      <PropertyRef Name="ID_Tinh" />
+    </Key>
+    <Property Name="ID_Tinh" Type="Int32" Nullable="false" />
+    <Property Name="TenTinh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ID_KhuVuc" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LoaiPhieuNhap">
+    <Key>
+      <PropertyRef Name="LoaiPhieuNhapId" />
+    </Key>
+    <Property Name="LoaiPhieuNhapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoaiPhieuNhap" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiPhieuNhapXuat" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="qtDepartment">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="ShopOnlineModel.FK_qtUserRole_qtDepartments" FromRole="qtDepartment" ToRole="qtUserRole" />
+    <NavigationProperty Name="qtUsers" Relationship="ShopOnlineModel.FK_qtUsers_qtDepartments" FromRole="qtDepartment" ToRole="qtUser" />
+  </EntityType>
+  <EntityType Name="qtPosition">
+    <Key>
+      <PropertyRef Name="PositionId" />
+    </Key>
+    <Property Name="PositionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PositionName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="ShopOnlineModel.FK_qtUserRole_qtPositions" FromRole="qtPosition" ToRole="qtUserRole" />
+    <NavigationProperty Name="qtUsers" Relationship="ShopOnlineModel.FK_qtUsers_qtPositions" FromRole="qtPosition" ToRole="qtUser" />
+  </EntityType>
+  <EntityType Name="qtRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Application" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDete" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="ShopOnlineModel.FK_qtUserRole_qtRoles" FromRole="qtRole" ToRole="qtUserRole" />
+  </EntityType>
+  <EntityType Name="qtSubstitute">
+    <Key>
+      <PropertyRef Name="SubstituteId" />
+    </Key>
+    <Property Name="SubstituteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="AppName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AppCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="qtSubstituteDetail">
+    <Key>
+      <PropertyRef Name="SubstituteDetailId" />
+    </Key>
+    <Property Name="SubstituteDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubstituteId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="qtUnitManager">
+    <Key>
+      <PropertyRef Name="UnitManagerId" />
+    </Key>
+    <Property Name="UnitManagerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="qtUnit">
+    <Key>
+      <PropertyRef Name="UnitId" />
+    </Key>
+    <Property Name="UnitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="UnitCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="LevelCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUserRoles" Relationship="ShopOnlineModel.FK_qtUserRole_qtUnits" FromRole="qtUnit" ToRole="qtUserRole" />
+    <NavigationProperty Name="qtUsers" Relationship="ShopOnlineModel.FK_qtUsers_qtUnits" FromRole="qtUnit" ToRole="qtUser" />
+  </EntityType>
+  <EntityType Name="qtUserConfig">
+    <Key>
+      <PropertyRef Name="UserConfigId" />
+    </Key>
+    <Property Name="UserConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="AppName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AppCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="qtUserConfigDetail">
+    <Key>
+      <PropertyRef Name="UserConfigDetailId" />
+    </Key>
+    <Property Name="UserConfigDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserConfigId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="OrderBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="qtUserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="PositionId" Type="Int32" />
+    <Property Name="Application" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtDepartment" Relationship="ShopOnlineModel.FK_qtUserRole_qtDepartments" FromRole="qtUserRole" ToRole="qtDepartment" />
+    <NavigationProperty Name="qtPosition" Relationship="ShopOnlineModel.FK_qtUserRole_qtPositions" FromRole="qtUserRole" ToRole="qtPosition" />
+    <NavigationProperty Name="qtRole" Relationship="ShopOnlineModel.FK_qtUserRole_qtRoles" FromRole="qtUserRole" ToRole="qtRole" />
+    <NavigationProperty Name="qtUnit" Relationship="ShopOnlineModel.FK_qtUserRole_qtUnits" FromRole="qtUserRole" ToRole="qtUnit" />
+  </EntityType>
+  <EntityType Name="qtUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="ImageFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAdmin" Type="Boolean" />
+    <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="PositionId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtDepartment" Relationship="ShopOnlineModel.FK_qtUsers_qtDepartments" FromRole="qtUser" ToRole="qtDepartment" />
+    <NavigationProperty Name="qtPosition" Relationship="ShopOnlineModel.FK_qtUsers_qtPositions" FromRole="qtUser" ToRole="qtPosition" />
+    <NavigationProperty Name="qtUnit" Relationship="ShopOnlineModel.FK_qtUsers_qtUnits" FromRole="qtUser" ToRole="qtUnit" />
+    <NavigationProperty Name="shAboutus" Relationship="ShopOnlineModel.FK_shAboutus_qtUsers" FromRole="qtUser" ToRole="shAboutu" />
+  </EntityType>
+  <EntityType Name="shAboutu">
+    <Key>
+      <PropertyRef Name="AboutGuid" />
+    </Key>
+    <Property Name="AboutGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AboutId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AboutTitle" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="AboutName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="AboutContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Sign" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImageUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="qtUser" Relationship="ShopOnlineModel.FK_shAboutus_qtUsers" FromRole="shAboutu" ToRole="qtUser" />
+  </EntityType>
+  <EntityType Name="shAgent">
+    <Key>
+      <PropertyRef Name="AgentGuid" />
+    </Key>
+    <Property Name="AgentGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AgentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgentName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AgentAddress" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Website" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ProvinceId" Type="Int32" />
+    <Property Name="DistrictId" Type="Int32" />
+    <Property Name="Longitude" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shBanner">
+    <Key>
+      <PropertyRef Name="BannerGuid" />
+    </Key>
+    <Property Name="BannerGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BannerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BannerName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PositionBanner" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shCategory">
+    <Key>
+      <PropertyRef Name="CategoryGuid" />
+    </Key>
+    <Property Name="CategoryGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ParentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="SortOrderHighLight" Type="Int32" />
+    <Property Name="TopHot" Type="Boolean" />
+    <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCategoryImages" Relationship="ShopOnlineModel.FK_shCategoryImage_shCategory" FromRole="shCategory" ToRole="shCategoryImage" />
+    <NavigationProperty Name="shProducts" Relationship="ShopOnlineModel.FK_shProducts_shCategory" FromRole="shCategory" ToRole="shProduct" />
+  </EntityType>
+  <EntityType Name="shCategoryImage">
+    <Key>
+      <PropertyRef Name="CategoryImageGuid" />
+    </Key>
+    <Property Name="CategoryImageGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FileNameGoc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCategory" Relationship="ShopOnlineModel.FK_shCategoryImage_shCategory" FromRole="shCategoryImage" ToRole="shCategory" />
+  </EntityType>
+  <EntityType Name="shColor">
+    <Key>
+      <PropertyRef Name="ColorGuid" />
+    </Key>
+    <Property Name="ColorGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ColorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ColorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shComment">
+    <Key>
+      <PropertyRef Name="CommentGuid" />
+    </Key>
+    <Property Name="CommentGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberGuiId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MemberName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="Contents" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shMember" Relationship="ShopOnlineModel.FK_shComments_shMembers" FromRole="shComment" ToRole="shMember" />
+    <NavigationProperty Name="shProduct" Relationship="ShopOnlineModel.FK_shComments_shProducts" FromRole="shComment" ToRole="shProduct" />
+    <Property Name="LaDaXem" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="shGoodReceiptIsuue">
+    <Key>
+      <PropertyRef Name="ReceiptIsuueGuid" />
+    </Key>
+    <Property Name="ReceiptIsuueGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReceiptIssueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Phieu" Type="Int32" />
+    <Property Name="ReceiptIsuueName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="SKU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaKho" Type="Int32" />
+    <Property Name="TenKho" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiPhieu" Type="Int32" />
+    <Property Name="MaDonHang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GhiChu" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shGoodReceiptIsuueDetail">
+    <Key>
+      <PropertyRef Name="ReceiptIsuueDetailGuid" />
+    </Key>
+    <Property Name="ReceiptIsuueDetailGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReceiptIsuueDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReceiptIsuueGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SectionGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SizeGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Phieu" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shMember">
+    <Key>
+      <PropertyRef Name="MemberGuiId" />
+    </Key>
+    <Property Name="MemberGuiId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MemberLogin" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ImageFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDay" Type="DateTime" Precision="3" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shComments" Relationship="ShopOnlineModel.FK_shComments_shMembers" FromRole="shMember" ToRole="shComment" />
+    <Property Name="LaDaXem" Type="Boolean" />
+    <NavigationProperty Name="shOrders" Relationship="ShopOnlineModel.FK_shOrder_shMembers1" FromRole="shMember" ToRole="shOrder" />
+  </EntityType>
+  <EntityType Name="shNew">
+    <Key>
+      <PropertyRef Name="NewGuiId" />
+    </Key>
+    <Property Name="NewGuiId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TitleNew" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Descriptions" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="ImageFile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Summary" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shOrderDetail">
+    <Key>
+      <PropertyRef Name="OrderDetailGuid" />
+    </Key>
+    <Property Name="OrderDetailGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDetailName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MemberGuiId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="SectionGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SizeGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Prices" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayType" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProduct" Relationship="ShopOnlineModel.FK_shOrderDetail_shProducts" FromRole="shOrderDetail" ToRole="shProduct" />
+    <Property Name="NgayDat" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shSetSize" Relationship="ShopOnlineModel.FK_shOrderDetail_shSetSize" FromRole="shOrderDetail" ToRole="shSetSize" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="shOrder" Relationship="ShopOnlineModel.FK_shOrderDetail_shOrder" FromRole="shOrderDetail" ToRole="shOrder" />
+  </EntityType>
+  <EntityType Name="shOrderHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderStatus" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="MemberGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="shPrice">
+    <Key>
+      <PropertyRef Name="PriceGuid" />
+    </Key>
+    <Property Name="PriceGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SectionGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SizeGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PriceName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shSetSize" Relationship="ShopOnlineModel.FK_shPrices_shSize" FromRole="shPrice" ToRole="shSetSize" />
+  </EntityType>
+  <EntityType Name="shProductImage">
+    <Key>
+      <PropertyRef Name="ProductImageGuid" />
+    </Key>
+    <Property Name="ProductImageGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="FileNameGoc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ProductImageCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProduct" Relationship="ShopOnlineModel.FK_shProductImage_shProducts" FromRole="shProductImage" ToRole="shProduct" />
+  </EntityType>
+  <EntityType Name="shProduct">
+    <Key>
+      <PropertyRef Name="ProductGuid" />
+    </Key>
+    <Property Name="ProductGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Details" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="UserManual" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompleteSetInclude" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="PriceCurrent" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PercentCurrent" Type="Int32" />
+    <Property Name="PriceAfterPercents" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ViewsProduct" Type="Int32" />
+    <Property Name="ProductStatus" Type="Int32" />
+    <Property Name="TopHot" Type="Boolean" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Inventory" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shCategory" Relationship="ShopOnlineModel.FK_shProducts_shCategory" FromRole="shProduct" ToRole="shCategory" />
+    <NavigationProperty Name="shComments" Relationship="ShopOnlineModel.FK_shComments_shProducts" FromRole="shProduct" ToRole="shComment" />
+    <NavigationProperty Name="shOrderDetails" Relationship="ShopOnlineModel.FK_shOrderDetail_shProducts" FromRole="shProduct" ToRole="shOrderDetail" />
+    <NavigationProperty Name="shProductImages" Relationship="ShopOnlineModel.FK_shProductImage_shProducts" FromRole="shProduct" ToRole="shProductImage" />
+    <NavigationProperty Name="shSaleDetails" Relationship="ShopOnlineModel.FK_shSaleDetail_shProducts" FromRole="shProduct" ToRole="shSaleDetail" />
+    <NavigationProperty Name="shProductSets" Relationship="ShopOnlineModel.FK_shSection_shProducts" FromRole="shProduct" ToRole="shProductSet" />
+  </EntityType>
+  <EntityType Name="shProductSet">
+    <Key>
+      <PropertyRef Name="SectionGuid" />
+    </Key>
+    <Property Name="SectionGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SectionName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Inventory" Type="Int32" />
+    <Property Name="ItemStatus" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProduct" Relationship="ShopOnlineModel.FK_shSection_shProducts" FromRole="shProductSet" ToRole="shProduct" />
+    <NavigationProperty Name="shSetSizes" Relationship="ShopOnlineModel.FK_shSize_shSection" FromRole="shProductSet" ToRole="shSetSize" />
+  </EntityType>
+  <EntityType Name="shSaleDetail">
+    <Key>
+      <PropertyRef Name="SaleDetailGuid" />
+    </Key>
+    <Property Name="SaleDetailGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SaleDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SaleGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CachTinhGiaTriKhuyenMai" Type="Int32" />
+    <Property Name="GiaTri" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="DieuKienApDung" Type="Int32" />
+    <Property Name="MaCauHinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryGuidProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Percents" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="PriceAfterPercents" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SaleAttach" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shProduct" Relationship="ShopOnlineModel.FK_shSaleDetail_shProducts" FromRole="shSaleDetail" ToRole="shProduct" />
+    <NavigationProperty Name="shSale" Relationship="ShopOnlineModel.FK_shSaleDetail_shSale1" FromRole="shSaleDetail" ToRole="shSale" />
+  </EntityType>
+  <EntityType Name="shSetSize">
+    <Key>
+      <PropertyRef Name="SizeGuid" />
+    </Key>
+    <Property Name="SizeGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SizeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SectionGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SizeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PriceCurrent" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Stuff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PercentCurrent" Type="Int32" />
+    <Property Name="PriceAfterPercents" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="Inventory" Type="Int32" />
+    <Property Name="SizeStatus" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shPrices" Relationship="ShopOnlineModel.FK_shPrices_shSize" FromRole="shSetSize" ToRole="shPrice" />
+    <NavigationProperty Name="shProductSet" Relationship="ShopOnlineModel.FK_shSize_shSection" FromRole="shSetSize" ToRole="shProductSet" />
+    <NavigationProperty Name="shOrderDetails" Relationship="ShopOnlineModel.FK_shOrderDetail_shSetSize" FromRole="shSetSize" ToRole="shOrderDetail" />
+  </EntityType>
+  <EntityType Name="shSex">
+    <Key>
+      <PropertyRef Name="SexGuid" />
+    </Key>
+    <Property Name="SexGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SexId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SexName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_landDistrict_landProvince">
+    <End Type="ShopOnlineModel.landProvince" Role="landProvince" Multiplicity="1" />
+    <End Type="ShopOnlineModel.landDistrict" Role="landDistrict" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="landProvince">
+        <PropertyRef Name="ProvinceId" />
+      </Principal>
+      <Dependent Role="landDistrict">
+        <PropertyRef Name="ProvinceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtDepartments">
+    <End Type="ShopOnlineModel.qtDepartment" Role="qtDepartment" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUserRole" Role="qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtDepartment">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtDepartments">
+    <End Type="ShopOnlineModel.qtDepartment" Role="qtDepartment" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUser" Role="qtUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtDepartment">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="qtUser">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtPositions">
+    <End Type="ShopOnlineModel.qtPosition" Role="qtPosition" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUserRole" Role="qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtPosition">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtPositions">
+    <End Type="ShopOnlineModel.qtPosition" Role="qtPosition" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUser" Role="qtUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtPosition">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="qtUser">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtRoles">
+    <End Type="ShopOnlineModel.qtRole" Role="qtRole" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUserRole" Role="qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtUnits">
+    <End Type="ShopOnlineModel.qtUnit" Role="qtUnit" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUserRole" Role="qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUnit">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtUnits">
+    <End Type="ShopOnlineModel.qtUnit" Role="qtUnit" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.qtUser" Role="qtUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUnit">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="qtUser">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shAboutus_qtUsers">
+    <End Type="ShopOnlineModel.qtUser" Role="qtUser" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shAboutu" Role="shAboutu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="shAboutu">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCategoryImage_shCategory">
+    <End Type="ShopOnlineModel.shCategory" Role="shCategory" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shCategoryImage" Role="shCategoryImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shCategory">
+        <PropertyRef Name="CategoryGuid" />
+      </Principal>
+      <Dependent Role="shCategoryImage">
+        <PropertyRef Name="CategoryGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shProducts_shCategory">
+    <End Type="ShopOnlineModel.shCategory" Role="shCategory" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shProduct" Role="shProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shCategory">
+        <PropertyRef Name="CategoryGuid" />
+      </Principal>
+      <Dependent Role="shProduct">
+        <PropertyRef Name="CategoryGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shComments_shMembers">
+    <End Type="ShopOnlineModel.shMember" Role="shMember" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shComment" Role="shComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shMember">
+        <PropertyRef Name="MemberGuiId" />
+      </Principal>
+      <Dependent Role="shComment">
+        <PropertyRef Name="MemberGuiId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shComments_shProducts">
+    <End Type="ShopOnlineModel.shProduct" Role="shProduct" Multiplicity="1" />
+    <End Type="ShopOnlineModel.shComment" Role="shComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProduct">
+        <PropertyRef Name="ProductGuid" />
+      </Principal>
+      <Dependent Role="shComment">
+        <PropertyRef Name="ProductGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shOrderDetail_shProducts">
+    <End Type="ShopOnlineModel.shProduct" Role="shProduct" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shOrderDetail" Role="shOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProduct">
+        <PropertyRef Name="ProductGuid" />
+      </Principal>
+      <Dependent Role="shOrderDetail">
+        <PropertyRef Name="ProductGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shPrices_shSize">
+    <End Type="ShopOnlineModel.shSetSize" Role="shSetSize" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shPrice" Role="shPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shSetSize">
+        <PropertyRef Name="SizeGuid" />
+      </Principal>
+      <Dependent Role="shPrice">
+        <PropertyRef Name="SizeGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shProductImage_shProducts">
+    <End Type="ShopOnlineModel.shProduct" Role="shProduct" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shProductImage" Role="shProductImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProduct">
+        <PropertyRef Name="ProductGuid" />
+      </Principal>
+      <Dependent Role="shProductImage">
+        <PropertyRef Name="ProductGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSaleDetail_shProducts">
+    <End Type="ShopOnlineModel.shProduct" Role="shProduct" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shSaleDetail" Role="shSaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProduct">
+        <PropertyRef Name="ProductGuid" />
+      </Principal>
+      <Dependent Role="shSaleDetail">
+        <PropertyRef Name="ProductGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSection_shProducts">
+    <End Type="ShopOnlineModel.shProduct" Role="shProduct" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shProductSet" Role="shProductSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProduct">
+        <PropertyRef Name="ProductGuid" />
+      </Principal>
+      <Dependent Role="shProductSet">
+        <PropertyRef Name="ProductGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSize_shSection">
+    <End Type="ShopOnlineModel.shProductSet" Role="shProductSet" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shSetSize" Role="shSetSize" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProductSet">
+        <PropertyRef Name="SectionGuid" />
+      </Principal>
+      <Dependent Role="shSetSize">
+        <PropertyRef Name="SectionGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="shIdeaCustomer">
+    <Key>
+      <PropertyRef Name="IdeaGuid" />
+    </Key>
+    <Property Name="IdeaGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdeaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Contents" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_shOrderDetail_shSetSize">
+    <End Type="ShopOnlineModel.shSetSize" Role="shSetSize" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shOrderDetail" Role="shOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shSetSize">
+        <PropertyRef Name="SizeGuid" />
+      </Principal>
+      <Dependent Role="shOrderDetail">
+        <PropertyRef Name="SizeGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="shOrder">
+    <Key>
+      <PropertyRef Name="OrderGuid" />
+    </Key>
+    <Property Name="OrderGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="MemberGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="OrderStatus" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="DistrictId" Type="Int32" />
+    <Property Name="ProvinceId" Type="Int32" />
+    <Property Name="FeeShip" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayType" Type="Int32" />
+    <Property Name="NgayDat" Type="DateTime" Precision="3" />
+    <Property Name="LaDaXem" Type="Boolean" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shMember" Relationship="ShopOnlineModel.FK_shOrder_shMembers1" FromRole="shOrder" ToRole="shMember" />
+    <NavigationProperty Name="shOrderDetails" Relationship="ShopOnlineModel.FK_shOrderDetail_shOrder" FromRole="shOrder" ToRole="shOrderDetail" />
+  </EntityType>
+  <EntityType Name="shSale">
+    <Key>
+      <PropertyRef Name="SaleGuid" />
+    </Key>
+    <Property Name="SaleGuid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SaleDetailGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SaleName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SaleCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CachTinhGiaTriKhuyenMai" Type="Int32" />
+    <Property Name="GiaTri" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="DieuKienApDung" Type="Int32" />
+    <Property Name="SaleStatus" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="shSaleDetails" Relationship="ShopOnlineModel.FK_shSaleDetail_shSale1" FromRole="shSale" ToRole="shSaleDetail" />
+  </EntityType>
+  <Association Name="FK_shOrder_shMembers1">
+    <End Type="ShopOnlineModel.shMember" Role="shMember" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shOrder" Role="shOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shMember">
+        <PropertyRef Name="MemberGuiId" />
+      </Principal>
+      <Dependent Role="shOrder">
+        <PropertyRef Name="MemberGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shOrderDetail_shOrder">
+    <End Type="ShopOnlineModel.shOrder" Role="shOrder" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shOrderDetail" Role="shOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shOrder">
+        <PropertyRef Name="OrderGuid" />
+      </Principal>
+      <Dependent Role="shOrderDetail">
+        <PropertyRef Name="OrderGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSaleDetail_shSale1">
+    <End Type="ShopOnlineModel.shSale" Role="shSale" Multiplicity="0..1" />
+    <End Type="ShopOnlineModel.shSaleDetail" Role="shSaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shSale">
+        <PropertyRef Name="SaleGuid" />
+      </Principal>
+      <Dependent Role="shSaleDetail">
+        <PropertyRef Name="SaleGuid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ThongBao">
+    <Key>
+      <PropertyRef Name="ThongBaoId" />
+    </Key>
+    <Property Name="ThongBaoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NoiDungThongBao" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDungCongViec" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="LienKet" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="NguoiThongBaoID" Type="Int32" />
+    <Property Name="NguoiNhanThongBaoId" Type="Int32" />
+    <Property Name="ThoiGian" Type="DateTime" Precision="3" />
+    <Property Name="DaXem" Type="Boolean" />
+    <Property Name="MaLoaiThongBao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GiaTri" Type="Int32" />
+    <Property Name="OrderGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

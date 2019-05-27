@@ -1,0 +1,192 @@
+﻿@model C.Core.Model.shCategory
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Hiệu chỉnh thông tin Danh mục";
+}
+
+@using C.DanhMuc.Helper;
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Danh mục
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Category/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin Danh mục</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Category/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("DanhMucGuid")
+
+            <div class="form-horizontal">
+                <hr />
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Tên danh mục:", new { @class = "control-label" }) (<span class="required">*</span>)
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("CategoryName", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Danh mục cha:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            <div id="drl_ParentId">
+                                @{
+                                    Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Categories.cshtml", new SelectList(new List<SelectListItem>()));
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Mô tả:", new { @class = "control-label" }) (<span class="required">*</span>)
+                        </div>
+                        <div class="col-md-9 ">
+                            @Html.TextArea("Description", null, 5, 2, new { @class = "form-control textarea-noresize-vertical" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.Label("Số thứ tự hiển thị:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("SortOrder", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6" style="margin-top:10pt">
+                        @{
+                            if (Model.CategoryId > 0)
+                            {
+                                @Html.CheckBox("Status")
+                            }
+                            else
+                            {
+                                @Html.CheckBox("Status", true)
+                            }
+                        }
+                        <label for="Status">Còn sử dụng</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="col-sm-12">
+                        @{
+                            var FileName = "/content/images/background.jpg";
+                            if (Model.CategoryId > 0)
+                            {
+                                FileName = Model.FileName;
+                            }
+                            <img src="@FileName" id="image-collection" style="width: 100%; height: 220px;" />
+                            <input type="hidden" name="FileName" id="FileName" value="@Model.FileName" />
+                        }
+                        <br />
+                        <div class="" style="margin-top: 5px;">
+                            <input type="file" value="Chọn file" id="FileUploader" name="FileUploader" accept="image/*" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        var thumbs = '@Url.Content(C.Core.Common.Config.thumbs)';
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '@Url.Action("Categories", "DanhMuc")',
+                data: {
+                    CategoryGuid: '@ViewBag.ParentId',
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_ParentId').html(data);
+
+                    $('#CategoryId').select2();
+                }
+            });
+
+            $('#formview form').validate({
+                messages: {
+                    CategoryName: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                    //Description: {
+                    //    required: 'Mô tả danh mục không được bỏ trống'
+                    //},
+                    SortOrder: {
+                        digits: 'Số thứ tự phải là số nguyên dương '
+                    },
+                },
+                rules: {
+                    CategoryName: {
+                        required: true
+                    },
+                    //Description: {
+                    //    required: true
+                    //},
+                    SortOrder: {
+                        digits: true
+                    },
+
+                }
+            });
+
+            $('#FileUploader').on('change', function (e) {
+                var data = new FormData();
+                var files = $("#FileUploader").get(0).files;
+
+                // Add the uploaded image content to the form data collection
+                if (files.length > 0) {
+                    data.append(thumbs, files[0]);
+                }
+                // call ajax
+                $.ajax({
+                    url: '/api/UploadProduct/Preview',
+                    data: data,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    success: function (response) {
+                        if (response != null && response != '') {
+                            $('#image-collection').attr('src', response);
+                            $('#FileName').val(response);
+                        }
+
+                    }, error: function (response) {
+
+                    },
+                    complete: function (response) {
+
+                    }
+                });
+            });
+        });
+    </script>
+}

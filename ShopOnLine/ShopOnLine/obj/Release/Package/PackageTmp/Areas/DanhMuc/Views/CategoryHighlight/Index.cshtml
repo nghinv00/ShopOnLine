@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "Danh sách Danh mục";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+
+<section class="content-header">
+    <h1>
+        Danh sách Danh mục
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Danh sách Danh mục</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/CategoryHighlight/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="highlight">
+                                <ul>
+                                    <li><a href="#name1"><span>Danh mục nổi bật</span></a></li>
+                                    <li><a href="#name2"><span>Danh sách danh mục   </span></a></li>
+                                </ul>
+                                <div id="name1">
+                                    <div id="delete" class="display-none">
+                                        @Html.Button("Xóa danh mục nổi bật", "btn btn-danger", "DeleteHighlight", "fa fa-trash-o")
+                                    </div>
+                                    <div id="DanhMuc1" style="margin-top: 5px;">
+                                        @{
+                                            Html.RenderPartial("ListCategoryHighLight", (IPagedList<C.Core.Model.shProduct>)ViewBag.ListProductHighLight);
+                                        }
+                                    </div>
+                                </div>
+                                <div id="name2">
+                                    <div id="add" class="display-none">
+                                        @Html.Button("Chọn làm danh mục nổi bật", "btn btn-primary", "CreateHighLight", "fa fa-plus-square")
+                                    </div>
+                                    <div id="DanhMuc2" style="margin-top: 5px;">
+                                        @{
+                                            Html.RenderPartial("ListCategory", (IPagedList<C.Core.Model.shCategory>)ViewBag.ListCategory);
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+</section>
+
+<div>
+    <div class="modal" id="dialog-HighLight">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Cấu hình hiển thị Icon Danh mục nổi bật trang chủ</h4>
+                </div>
+                <div class="modal-body" id="dialogHighLight">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        $("#highlight").tabs();
+
+        function category(id) {
+
+        }
+
+        function ViewImages(CategoryGuid) {
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("DialogHighLight")',
+                data: {
+                    CategoryGuid: CategoryGuid
+                },
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogHighLight").html(data);
+                    $('#dialog #CategoryGuid').val(CategoryGuid)
+                    $('#dialog-HighLight').modal('toggle');
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#highlight ul li').addClass('active-ui');
+            $('#highlight ul li').first().addClass('no-active-ui');
+            $('#highlight ul li').on('click', function (e) {
+                $('#highlight ul li').removeClass('no-active-ui');
+                //$(this).removeClass('active-ui');
+                $(this).addClass('no-active-ui');
+            });
+
+
+            $('input[name=cbxItem1]').on('click', function (e) {
+                if ($('input[name=cbxItem1]:checked').length > 0) {
+                    $('#delete').css('display', 'block')
+                }
+                else {
+                    $('#delete').css('display', 'none')
+                }
+
+            });
+
+            $('input[name=cbxItem2]').on('click', function (e) {
+                if ($('input[name=cbxItem2]:checked').length > 0) {
+                    $('#add').css('display', 'block')
+                }
+                else {
+                    $('#add').css('display', 'none')
+                }
+            });
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+
+             $('#DeleteHighlight').click(function (e) {
+                $('#formview form').attr('action', '@Url.Action("DeleteHighLight")');
+                $('#formview form').submit();
+            });
+
+            $('#CreateHighLight').click(function (e) {
+                $('#formview form').attr('action', '@Url.Action("HighLight")');
+                $('#formview form').submit();
+            });
+
+        });
+    </script>
+}

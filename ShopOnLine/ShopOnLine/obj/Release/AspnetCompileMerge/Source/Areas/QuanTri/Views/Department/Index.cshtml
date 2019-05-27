@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Danh mục phòng ban";
+}
+
+
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+<section class="content-header">
+    <h1>
+        Quản lý thông tin phòng ban
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Quản lý thông tin phòng ban</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/Department/Index")
+            @Html.Hidden("page")
+
+            <div id="loader" class="loading loading-hide"></div>
+
+            <div class="row">
+                <div class="col-md-3 no-padding-right">
+                    <ul id="tree" class="ztree"></ul>
+                </div>
+                <div class="col-md-9 no-padding-left">
+                    @*<div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Label("Đơn vị:")
+                                <div id="drl_UnitId">
+                                    @{
+            Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Units.cshtml", new SelectList(new List<SelectListItem>()));
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                                @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+                            </div>
+                        </div>
+                    </div>
+                    <div id="PhongBan">
+                        @{
+                            Html.RenderPartial("ListDepartments", (IPagedList<C.Core.Model.qtDepartment>)ViewBag.ListDepartments);
+                        }
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+   
+
+        function unitchange(id) {
+            SelectUnit(id);
+        }
+        var zTreeObj;
+
+        var setting = {
+            view: {
+                //showIcon: showIconForTree
+                dblClickExpand: false,
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 0
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent &&!treeNode.children ;
+        };
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            zTree.expandNode(treeNode);
+        }
+
+        $.ajax({
+            url: '@Url.Action("UnitTreeview", "DanhMucDungChung")',
+            type: 'POST',
+            data: {
+                isShowDepartment: true
+            },
+            dataType: "json",
+            success: function (data) {
+                var zNodes = data;
+                console.log(data);
+                zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+
+            },
+            error: function (data) {
+
+            },
+            complete: function (data, response) {
+             
+            }
+        });
+
+        function ThayDoiDonVi(UnitId) {
+            $('#formview form').submit();
+        }
+
+        function SelectUnit(UnitId) {
+            $("#loader").fadeIn();
+
+            $.ajax({
+                url: '@Url.Action("ListDepartments")',
+                data: {
+                    UnitId: UnitId
+                },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus) {
+                    $('#PhongBan').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                },
+                complete: function (data) {
+                    $("#loader").fadeOut();
+                }
+            });
+         }
+
+        $(document).ready(function () {
+
+            //$('#UnitId').select2();
+
+            $('ul.ztree .node_name').click(function (e) {
+
+            });
+
+
+            $('#UnitId').on('change', function (e) {
+                ThayDoiDonVi($('#UnitId').val());
+            })
+
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create", "Department")/' + '?UnitId=' + $('#UnitId').val();
+            });
+
+
+        });
+    </script>
+}

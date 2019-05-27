@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Danh mục sản phẩm";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+
+<section class="content-header">
+    <h1>
+        Quản lý thành viên
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Quản lý thành viên</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Member/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                        @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+                    </div>
+                </div>
+            </div>
+            <div id="DanhMuc">
+                @{
+                    Html.RenderPartial("ListMembers", (IPagedList<C.Core.Model.shMember>)ViewBag.ListMembers);
+                }
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create")';
+            });
+
+        });
+    </script>
+}

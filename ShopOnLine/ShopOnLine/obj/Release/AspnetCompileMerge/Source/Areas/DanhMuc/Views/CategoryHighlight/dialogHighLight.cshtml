@@ -1,0 +1,172 @@
+﻿<div id="dialog">
+    @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.Hidden("CategoryGuid")
+        <div class="container col-md-12 box box-primary">
+
+            <div class="col-md-12 no-padding" style="margin-top: 15px;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-12 no-padding">
+                            @Html.Label("Chọn ảnh hiển thị Icon danh mục: ")
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <input type="file" value="Chọn file" id="FileUploaderIcon" name="FileUploaderIcon" accept="image/*" />
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <input type="hidden" class="form-control" id="ImageIcon" name="ImageIcon" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 no-padding">
+                            <i>Hệ thống chỉ chấp nhận đuôi file jpg, png, gif, jpeg</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="list-image">
+                        <div class="form-group">
+                            @Html.Raw(ViewBag.Icon)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 10px"></div>
+            <div class="col-md-12 no-padding" style="margin-top: 15px;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="col-md-12 no-padding">
+                            @Html.Label("Chọn ảnh hiển thị Icon-Active danh mục: ")
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <input type="file" value="Chọn file" id="FileUploaderIconActive" name="FileUploaderIconActive" accept="image/*" />
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <input type="hidden" class="form-control" id="ImageIconActive" name="ImageIconActive" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 no-padding">
+                            <i>Hệ thống chỉ chấp nhận đuôi file jpg, png, gif, jpeg</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="list-image">
+                        <div class="form-group">
+                            @Html.Raw(ViewBag.IconActive)   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="float-right">
+            <button type="button" class="btn btn-danger" onclick="HuyBo()">Hủy Bỏ</button>
+            <button type="button" class="btn btn-primary" onclick="GhiLai()">Ghi lại</button>
+        </div>
+    }
+</div>
+
+<script>
+
+    function HuyBo() {
+        $('#dialog-HighLight').modal('toggle');
+        $('input[type=text]').val('');
+    }
+
+    $('#dialogHighLight form').validate({
+        messages: {
+
+        },
+        rules: {
+
+        }
+    });
+
+
+    function GhiLai() {
+        if ($('#dialogHighLight form').valid()) { // submit trước khi nhảy vào hàm
+            $('#loader').fadeIn('slow');
+            $.ajax({
+                url: '@Url.Action("DialogHighLight")',
+                data: {
+                    //$('#dialogHighLight form').serialize(),
+                    CategoryGuid: $('#CategoryGuid').val(),
+                    ImageIcon: $('#ImageIcon').val(),
+                    ImageIconActive: $('#ImageIconActive').val()
+                },
+                type: 'POST',
+                dataType: "json",
+                success: function (data) {
+                    $('#dialog-HighLight').modal('toggle');
+
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+    }
+
+
+    $('input#FileUploaderIcon').on('change', function (e) {
+        var data = new FormData();
+        var files = $('#FileUploaderIcon').get(0).files;
+
+        // Add the uploaded image content to the form data collection
+        if (files.length > 0) {
+            data.append('Preview', files[0]);
+        }
+        // call ajax
+        $.ajax({
+            url: '/api/FileUpload/Preview',
+            data: data,
+            type: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+            success: function (response) {
+                console.log(response)
+                if (response != '' && response != null) {
+                    $('#ImageIcon').val(response);
+                    $('#previewIcon').attr('src', response);
+                }
+            }, error: function (response) {
+
+            },
+            complete: function (response) {
+
+            }
+        });
+    });
+
+
+    $('input#FileUploaderIconActive').on('change', function (e) {
+        var data = new FormData();
+        var files = $('#FileUploaderIconActive').get(0).files;
+
+        // Add the uploaded image content to the form data collection
+        if (files.length > 0) {
+            data.append('Preview', files[0]);
+        }
+        // call ajax
+        $.ajax({
+            url: '/api/FileUpload/Preview',
+            data: data,
+            type: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+            success: function (response) {
+                console.log(response)
+                if (response != '' && response != null) {
+                    $('#ImageIconActive').val(response);
+                    $('#previewIconActive').attr('src', response);
+                }
+            }, error: function (response) {
+
+            },
+            complete: function (response) {
+
+            }
+        });
+    });
+</script>

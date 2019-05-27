@@ -1,0 +1,143 @@
+﻿<link href="~/Content/jquery-ui/jquery-ui.css" rel="stylesheet" />
+<link href="~/SongHongVn/modules/news/css/news.css" rel="stylesheet" type="text/css" />
+
+<link href="~/AdminLTE/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+<script src="~/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/SongHongVn/modules/news/js/news.js"></script>
+<script src="~/Scripts/jquery/jquery-ui.min.js"></script>
+
+@model IEnumerable<shOrder>
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div id="tabs">
+        <ul>
+            <li class="active-tabs"><a href="#fragment-4" value="4"><span>Chờ thanh toán</span></a></li>
+            <li class="active-tabs"><a href="#fragment-5" value="5"><span>Chờ lấy hàng</span></a></li>
+            <li class="active-tabs"><a href="#fragment-6" value="6"><span>Đã giao hàng </span></a></li>
+            <li class="active-tabs"><a href="#fragment-9" value="9"><span>Đã hủy</span></a></li>
+        </ul>
+        <div id="fragment-4">
+            @{ Html.RenderPartial("ListOrders", (IEnumerable<C.Core.Model.shOrder>)Model as IEnumerable<C.Core.Model.shOrder>); }
+        </div>
+        <div id="fragment-5">
+        </div>
+        <div id="fragment-6">
+        </div>
+        <div id="fragment-9">
+        </div>
+    </div>
+}
+
+<div>
+    <div class="modal" id="dialog-Order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Chi tiết Đơn Hàng</h4>
+                </div>
+                <div class="modal-body" id="dialogOrder">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function LoadGrid(value) {
+        $.ajax({
+            url: '/Login/ListOrders',
+            data: {
+                Status: value
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $('#fragment-' + value).html(data);
+            },
+            error: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
+    }
+    $('#tabs ul li').first().removeClass('active-tabs');
+    $('#tabs ul li a').on('click', function (e) {
+        $('#tabs ul li').addClass('active-tabs');
+        $(this).parent().removeClass('active-tabs')
+
+        var value = $(this).attr('value');
+
+        LoadGrid(value);
+    });
+
+    $("#tabs").tabs();
+</script>
+
+
+<style>
+    .feature_new .item .i-decs {
+        margin-left: 160px;
+        padding: 20px 20px 25px;
+    }
+
+    .item {
+        margin-bottom: 25px;
+    }
+
+    .feature_new .item .i-images {
+        width: 150px;
+        float: left;
+    }
+
+        .feature_new .item .i-images img {
+            width: 150px;
+        }
+
+    .i-title {
+        float: left !important;
+        font-size: 14px !important;
+        font-weight: 100 !important;
+        text-transform: none !important;
+    }
+
+    #detail a:hover {
+        text-decoration: underline;
+    }
+
+
+    .active-tabs {
+        background-color: #cccccc !important;
+    }
+
+    .tr-about {
+        background-color: #f9f9f9 !important;
+    }
+
+    .total-money {
+        color: #f50091 !important;
+        font-size: 2rem !important;
+        line-height: 3.4rem !important;
+    }
+
+    .menuCategory ul li a {
+        color: #666;
+    }
+
+        .menuCategory ul li a:hover {
+            color: #f50091;
+        }
+</style>

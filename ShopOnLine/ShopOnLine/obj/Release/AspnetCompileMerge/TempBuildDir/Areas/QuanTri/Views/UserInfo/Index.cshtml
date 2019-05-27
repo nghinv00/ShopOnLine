@@ -1,0 +1,254 @@
+﻿@model C.Core.Model.qtUser
+@using C.QuanTri.Helper;
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+}
+<section class="content-header">
+    <h1>
+        Thông tin cá nhân
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Thông tin cá nhân</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary"  id="formview">
+        @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("hdurl", "Quantri/UserInfo/Index")
+            @Html.Hidden("hdListId");
+            @Html.Hidden("hdUserId");
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin cá nhân</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center">
+                            <img alt="User Pic" src="@Html.GetFileImage(Model.UserId)" class="img-circle img-responsive">
+                            <h3 class="text-center">@Model.UserName</h3>
+                            <a id="btnCapNhatThongTin" style="min-width:120px" class="btn btn-primary"><span class="fa fa-user-md"> Cập nhật</span></a>
+                            <a id="btnDoiMatKhau" style="min-width:120px" class="btn btn-primary"><span class="fa fa-refresh"> Đổi mật khẩu</span></a>
+                            <a id="btnThongTinCanBo" style="min-width:120px" class="btn btn-primary"><span class="fa fa-address-book-o"> Thông tin cá nhân</span></a>
+                            <div id="FileUpload" style="display:none">
+                                Thay đổi ảnh đại diện
+                                <input type="file" name="FileAttach" id="FileAttach" />
+                            </div>
+                        </div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <div id="HienThiThongTin">
+                                @Html.ValidationSummary(true, null, new { @class = "alert-success" })
+                                <table class="table table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>Họ tên:</td>
+                                            <td>@Model.UserName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chức vụ:</td>
+                                            <td>@ViewBag.ChucVu</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phòng:</td>
+                                            <td>@ViewBag.TenPhong</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Đơn vị:</td>
+                                            <td>@ViewBag.TenDonVi</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Số điện thoại:</td>
+                                            <td>@Model.Tel</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>@Model.Email</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div id="ChinhSuaThongTin" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Họ và tên
+                                                @Html.TextBox("UserName", null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Chức vụ
+                                                @Html.TextBox("ChucVu", null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Thuộc phòng:
+                                                @Html.TextBox("TenPhongBan", @Html.PositionName(Model.DepartmentId), new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Thuộc đơn vị
+                                                @Html.TextBox("TenDonVi", @Html.UnitName(Model.UnitId), null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Số điện thoại:
+                                                @Html.TextBox("Tel", null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Email:
+                                                @Html.TextBox("Email", null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div style="text-align:center; margin-top:10px;">
+                                            <a id="btnCapNhat" class="btn btn-primary"><span class="fa fa-user-md">  Cập nhật</span></a>
+                                            <a id="btnClose" class="btn btn-default"><span class="fa fa-close">  Kết thúc</span></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+    <div id="dialog" style="display: none;">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdUserId");
+
+            <div class="">
+                <div class="">
+                    <div class="">
+                        @Html.Label("Mật khẩu cũ:")
+                        <span class="required">*</span>
+                        @Html.Password("OldPassword", null, new { @class = "form-control" })
+                    </div>
+                    <div class="">
+                        @Html.Label("Mật khẩu mới:")
+                        <span class="required">*</span>
+                        @Html.Password("NewPassword", null, new { @class = "form-control" })
+                    </div>
+                    <div class="">
+                        @Html.Label("Xác nhận mật khẩu:")
+                        <span class="required">*</span>
+                        @Html.Password("ConfirmPassword", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @section scripts {
+
+
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function () {
+                $("#btnCapNhatThongTin").click(function () {
+                    $("#btnCapNhatThongTin").hide();
+                    $("#HienThiThongTin").hide();
+                    $("#FileUpload").show();
+                    $("#ChinhSuaThongTin").show();
+                });
+                $("#btnClose").click(function () {
+                    $("#btnCapNhatThongTin").show();
+                    $("#HienThiThongTin").show();
+                    $("#FileUpload").hide();
+                    $("#ChinhSuaThongTin").hide();
+                })
+                $("#btnCapNhat").click(function () {
+                    $("#formview form").attr("action", '@Url.Action("CapNhatThongTin")');
+                    $("#formview form").submit();
+                });
+
+                $("#btnThongTinCanBo").click(function () {
+                   
+                    $.ajax({
+                        url: window.location.protocol + "//" + window.location.host + "/CBCC/HoSoCanBo/KiemTraTonTai",
+                        data: { nguoidungId: $("#hdUserId").val() },
+                        type: 'POST',
+                        success: function (data) {
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/CBCC/HoSoCanBo/ThemMoi/" + data+"?LaCaNhan=true";
+                        }
+                    });
+                });
+
+                $("#UserName, #ChucVu, #TenPhongBan, #TenDonVi").attr('readonly', true);
+            });
+            $('#dialog form').validate({
+                messages: {
+                    OldPassword: {
+                        required: "Mật khẩu không được bỏ trống",
+                        minlength: "Mật khẩu phải có tối thiểu 6 kí tự"
+                    },
+                    NewPassword: {
+                        required: "Mật khẩu không được bỏ trống",
+                        minlength: "Mật khẩu phải có tối thiểu 6 kí tự"
+                    },
+                    ConfirmPassword: {
+                        required: "Xác nhận mật khẩu không được bỏ trống",
+                        equalTo: "Mật khẩu xác nhận chưa chính xác"
+                    },
+                },
+                rules: {
+                    OldPassword: {
+                        required: true,
+                        minlength: 6
+                    },
+                    NewPassword: {
+                        required: true,
+                        minlength: 6
+                    },
+                    ConfirmPassword: {
+                        required: true,
+                        equalTo: "#NewPassword"
+                    },
+                }
+            });
+
+            $('#btnDoiMatKhau').click(function () {
+                openDialog('dialog', "Đổi mật khẩu");
+            });
+            makeDialogAll('dialog', btnGhiLai_Onclick, 400, 400);
+            function btnGhiLai_Onclick() {
+                $("#dialog form").attr("action", '@Url.Action("Index")');
+                $("#dialog form").submit();
+            }
+        </script>
+    }
+
+
+
+
+
+
+

@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "Quản lý người dùng";
+}
+
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+<section class="content-header">
+    <h1>
+        Quản lý người dùng
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Quản lý người dùng</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+    {
+        @Html.Hidden("hdurl", "/QuanTri/User/Index")
+        @Html.Hidden("page")
+        <div id="loader" class="loading loading-hide"></div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.Label("Tên người dùng:")
+                    @Html.TextBox("TenNguoiDung", null, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Đơn vị:")
+                    <div id="drl_UnitId">
+                        @{
+                        Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Units.cshtml", new SelectList(new List<SelectListItem>()));
+                        }
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Phòng ban:")
+                    <div id="drl_Department">
+                        @{ 
+                            Html.RenderPartial("Departments");
+                        }
+                    </div>
+                </div>
+                <div class="col-md-3 btn-view-row">
+                    @Html.Button("Tìm kiếm", "btn btn-primary", "btnSearch", "fa fa-search")
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+
+                    @Html.Button("Giới hạn chức năng", "btn btn-primary", "RoleFunc", "fa fa-tasks")
+                    @Html.Button("Phân công đơn vị", "btn btn-primary", "PhanCong", "fa fa-tasks")
+                    @Html.Button("Đổi mật khẩu", "btn btn-primary", "Refresh", "fa fa-refresh")
+                    @Html.Button("Hủy kích hoạt", "btn btn-danger", "Delete", "fa fa-trash-o")
+                </div>
+            </div>
+        </div>
+
+        <div id="NguoiDung">
+            @{
+            Html.RenderPartial("ListUsers", (IPagedList<C.Core.Model.qtUser>)ViewBag.ListUsers);
+            }
+        </div>
+
+}
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        function ThayDoiDonVi(UnitId) {
+            $.ajax({
+                url: '@Url.Action("Departments")',
+                data: {
+                    UnitId: UnitId,
+                    DepartmentId: $('#DepartmentId').val()
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_Department').html(data);
+                }
+            });
+        }
+
+        function ThayDoiPhong(UnitId, DepartmentId) {
+
+        }
+
+        $(document).ready(function () {
+
+            $('#UnitId').select2();
+            $('#DepartmentId').select2();
+
+            $.ajax({
+                url: '@Url.Action("Units", "DanhMucDungChung")',
+                data: {
+                    UnitId: '@ViewBag.UnitId',
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_UnitId').html(data);
+
+                    $('#UnitId').on('change', function (e) {
+                        ThayDoiDonVi($('#UnitId').val());
+                    });
+                }
+            });
+
+            $('#DepartmentId').on('change', function (e) {
+                ThayDoiPhong($('#UnitId').val(), $('#DepartmentId').val());
+            });
+
+            $('#UnitId').on('change', function (e) {
+                ThayDoiDonVi($('#UnitId').val());
+            });
+
+            $('#btnSearch').click(function (e) {
+                //$('#formview form').attr('action', 'index');
+                $('#formview form').submit();
+            });
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';                 
+            });
+
+        });
+
+    </script>
+}

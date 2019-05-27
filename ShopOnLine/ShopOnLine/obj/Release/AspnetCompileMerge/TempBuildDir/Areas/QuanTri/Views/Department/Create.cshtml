@@ -1,0 +1,180 @@
+﻿@model C.Core.Model.qtDepartment
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Thêm mới người dùng";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Đơn Vị
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/QuanTri/Department/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin đơn vị</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/Department/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("DepartmentId")
+            <div class="form-horizontal">
+                <hr />
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Tên phòng ban:", new { @class = "control-label" }) (<span class="required">*</span>)
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("DepartmentName", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Địa chỉ:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("Address", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Điện thoại:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("Phone", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Fax:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("Fax", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Email:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("Email", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Đơn vị:", new { @class = "control-label" }) (<span class="required">*</span>)
+                        </div>
+                        <div class="col-md-9">
+                            <div id="drl_UnitId">
+                                @{
+                                    Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Units.cshtml", new SelectList(new List<SelectListItem>()));
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Thứ tự:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.TextBox("SortOrder", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6">
+                            @{
+                                if (Model.DepartmentId > 0)
+                                {
+                                    @Html.CheckBox("Status")
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("Status", true)
+                                }
+                            }
+
+                            @Html.Label("Còn sử dụng:", new { @for = "Status", @class = "control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+            $('#UnitId').select2();
+            $.ajax({
+                url: '@Url.Action("Units", "DanhMucDungChung")',
+                data: {
+                    UnitId: '@ViewBag.UnitId',
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#drl_UnitId').html(data);
+                }
+            });
+
+            $('#formview form').validate({
+                messages: {
+                    DepartmentName: {
+                        required: 'Tên phòng ban không được bỏ trống'
+                    },
+                    UnitId: {
+                        required: 'Chưa chọn đơn vị quản lý'
+                    },
+                    Email: {
+                        email: "Chưa đúng định dạng Email (xxx@gmail.com)"
+                    }
+                },
+                rules: {
+                    DepartmentName: {
+                        required: true
+                    },
+                    UnitId: {
+                        required: true
+                    },
+                    Email: {
+                        email: true
+                    }
+                }
+            });
+
+        });
+    </script>
+}

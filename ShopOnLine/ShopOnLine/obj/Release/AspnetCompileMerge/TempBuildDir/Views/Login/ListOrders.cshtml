@@ -1,0 +1,213 @@
+﻿@model IEnumerable<shOrder>
+@using C.Core.ExModel;
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+<link href="~/Content/Site.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    <table style="width:100%" class="grid">
+        <thead>
+            <tr>
+                <th></th>
+                <th> # </th>
+                <th>Tên khách hàng</th>
+                <th>Email </th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ </th>
+                <th>Thành tiền</th>
+                <th>Thời gian</th>
+                <th> # </th>
+            </tr>
+        </thead>
+        @{
+            if (Model != null && Model.Count() > 0)
+            {
+                <tbody>
+                    @{
+                        int i = 1;
+                        int sodem = 1;
+                        foreach (var item in Model as IEnumerable<shOrder>)
+                        {
+                            <tr class="gridrow">
+                                <td style="width:5%" align="center">
+                                    @(sodem++)
+                                </td>
+
+                                <td style="width:5%;text-align:center;">
+                                    @Html.htmlCheckBox_DataToggle("cbxOne", item.OrderGuid, "Xem chi tiết đơn hàng")
+                                </td>
+                                <td style="width:25%">
+                                    @item.FullName
+                                </td>
+                                <td style="width:10%">
+                                    @item.Email
+                                </td>
+                                <td style="width:10%">
+                                    @item.Phone
+                                </td>
+                                <td style="width:15%" class="text-align-right">
+                                    @item.Address
+                                </td>
+                                <td style="width:15%; font-weight: bold;" class="text-align-right">
+                                    @Format.FormatDecimalToString(item.Total.GetValueOrDefault(0) + item.FeeShip.GetValueOrDefault(0))
+                                    VNĐ
+                                </td>
+                                <td>
+                                    @item.CreateDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy HH:mm")
+                                </td>
+                                <td style="text-align: center;">
+                                    @{
+                                        if (item.OrderStatus == OrderStatus.DangXuLy.GetHashCode())
+                                        {
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Hủy đơn hàng" title="Hủy đơn hàng" onclick="CancelOrder('@item.OrderGuid', '@item.OrderStatus')">
+                                                <img src="~/Content/Images/remove-icon-orange.png" />
+                                            </a>
+                                        }
+                                        else if (item.OrderStatus == OrderStatus.DangGiaoHang.GetHashCode())
+                                        {
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Hủy đơn hàng" title="Hủy đơn hàng" onclick="CancelOrder('@item.OrderGuid', '@item.OrderStatus')">
+                                                <img src="~/Content/Images/remove-icon-orange.png" />
+                                            </a>
+                                        }
+                                        else if (item.OrderStatus == OrderStatus.DaGiaoHang_ChuaXacNhan.GetHashCode() 
+                                            || item.OrderStatus == OrderStatus.DaGiaoHang_DaXacNhan.GetHashCode())
+                                        {
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="Đánh giá" title="Đánh giá" onclick="RatingOrder('@item.OrderGuid', '@item.OrderStatus')">
+                                                <img src="~/Content/Images/chart16.png" />
+                                            </a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td colspan="8"><span>Bạn chưa có đơn hàng nào </span></td>
+                    </tr>
+                </tbody>
+            }
+        }
+    </table>
+}
+
+<script type="text/javascript">
+
+    function CancelOrder(OrderGuid, OrderStatus) {
+
+        $.ajax({
+            url: '/Login/OrderStatus',
+            data: {
+                Status: OrderStatus,
+                OrderGuid: OrderGuid,
+                Description: 'Hủy đơn hàng'
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                window.location.reload();
+            },
+            error: function () {
+
+            },
+            complete: function () {
+                LoadGrid(OrderStatus);
+            }
+        });
+    }
+
+    function RatingOrder(OrderGuid, OrderStatus) {
+        $('#loader').fadeIn();
+        $.ajax({
+            url: '/Login/RatingOrder',
+            data: { OrderGuid: OrderGuid },
+            type: 'GET',
+            dataType: "html",
+            success: function (data) {
+                $("#dialogOrder").html(data);
+                $('#dialog-Order').modal('toggle');
+            },
+            complete: function (data) {
+                $('#loader').fadeOut('fast');
+            }
+        });
+        $.ajax({
+
+            data: {
+                Status: OrderStatus,
+                OrderGuid: OrderGuid
+            },
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+
+            },
+            error: function () {
+
+            },
+            complete: function () {
+                LoadGrid(OrderStatus);
+            }
+        });
+    }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    $('input[name=cbxOne]').on('change', function (e) {
+
+        $('.tr-about').hide();
+        $('input[name=cbxOne]').not(this).prop('checked', false);
+        var tr_current = $(this).parent().parent('tr');
+
+        if ($(this).is(":checked")) {
+
+            // Lộ trình giao hàng
+            $.ajax({
+                url: '/Login/Details',
+                data: { OrderGuid: $(this).val() },
+                type: "POST",
+                dataType: "html",
+                success: function (data) {
+                    $(tr_current).after(data);
+                }
+            });
+
+            // Danh sách mặt hàng
+            $.ajax({
+                url: '/Login/DsChildOrder',
+                data: { OrderGuid: $(this).val() },
+                type: "POST",
+                dataType: "html",
+                success: function (data) {
+                    $(tr_current).after(data);
+                    $(tr_current).next('tr').slideDown();
+                    $(tr_current).next('tr').children('td').children('div').slideDown();
+                },
+                error: function () {
+                    $(tr_current).after(
+                        "<tr class='tr-about' style='display:none;'><td colspan='7'> <span class='required'><b> Chưa có thông tin mặt hàng </b></span> </td> </tr>"
+                    );
+                    $(tr_current).next('tr').slideDown('slow');
+                }
+            });
+        } else {
+            $(tr_current).next('tr').children('td').children('div').slideUp({
+                complete: function () {
+                    $(tr_current).next('tr').hide();
+                }
+            });
+        }
+    });
+</script>

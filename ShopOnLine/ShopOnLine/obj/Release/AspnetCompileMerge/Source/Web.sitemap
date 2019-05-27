@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="" title=""  description="">
+
+    <!-- Quản trị người dùng -->
+    <siteMapNode url="~/QuanTri/User/Index#" class="qtnguoidung" index="qtnguoidung"   icon="fa fa-user"  title="Quản trị người dùng" description="Quản trị người dùng" roles="QUAN_TRI_NGUOI_DUNG,DANH_MUC_NGUOI_DUNG,DANH_MUC_DON_VI,DANH_MUC_PHONG_BAN,DANH_MUC_CHUC_VU" >
+      <siteMapNode url="~/QuanTri/User/Index" index="qtnguoidung" title="Danh sách người dùng"  description="Danh sách người dùng" roles="QUAN_TRI_NGUOI_DUNG"/>
+      <siteMapNode url="~/QuanTri/Unit/Index" index="qtnguoidung" title="Danh mục đơn vị"  description="Danh mục đơn vị" roles="DANH_MUC_DON_VI" />
+      <siteMapNode url="~/QuanTri/Department/Index" index="qtnguoidung"  title="Danh mục phòng ban"  description="Danh mục phòng ban" roles="DANH_MUC_PHONG_BAN"/>
+      <siteMapNode url="~/QuanTri/Position/Index" index="qtnguoidung"  title="Danh mục chức vụ"  description="Danh mục chức vụ" roles="DANH_MUC_CHUC_VU" />
+    </siteMapNode>
+
+    <!-- Quản lý Thành viên-->
+    <siteMapNode url="~/DanhMuc/Member/Index#" class="thanhvien" index="thanhvien"   icon="fa fa-user-plus"  title="Quản lý thành viên" description="Quản lý thành viên" roles="QUAN_LY_THANH_VIEN,QUAN_LY_BINH_LUAN" >
+      <siteMapNode url="~/DanhMuc/Member/Index" index="thanhvien" title="Quản lý thành viên"  description="Quản lý thành viên" roles="QUAN_LY_THANH_VIEN"/>
+      <siteMapNode url="~/DanhMuc/Comment/Index" index="thanhvien" title="Quản lý bình luận sản phẩm"  description="Quản lý bình luận sản phẩm" roles="QUAN_LY_BINH_LUAN"/>
+    </siteMapNode>
+    
+    <!-- Danh mục -->
+    <siteMapNode url="~/DanhMuc/Category/Index#" class="danhmuc" index="danhmuc"   icon="fa fa-newspaper-o"  title="Quản trị danh mục" description="Quản trị danh mục" roles="DANH_MUC,QUAN_LY_THANH_VIEN,QUAN_LY_TIN_TUC,QUAN_LY_DANH_MUC,GIOI_THIEU" >
+      <siteMapNode url="~/DanhMuc/Category/Index" index="danhmuc" title="Danh mục"  description="Danh mục sản phẩm" roles="QUAN_LY_DANH_MUC"/>
+      <siteMapNode url="~/DanhMuc/CategoryHighlight/Index" index="danhmuc" title="Danh mục nổi bật "  description="Danh mục nổi bật" roles="QUAN_LY_DANH_MUC_NOI_BAT"/>
+      <siteMapNode url="~/DanhMuc/New/Index" index="danhmuc" title="Quản lý tin tức"  description="Quản lý tin tức" roles="QUAN_LY_TIN_TUC"/>
+      <siteMapNode url="~/DanhMuc/Banner/Index" index="danhmuc" title="Quản lý banner"  description="Quản lý banner" roles="QUAN_LY_BANNER"/>
+      <siteMapNode url="~/DanhMuc/Color/Index" index="danhmuc" title="Quản lý Màu sắc"  description="Quản lý màu sắc" roles="QUAN_LY_MAU_SAC"/>
+      <siteMapNode url="~/DanhMuc/About/Index" index="sanpham" title="Trang giới thiệu"  description="Trang giới thiệu" roles="GIOI_THIEU"/>
+    </siteMapNode>
+
+    <!-- Quản lý sản phẩm + Khuyến mại-->
+    <siteMapNode url="~/DanhMuc/Product/Index#" class="sanpham" index="sanpham"   icon="fa fa-product-hunt"  title="Quản lý sản phẩm" description="Quản lý sản phẩm" roles="QUAN_LY_SAN_PHAM,QUAN_LY_SAN_PHAM_NOI_BAT" >
+      <siteMapNode url="~/DanhMuc/Product/Index" index="sanpham" title="Quản lý sản phẩm"  description="Quản lý sản phẩm" roles="QUAN_LY_SAN_PHAM"/>
+      <siteMapNode url="~/DanhMuc/ProductHighLight/Index" index="sanpham" title="Quản lý sản phẩm nổi bật"  description="Quản lý sản phẩm nổi bật" roles="QUAN_LY_SAN_PHAM_NOI_BAT"/>
+      <siteMapNode url="~/DanhMuc/Sale/Index" index="sanpham" title="Quản lý khuyến mại"  description="Quản lý khuyến mại" roles="QUAN_LY_KHUYEN_MAI"/>
+      <siteMapNode url="~/DanhMuc/SearchAdvance/Index" index="sanpham" title="Tìm kiếm nhanh"  description="Tìm kiếm nhanh" roles="TIM_KIEM_NHANH"/>
+    </siteMapNode>
+
+    <!-- Quản lý hàng hóa-->
+    <siteMapNode url="~/DanhMuc/Order/Index#" class="order" index="order"   icon="fa fa-shopping-cart"  title="Quản lý hàng hóa" description="Quản lý hàng hóa" roles="QUAN_LY_DON_HANG,QUAN_LY_NHAP_KHO" >
+      <siteMapNode url="~/DanhMuc/Order/Index" index="order" title="Quản lý đơn hàng"  description="Quản lý đơn hàng" roles="QUAN_LY_DON_HANG"/>
+      <siteMapNode url="~/DanhMuc/ProductManage/Index" index="khohang" title="Quản lý nhập hàng"  description="Quản lý nhập hàng" roles="QUAN_LY_NHAP_KHO"/>
+    </siteMapNode>
+    
+    <!-- Quản lý Kho hàng-->
+    <!--<siteMapNode url="~/DanhMuc/ProductManage/Index#" class="khohang" index="khohang"   icon="fa fa-ambulance"  title="Quản lý Kho hàng" description="Quản lý Kho hàng" roles="QUAN_LY_NHAP_KHO,QUAN_LY_TON_KHO" >
+      <siteMapNode url="~/DanhMuc/ProductManage/Index" index="khohang" title="Quản lý nhập hàng"  description="Quản lý nhập hàng" roles="QUAN_LY_NHAP_KHO"/>
+    </siteMapNode>-->
+    
+    <!-- Quản lý Báo cáo-->
+    <siteMapNode url="~/DanhMuc/BaoCao/Index#" class="baocao" index="baocao"   icon="fa fa-line-chart"  title="Báo cáo thống kê" description="Báo cáo thống kê" roles="BAO_CAO_THONG_KE,QUAN_LY_TON_KHO,BAO_CAO_DOANH_THU" >
+      <siteMapNode url="~/DanhMuc/BaoCao/Index" index="baocao" title="Báo cáo thống kê"  description="Báo cáo thống kê" roles="BAO_CAO_THONG_KE"/>
+      <siteMapNode url="~/DanhMuc/ProductInventory/Index" index="baocao" title="Báo cáo tồn kho"  description="Báo cáo tồn kho" roles="QUAN_LY_TON_KHO"/>
+      <siteMapNode url="~/DanhMuc/DoanhThu/Index" index="baocao" title="Báo cáo doanh thu"  description="Báo cáo doanh thu" roles="BAO_CAO_DOANH_THU"/>
+    </siteMapNode>    
+    
+    <!-- Cấu hình người sử dụng để nhận các nhiệm vụ trong hệ thống -->
+    <siteMapNode url="~/QuanTri/UserConfig/Index#" class="nsd" icon="fa fa-users" index="nsd" title="Cấu hình người dùng" roles="CAU_HINH_CHUC_NANG_DON_VI,CAU_HINH_CHUC_NANG_PHONG,PHAN_CONG_QUAN_LY_DON_VI">
+      <siteMapNode url="~/QuanTri/UserConfig/Index" index="nsd" title="Cấu hình NSD theo đơn vị" roles="CAU_HINH_CHUC_NANG_DON_VI"  description="Cấu hình người dùng theo đơn vị" />
+      <siteMapNode url="~/QuanTri/Substitute/Index" index="nsd" title="Cấu hình NSD theo phòng" roles="CAU_HINH_CHUC_NANG_PHONG" description="Cấu hình người dùng theo phòng" />
+      <siteMapNode url="~/QuanTri/UnitManager/Index" index="nsd" title="Phân công quản lý đơn vị" roles="PHAN_CONG_QUAN_LY_DON_VI" description="Phân công quản lý đơn vị" />
+    </siteMapNode>
+    
+    <!-- Quản trị hệ thống-->
+    <siteMapNode url="~/QuanTri/Role/Index#" class="qthethong" index="qthethong"   icon="fa fa-cogs"  title="Quản trị hệ thống" description="Quản trị người dùng" roles="PHAN_QUYEN,USER_IN_ROLE" >
+      <siteMapNode url="~/QuanTri/Role/Index" index="qthethong" title="Phân quyền"  description="Phân quyền" roles="PHAN_QUYEN"/>
+      <siteMapNode url="/" index="qthethong" title="Cấu hình Menu"  description="Cấu hình Menu" roles="USER_IN_ROLE"/>
+    </siteMapNode>
+   
+  </siteMapNode>
+</siteMap>

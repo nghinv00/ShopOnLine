@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Đăng ký";
+}
+
+@using C.Core.Common;
+@using C.UI.Helpers;
+@using C.Core.Model;
+@model shMember
+
+<script src="~/Scripts/jquery/jquery.validate.min.js"></script>
+
+<div id="vnt-content">
+    @Html.Hidden("MemberGuiId")
+    @Html.Hidden("MemberId")
+
+    <div id="loader" class="loading loading-hide"></div>
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_SanPham });
+    }
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li><a href='/'>Trang chủ</a></li>
+                    <li><a href='/'>Tài khoản</a></li>
+                    <li>Đăng ký </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-content">
+        <div class="wrapper">
+            <div class="box_mid">
+                <div class="mid-title">
+                    <div class="wrapper">
+                        <div class="titleL">Đăng ký tài khoản</div>
+                        <div class="titleR"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="mid-content">
+                    <div class="infoPro" id="formview">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="col-md-12">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            @Html.Label("Tên thành viên :") (<span class="required">*</span>)
+                                            @Html.TextBox("MemberName", null, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.Label("Tên đăng nhập:") (<span class="required">*</span>)
+                                            @Html.TextBox("MemberLogin", null, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.Label("Mật khẩu: ") (<span class="required">*</span>)
+
+                                            @{
+                                                if (Model.MemberId > 0)
+                                                {
+                                                    @Html.Password("Password", Model.Password, new { @class = "form-control" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.Password("Password", null, new { @class = "form-control" })
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            @Html.Label("Địa chỉ:")
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </div> @Html.TextBox("Address", null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.Label("Giới tính: ")
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-phone"></i>
+                                                </div>
+                                                @Html.DropDownList("Sex", (SelectList)ViewBag.Sex as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.Label("Email: ")
+                                            @Html.TextBox("Email", null, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            @Html.Label("Số điện thoại: ")
+                                            <div id="drl_UnitId">
+                                                @Html.TextBox("Phone", null, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            @Html.Label("Chú thích: ")
+                                            <div id="drl_Department">
+                                                @Html.TextArea("Notes", null, new { @class = "form-control textarea-noresize-vertical" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div id="image">
+                                        <div class="imageFile">
+                                            <img src="~/Content/Images/background.jpg" style="width:inherit; height: inherit;" id="img-file" />
+                                        </div>
+                                        @Html.Hidden("ImageFile")
+                                        <input type="file" value="Chọn file" id="FileUploader" name="FileUploader" accept="image/x-png,image/gif,image/jpeg" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="text-align: center;">
+                                    @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                                    @Html.Button("Quay lại", "btn btn-danger", "btnBack", "fa fa-arrow-left")
+                                </div>
+                            </div>
+
+                            <div class="clear"></div>
+                        }
+
+
+                    </div>
+                    <div class="tag ">
+                        <p>
+                            <span class="title">TAG: </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        if ('@Model.MemberId' > 0)
+        {
+            $('#img-file').attr('src', '@Model.ImageFile');
+        }
+
+        $('#Username').focus();
+
+        $('#formview form').validate({
+            messages: {
+                MemberName: {
+                    required: 'Tên đăng nhập không được bỏ trống'
+                },
+                Password: {
+                    required: 'Mật khẩu không được bỏ trống'
+                },
+                MemberLogin: {
+                    required: 'Tên đăng nhập được bỏ trống'
+                }
+            },
+            rules: {
+                MemberName: {
+                    required: true
+                },
+                Password: {
+                    required: true
+                },
+                MemberLogin: {
+                    required: true
+                }
+            }
+        });
+
+        $('#btnGhiLai').click(function (e) {
+            $('#formview form').attr('action', '@Url.Action("register", "login")');
+            $('#formview form').submit();
+        });
+
+        $('#btnBack').click(function (e) {
+            window.history.go(-1);
+        });
+
+
+        $('#FileUploader').on('change', function (e) {
+            var data = new FormData();
+            var files = $("#FileUploader").get(0).files;
+
+            // Add the uploaded image content to the form data collection
+            if (files.length > 0) {
+                data.append("PreviewImage", files[0]);
+            }
+            // call ajax
+            $.ajax({
+                url: '/api/FileUpload/Preview',
+                data: data,
+                type: 'POST',
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false, // NEEDED, DON'T OMIT THIS
+                success: function (response) {
+                    $('#img-file').attr('src', response);
+                    $('#ImageFile').val(response)
+                }, error: function (response) {
+
+                },
+                complete: function (response) {
+
+                }
+            });
+        });
+
+    });
+</script>
+

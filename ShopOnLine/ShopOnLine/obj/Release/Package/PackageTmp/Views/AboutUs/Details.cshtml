@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Giới thiệu ";
+}
+
+@using C.Core.Common;
+@using C.Core.Model;
+@model shAboutu
+<link href="~/SongHongVn/modules/about/css/about.css" rel="stylesheet" />
+<script src="~/SongHongVn/modules/about/js/about.js"></script>
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_GioiThieu });
+    }
+    @Html.Hidden("hdurl", "/gioi-thieu")
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li>
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li> <a href="/gioi-thieu">Giới thiệu</a></li>
+                    <li> Giới Thiệu về Công Ty</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="box_mid">
+        <div class="mid-title">
+            <div class="wrapper">
+                <div class="titleL">
+                    <h1>@Model.AboutTitle</h1>
+                </div>
+                <div class="titleR">
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="mid-content">
+            <div class="mod-content">
+                <div class="wrapper">
+                    <div id="vnt-siderbar">
+                        @{ Html.RenderAction("MenuLeft");}
+                        @{ Html.RenderPartial("~/Views/Common/Adv.cshtml");}
+                    </div>
+                    <div id="vnt-main">
+                        <div class="the-content desc">
+                            @Html.Raw(Model.AboutContent)
+                            <br />
+                            @Html.Raw(Model.Sign)
+                            @{
+                                foreach (var item in ViewBag.dsChild)
+                                {
+                                    @Html.Raw(@item.AboutContent);
+
+                                    @Html.Raw(@item.Sign);
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+﻿@using C.Core.Model;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+
+@model IEnumerable<shProductSet>
+
+<div>
+    <div class="format_title">Chi tiết sản phẩm</div>
+    <p open="" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0);">
+        <strong style="margin: 0px; padding: 0px;">
+            <span style="margin: 0px; padding: 0px; font-size: 14px;">
+                <span style="margin: 0px; padding: 0px; color: rgb(178, 34, 34);">
+                    Kết cấu và giá sản phẩm:
+                </span>
+            </span>
+        </strong>
+    </p>
+
+    <table border="0" cellpadding="0" cellspacing="0" class="border_schedule" style="width: 100%;">
+        <tbody>
+
+            <!-- Start table -->
+            <tr class="row_title_schedule">
+                <td rowspan="2" align="center"><strong><span style="line-height: 20.8px;">TT</span></strong></td>
+                <td rowspan="2" style="text-align: center;"><strong><span style="line-height: 20.8px;">Sản phẩm</span></strong></td>
+                <td align="center" rowspan="2">
+                    <p><strong><span style="line-height: 20.8px;">Kích thước (cm)</span></strong></p>
+                </td>
+                <td align="center" colspan="2"><strong><span style="line-height: 20.8px;">Giá tiền (VNĐ)</span></strong></td>
+            </tr>
+
+            <tr class="row_title_schedule">
+                @{
+                    IEnumerable<string> dsChatLieu = new List<string>();
+                    if (Model != null && Model.Count() > 0)
+                    {
+                        var section = Model.ElementAtOrDefault(0);
+
+                        dsChatLieu = section.shSetSizes.Select(x => x.Stuff.Trim().TrimEnd().TrimStart()).Distinct();
+                    }
+
+                    foreach (var item in dsChatLieu)
+                    {
+                        <td align="center"><strong><span style="line-height: 20.8px;">@item</span></strong></td>
+                    }
+                }
+            </tr>
+
+
+            <!-- Content table -->
+            @{
+                int sodem = 0;
+                foreach (var item in Model as IEnumerable<shProductSet>)
+                {
+                    int kiemtra = 0;
+                    sodem++;
+                    IEnumerable<shSetSize> dsSizeParent = item.shSetSizes.Where(x => x.SectionGuid == item.SectionGuid);
+
+                    <tr class="row_detail_schedule">
+                        <td align="center"><strong>@sodem</strong></td>
+
+                        <td style="text-align: center;"><strong><span style="line-height: 20.8px;">@item.SectionName</span></strong></td>
+
+
+                        @foreach (var size in dsSizeParent)
+                        {
+
+                            if (kiemtra == 0)
+                            {
+                                <td colspan="1" rowspan="1" style="text-align: center;">@size.SizeName</td>
+                            }
+
+                            foreach (var chatlieu in dsChatLieu)
+                            {
+                                if (size.Stuff.Trim().TrimEnd().TrimStart() == chatlieu)
+                                {
+                                    <td align="center" class="">@Format.FormatDecimalToString(size.PriceCurrent.GetValueOrDefault(0)).Replace(',', '.') VNĐ</td>
+                                }
+                            }
+                            kiemtra++;
+                        }
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>

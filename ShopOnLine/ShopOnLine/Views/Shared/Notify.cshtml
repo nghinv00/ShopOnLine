@@ -1,0 +1,61 @@
+﻿@using C.Core.Model;
+@model IEnumerable<ThongBao>
+
+@{
+    <li class="header">Bạn có @Model.Count() thông báo mới</li>
+    <ul class="menu">
+        @foreach (var item in Model as IEnumerable<ThongBao>)
+        {
+            <li>
+                <a href="@item.LienKet&notify=@item.ThongBaoId" data-toggle="tooltip" data-original-title="@item.NoiDungCongViec">
+                    <i class="fa fa-users text-aqua"></i> @item.NoiDungThongBao
+                </a>
+            </li>
+        }
+    </ul>
+    <li class="footer"><a href="#">View all</a></li>
+}
+
+<style>
+    #div-thongbao .menu a {
+        text-decoration: none;
+    }
+
+        #div-thongbao .menu a:hover {
+            text-decoration: none;
+        }
+    #div-thongbao .menu > li > a {
+        color: #444444;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 10px;
+    }
+
+    #div-thongbao .menu > li > a {
+        display: block;
+        white-space: nowrap;
+        border-bottom: 1px solid #f4f4f4;
+    }
+</style>
+@*<li>
+        <a href="#">
+            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+            page and may cause design problems
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="fa fa-users text-red"></i> 5 new members joined
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="fa fa-user text-red"></i> You changed your username
+        </a>
+    </li>*@
+

@@ -1,0 +1,111 @@
+﻿@model shProduct
+@using C.Core.Model;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+
+<link href="~/SongHongVn/modules/product/css/product.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/common.css" rel="stylesheet" type="text/css" />
+
+<div>
+    <h4>
+        @Model.ProductName
+    </h4>
+
+    <div id="section">
+        @*<div class="col-md-12">
+
+            @{
+                foreach (var item in ViewBag.Section as IEnumerable<shProductSet>)
+                {
+                    <p open="" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-align: center;">
+                        <br>
+                        <strong style="margin: 0px; padding: 0px;">
+                            <span style="margin: 0px; padding: 0px; font-size: 14px;">
+                                <span style="color: rgb(0, 100, 0);">
+                                    @item.SectionName
+                                </span>
+                            </span>
+                        </strong>
+                    </p>
+
+                    <table border="0" cellpadding="0" cellspacing="0" class="border_schedule" style="line-height: 20.8px; width: 100%;">
+                        <tbody>
+                            @{
+
+                                IEnumerable<shSize> dsSizeParent = (new shSizeService()).DanhSachSize_BySectionGuid(item.SectionGuid, item.ProductGuid, null);
+                                <!-- Start table -->
+                                <tr class="row_title_schedule">
+                                    <td align="left"><b>Kết cấu / kích thước</b></td>
+                                    @foreach (var sizeparent in dsSizeParent)
+                                    {
+                                        <td align="center" colspan="2"><b>@sizeparent.SizeName</b></td>
+                                    }
+                                </tr>
+
+                                <!-- Content Table -->
+                                IEnumerable<shSection> dsSectionChild = (new shSectionService()).DanhSachSection_TheoParentId(item.SectionGuid);
+                                foreach (var sectionchild in dsSectionChild)
+                                {
+                                    <tr class="row_detail_schedule">
+                                        <td align="left"><b>@sectionchild.SectionName</b></td>
+
+                                        @foreach (var sizeparent in dsSizeParent)
+                                        {
+                                            <td align="left">@Html.SizeNameByParentId_SectionGuid(sizeparent.SizeGuid, sectionchild.SectionGuid)</td>
+                                            <td align="right" class="format-red-no-bold" style="padding-right: 5px;">
+                                                @Html.SizeNameByParentId_SectionGuid_PriceCurrent(sizeparent.SizeGuid, sectionchild.SectionGuid) VNĐ
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                                
+                                <!--The end table -->
+                                <tr class="row_detail_schedule">
+                                    <td align="left"><b>Bộ chăn ga</b></td>
+                                    @foreach (var sizeparent in dsSizeParent)
+                                    {
+                                        <td align="right" class="fortmat-red" colspan="2">@Format.FormatDecimalToString(sizeparent.PriceCurrent.GetValueOrDefault(0)).Replace(',', '.') VNĐ </td>
+                                    }
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+        </div>*@
+    </div>
+
+    <div id="design-image">
+        <h5>Danh sách hỉnh ảnh mẫu mã sản phẩm </h5>
+        <div class="col-md-12">
+            @if (ViewBag.DsDesignImage != null)
+            {
+                foreach (var item in ViewBag.DsDesignImage as IEnumerable<shProductImage>)
+                {
+                    <div class="col-md-3" style="padding:10px;">
+                        <b id="name-image" style="display:none;">@item.FileName</b>
+                        <img src="@item.FileName" style="width: 100%; height:150px;">
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div id="material-image">
+        <h5>Danh sách hỉnh ảnh chất liệu  sản phẩm </h5>
+        <div class="col-md-12">
+            @if (ViewBag.DsDesignImage != null)
+            {
+                foreach (var item in ViewBag.DsMaterialImage as IEnumerable<shProductImage>)
+                {
+                    <div class="col-md-3" style="padding:10px;">
+                        <b id="name-image" style="display:none;">@item.FileName</b>
+                        <img src="@item.FileName" style="width: 100%; height:150px;">
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</div>

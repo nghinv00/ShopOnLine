@@ -1,0 +1,115 @@
+﻿@model C.Core.Model.qtUserConfig
+@using C.UI.Helpers;
+
+@{
+    ViewBag.Title = "Cấu hình nhóm người sử dụng theo đơn vị";
+}
+<section class="content-header">
+    <h1>
+        Cấu hình người dùng theo đơn vị
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Cấu hình người dùng</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary"  id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/UserConfig/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.UserConfigId)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>
+                            Tên nhóm sử dụng:
+                            <span class="required">*</span>
+                        </label>
+                        @Html.TextBox("AppName", null, new { @class = "form-control" })
+
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @Html.Label("Mã nhóm sử dụng:")
+                            <span class="required">*</span>
+                        </label>
+                        @Html.TextBox("AppCode", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+
+
+                        @Html.Label("Đơn vị")
+                        @Html.DropDownList("UnitId", null, "-- Chọn đơn vị---", new { @class = "form-control" })
+                        <input type="hidden" id="UnitHide" value="@ViewBag.Unit" />
+
+                    </div>
+                    <div class="form-group">
+
+                        @Html.CheckBox("IsActive")
+                        @Html.Label("Còn sử dụng", new { @class = "control-label" })
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Raw(ViewBag.dsNguoiDung)
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="box-footer">
+                            @Html.Button("Ghi lại", "btn btn-primary", "btnCreate", "fa fa-save")
+                            @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<script type="text/javascript" language="javascript">
+    $('#formview form').validate({
+        messages: {
+            AppName: {
+                required: 'Tên nhóm không được bỏ trống'
+            },
+            AppCode: {
+                required: 'Mã nhóm nhập không được bỏ trống'
+            },
+            UnitId: {
+                required: 'Đơn vị không được bỏ trống'
+            }
+        },
+        rules: {
+
+            AppName: {
+                required: true
+            },
+            AppCode: {
+                required: true
+            },
+            UnitId: {
+                required: true
+            }
+        }
+    });
+    $(document).ready(function () {
+
+        $('#btnCreate').click(function () {
+            $("#formview form").attr('action', '@Url.Action("Save")');
+            $("#formview form").submit();
+        });
+        $('#UnitId').change(function () {
+            $("#formview form").submit();
+        });
+    });
+
+</script>

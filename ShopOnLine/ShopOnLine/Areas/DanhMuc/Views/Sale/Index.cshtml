@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Danh sách Khuyến mại";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+<link href="~/Content/common.css" rel="stylesheet" />
+<section class="content-header">
+    <h1>
+        Danh sách Khuyến mại
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Danh sách Khuyến mại</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Sale/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                            @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+                        </div>
+                    </div>
+                </div>
+                <div id="DanhMuc">
+                    @{
+            Html.RenderPartial("ListSale", (IPagedList<C.Core.Model.shSale>)ViewBag.ListSale);
+                    }
+                </div>
+            </div>
+
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        function category(id) {
+
+
+        }
+        var zTreeObj;
+
+        var setting = {
+            view: {
+                //showIcon: showIconForTree
+                dblClickExpand: false,
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 0
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent &&!treeNode.children ;
+        };
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            zTree.expandNode(treeNode);
+        }
+
+        $.ajax({
+            url: '@Url.Action("CategoryTreeview", "DanhMuc")',
+            type: 'POST',
+            data: {
+                isProduct: false
+            },
+            dataType: "json",
+            success: function (data) {
+                var zNodes = data;
+                zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+
+            },
+            error: function (data) {
+
+            },
+            complete: function (data, response) {
+
+            }
+        });
+
+
+        $(document).ready(function () {
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

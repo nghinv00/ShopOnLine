@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Giới thiệu ";
+}
+
+@using C.Core.Common;
+@using C.Core.Model;
+@model shAboutu
+
+<link href="~/SongHongVn/modules/about/css/about.css" rel="stylesheet" />
+<script src="~/SongHongVn/modules/about/js/about.js"></script>
+
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_GioiThieu });
+    }
+
+    @Html.Hidden("hdurl", "/gioi-thieu")
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li>
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li> <a href="/gioi-thieu">Giới thiệu</a></li>
+                    <li> Giới Thiệu Về Công Ty</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="box_mid">
+        <div class="mid-title">
+            <div class="wrapper">
+                <div class="titleL">
+                    <h1>Giới Thiệu Về Công Ty</h1>
+                </div>
+                <div class="titleR">
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+       
+        <div class="mid-content">
+
+            <div class="mod-content">
+                <div class="wrapper">
+                    <div id="vnt-siderbar">
+                        @{ Html.RenderAction("MenuLeft");}
+                        @{ Html.RenderPartial("~/Views/Common/Adv.cshtml");}
+                    </div>
+                    <div id="vnt-main">
+                        <div class="the-content desc">
+                            <div class="list-year">
+                                @{ Html.RenderPartial("Right", (IEnumerable<shAboutu>)ViewBag.dsChildAbout); }
+                            </div>
+                            <div>
+                                <p>
+                                    <strong>
+                                        @Html.Raw(Model.AboutContent)
+                                    </strong>
+                                </p>
+                            </div>
+                            <div class="divBorder">
+                                Không gian của mỗi gia đình sẽ trở nên ấm cúng hơn nhờ những sắc mầu chăn,
+                                ga, gối, đệm của Công ty chúng tôi. Dù trong những ngày đông lạnh
+                                giá nhất,Sản phẩm công ty luôn biết “sưởi ấm” và làm trọn vẹn hơn từng giờ phút
+                                sum vầy, hạnh phúc của mọi nhà.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="clear"></div>
+</div>

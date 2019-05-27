@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Bảng giá ";
+}
+
+@using C.Core.Common;
+@using C.Core.Model;
+
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_BangGia });
+    }
+    
+    @Html.Hidden("hdurl", "/bang-gia")
+</div>

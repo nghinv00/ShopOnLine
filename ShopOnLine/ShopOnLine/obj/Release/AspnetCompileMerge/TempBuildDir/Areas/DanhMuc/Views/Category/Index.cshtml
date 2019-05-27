@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Danh sách Danh mục";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+
+<section class="content-header">
+    <h1>
+        Danh sách Danh mục
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Danh sách Danh mục</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Category/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <ul id="tree" class="ztree"></ul>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                                @*@Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")*@
+                            </div>
+                        </div>
+                    </div>
+                    <div id="DanhMuc">
+                        @{
+                            Html.RenderPartial("ListCategory", (IPagedList<C.Core.Model.shCategory>)ViewBag.ListCategory);
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<div>
+    <div class="modal" id="dialog-Order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Chuyển nhân viên theo dõi</h4>
+                </div>
+                <div class="modal-body" id="dialogOrder">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        function ChuyenToiNhanVienTheoDoi(CategoryGuid) {
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("ChuyenNhanVienTheoDoi")',
+                data: { CategoryGuid: CategoryGuid },
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogOrder").html(data);
+                    $("#dialogOrder .modal-title").text('Chuyển nhân viên theo dõi ');
+
+                    $('#dialog-Order').modal('toggle');
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+
+        function category(id) {
+
+
+        }
+        var zTreeObj;
+
+        var setting = {
+            view: {
+                //showIcon: showIconForTree
+                dblClickExpand: false,
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 0
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent &&!treeNode.children ;
+        };
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            zTree.expandNode(treeNode);
+        }
+
+        $.ajax({
+            url: '@Url.Action("CategoryTreeview", "DanhMuc")',
+            type: 'POST',
+            data: {
+                isProduct: false
+            },
+            dataType: "json",
+            success: function (data) {
+                var zNodes = data;
+                zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+
+            },
+            error: function (data) {
+
+            },
+            complete: function (data, response) {
+
+            }
+        });
+
+
+        $(document).ready(function () {
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,59 @@
+﻿@using C.Core.Model;
+@model List<C.Core.ExModel.CartItem>
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+@{
+    ViewBag.Title = " Giỏ hàng - ";
+}
+@Html.Hidden("hdurl", "/gio-hang")
+<style>
+    .soluong {
+        padding: 5px 5px 0 5px;
+        background-color: #eee;
+        /*border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;*/
+        border: 1px solid #ccc;
+    }
+
+    .left-right {
+        font-weight: bold;
+        border: 1px solid #ccc;
+    }
+
+    .left-right:hover {
+        cursor: pointer;
+    }
+</style>
+<div id="vnt-content" style="margin-top: 75px;">
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li><a href='/'>Trang chủ</a></li>
+                    <li><a href='/gio-hang'>Giỏ hàng</a></li>
+                    <li>Danh sách mặt hàng </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="color: red; ">
+        @ViewBag.Error
+    </div>
+    <div class="mid-title">
+        <div class="wrapper">
+            <div class="titleL" style="text-align: center;">
+                <h1>Danh sách mặt hàng</h1>
+            </div>
+            <div class="titleR"></div>
+            <div class="clear"></div>
+        </div>
+
+        <div id="list-item" style="padding: 10px 5% 10px 5%;">
+            @{ Html.RenderPartial("DsProduct", (List<C.Core.ExModel.CartItem>)ViewBag.list as List<C.Core.ExModel.CartItem>);}
+        </div>
+
+    </div>
+
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShopOnlineModelStoreContainer" CdmEntityContainer="ShopOnlineDb">
+    <EntitySetMapping Name="landDistricts">
+      <EntityTypeMapping TypeName="ShopOnlineModel.landDistrict">
+        <MappingFragment StoreEntitySet="landDistrict">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="landProvinces">
+      <EntityTypeMapping TypeName="ShopOnlineModel.landProvince">
+        <MappingFragment StoreEntitySet="landProvince">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="landQuanHuyens">
+      <EntityTypeMapping TypeName="ShopOnlineModel.landQuanHuyen">
+        <MappingFragment StoreEntitySet="landQuanHuyen">
+          <ScalarProperty Name="ID_Tinh" ColumnName="ID_Tinh" />
+          <ScalarProperty Name="TenQuan" ColumnName="TenQuan" />
+          <ScalarProperty Name="ID_Quan" ColumnName="ID_Quan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="landTinhThanhs">
+      <EntityTypeMapping TypeName="ShopOnlineModel.landTinhThanh">
+        <MappingFragment StoreEntitySet="landTinhThanh">
+          <ScalarProperty Name="ID_KhuVuc" ColumnName="ID_KhuVuc" />
+          <ScalarProperty Name="TenTinh" ColumnName="TenTinh" />
+          <ScalarProperty Name="ID_Tinh" ColumnName="ID_Tinh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoaiPhieuNhaps">
+      <EntityTypeMapping TypeName="ShopOnlineModel.LoaiPhieuNhap">
+        <MappingFragment StoreEntitySet="LoaiPhieuNhap">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LoaiPhieuNhapXuat" ColumnName="LoaiPhieuNhapXuat" />
+          <ScalarProperty Name="TenLoaiPhieuNhap" ColumnName="TenLoaiPhieuNhap" />
+          <ScalarProperty Name="LoaiPhieuNhapId" ColumnName="LoaiPhieuNhapId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtDepartments">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtDepartment">
+        <MappingFragment StoreEntitySet="qtDepartments">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtPositions">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtPosition">
+        <MappingFragment StoreEntitySet="qtPositions">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+          <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtRoles">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtRole">
+        <MappingFragment StoreEntitySet="qtRoles">
+          <ScalarProperty Name="CreatedDete" ColumnName="CreatedDete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="Application" ColumnName="Application" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtSubstitutes">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtSubstitute">
+        <MappingFragment StoreEntitySet="qtSubstitute">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AppCode" ColumnName="AppCode" />
+          <ScalarProperty Name="AppName" ColumnName="AppName" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="SubstituteId" ColumnName="SubstituteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtSubstituteDetails">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtSubstituteDetail">
+        <MappingFragment StoreEntitySet="qtSubstituteDetail">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SubstituteId" ColumnName="SubstituteId" />
+          <ScalarProperty Name="SubstituteDetailId" ColumnName="SubstituteDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtUnitManagers">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtUnitManager">
+        <MappingFragment StoreEntitySet="qtUnitManager">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UnitManagerId" ColumnName="UnitManagerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtUnits">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtUnit">
+        <MappingFragment StoreEntitySet="qtUnits">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="LevelCode" ColumnName="LevelCode" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtUserConfigs">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtUserConfig">
+        <MappingFragment StoreEntitySet="qtUserConfig">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AppCode" ColumnName="AppCode" />
+          <ScalarProperty Name="AppName" ColumnName="AppName" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UserConfigId" ColumnName="UserConfigId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtUserConfigDetails">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtUserConfigDetail">
+        <MappingFragment StoreEntitySet="qtUserConfigDetail">
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserConfigId" ColumnName="UserConfigId" />
+          <ScalarProperty Name="UserConfigDetailId" ColumnName="UserConfigDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtUserRoles">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtUserRole">
+        <MappingFragment StoreEntitySet="qtUserRole">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Application" ColumnName="Application" />
+          <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="qtUsers">
+      <EntityTypeMapping TypeName="ShopOnlineModel.qtUser">
+        <MappingFragment StoreEntitySet="qtUsers">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="ImageFile" ColumnName="ImageFile" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shAboutus">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shAboutu">
+        <MappingFragment StoreEntitySet="shAboutus">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="Sign" ColumnName="Sign" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="AboutContent" ColumnName="AboutContent" />
+          <ScalarProperty Name="AboutName" ColumnName="AboutName" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="AboutTitle" ColumnName="AboutTitle" />
+          <ScalarProperty Name="AboutId" ColumnName="AboutId" />
+          <ScalarProperty Name="AboutGuid" ColumnName="AboutGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shAgents">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shAgent">
+        <MappingFragment StoreEntitySet="shAgent">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="AgentAddress" ColumnName="AgentAddress" />
+          <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+          <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+          <ScalarProperty Name="AgentGuid" ColumnName="AgentGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shBanners">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shBanner">
+        <MappingFragment StoreEntitySet="shBanner">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="PositionBanner" ColumnName="PositionBanner" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="BannerName" ColumnName="BannerName" />
+          <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+          <ScalarProperty Name="BannerGuid" ColumnName="BannerGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shCategories">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shCategory">
+        <MappingFragment StoreEntitySet="shCategory">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="TopHot" ColumnName="TopHot" />
+          <ScalarProperty Name="SortOrderHighLight" ColumnName="SortOrderHighLight" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CategoryGuid" ColumnName="CategoryGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shCategoryImages">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shCategoryImage">
+        <MappingFragment StoreEntitySet="shCategoryImage">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="FileNameGoc" ColumnName="FileNameGoc" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="CategoryGuid" ColumnName="CategoryGuid" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CategoryImageGuid" ColumnName="CategoryImageGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shColors">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shColor">
+        <MappingFragment StoreEntitySet="shColor">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+          <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+          <ScalarProperty Name="ColorGuid" ColumnName="ColorGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shComments">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shComment">
+        <MappingFragment StoreEntitySet="shComments">
+          <ScalarProperty Name="LaDaXem" ColumnName="LaDaXem" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Contents" ColumnName="Contents" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="MemberGuiId" ColumnName="MemberGuiId" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+          <ScalarProperty Name="CommentGuid" ColumnName="CommentGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shGoodReceiptIsuues">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shGoodReceiptIsuue">
+        <MappingFragment StoreEntitySet="shGoodReceiptIsuue">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+          <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
+          <ScalarProperty Name="LoaiPhieu" ColumnName="LoaiPhieu" />
+          <ScalarProperty Name="TenKho" ColumnName="TenKho" />
+          <ScalarProperty Name="MaKho" ColumnName="MaKho" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+          <ScalarProperty Name="ReceiptIsuueName" ColumnName="ReceiptIsuueName" />
+          <ScalarProperty Name="Phieu" ColumnName="Phieu" />
+          <ScalarProperty Name="ReceiptIssueId" ColumnName="ReceiptIssueId" />
+          <ScalarProperty Name="ReceiptIsuueGuid" ColumnName="ReceiptIsuueGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shGoodReceiptIsuueDetails">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shGoodReceiptIsuueDetail">
+        <MappingFragment StoreEntitySet="shGoodReceiptIsuueDetail">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Phieu" ColumnName="Phieu" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="SizeGuid" ColumnName="SizeGuid" />
+          <ScalarProperty Name="SectionGuid" ColumnName="SectionGuid" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="ReceiptIsuueGuid" ColumnName="ReceiptIsuueGuid" />
+          <ScalarProperty Name="ReceiptIsuueDetailId" ColumnName="ReceiptIsuueDetailId" />
+          <ScalarProperty Name="ReceiptIsuueDetailGuid" ColumnName="ReceiptIsuueDetailGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shMembers">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shMember">
+        <MappingFragment StoreEntitySet="shMembers">
+          <ScalarProperty Name="LaDaXem" ColumnName="LaDaXem" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="ImageFile" ColumnName="ImageFile" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="MemberLogin" ColumnName="MemberLogin" />
+          <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+          <ScalarProperty Name="MemberGuiId" ColumnName="MemberGuiId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shNews">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shNew">
+        <MappingFragment StoreEntitySet="shNews">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Contents" ColumnName="Contents" />
+          <ScalarProperty Name="Summary" ColumnName="Summary" />
+          <ScalarProperty Name="ImageFile" ColumnName="ImageFile" />
+          <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="TitleNew" ColumnName="TitleNew" />
+          <ScalarProperty Name="NewId" ColumnName="NewId" />
+          <ScalarProperty Name="NewGuiId" ColumnName="NewGuiId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shOrderDetails">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shOrderDetail">
+        <MappingFragment StoreEntitySet="shOrderDetail">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="NgayDat" ColumnName="NgayDat" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="PayType" ColumnName="PayType" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Prices" ColumnName="Prices" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="SizeGuid" ColumnName="SizeGuid" />
+          <ScalarProperty Name="SectionGuid" ColumnName="SectionGuid" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="MemberGuiId" ColumnName="MemberGuiId" />
+          <ScalarProperty Name="OrderGuid" ColumnName="OrderGuid" />
+          <ScalarProperty Name="OrderDetailName" ColumnName="OrderDetailName" />
+          <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+          <ScalarProperty Name="OrderDetailGuid" ColumnName="OrderDetailGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shOrderHistories">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shOrderHistory">
+        <MappingFragment StoreEntitySet="shOrderHistory">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="MemberGuid" ColumnName="MemberGuid" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="OrderGuid" ColumnName="OrderGuid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shPrices">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shPrice">
+        <MappingFragment StoreEntitySet="shPrices">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Money" ColumnName="Money" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="PriceName" ColumnName="PriceName" />
+          <ScalarProperty Name="SizeGuid" ColumnName="SizeGuid" />
+          <ScalarProperty Name="SectionGuid" ColumnName="SectionGuid" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+          <ScalarProperty Name="PriceGuid" ColumnName="PriceGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shProductImages">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shProductImage">
+        <MappingFragment StoreEntitySet="shProductImage">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ProductImageCategory" ColumnName="ProductImageCategory" />
+          <ScalarProperty Name="FileNameGoc" ColumnName="FileNameGoc" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="ProductImageId" ColumnName="ProductImageId" />
+          <ScalarProperty Name="ProductImageGuid" ColumnName="ProductImageGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shProducts">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shProduct">
+        <MappingFragment StoreEntitySet="shProducts">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="TopHot" ColumnName="TopHot" />
+          <ScalarProperty Name="ProductStatus" ColumnName="ProductStatus" />
+          <ScalarProperty Name="ViewsProduct" ColumnName="ViewsProduct" />
+          <ScalarProperty Name="PriceAfterPercents" ColumnName="PriceAfterPercents" />
+          <ScalarProperty Name="PercentCurrent" ColumnName="PercentCurrent" />
+          <ScalarProperty Name="PriceCurrent" ColumnName="PriceCurrent" />
+          <ScalarProperty Name="CompleteSetInclude" ColumnName="CompleteSetInclude" />
+          <ScalarProperty Name="UserManual" ColumnName="UserManual" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryGuid" ColumnName="CategoryGuid" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shProductSets">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shProductSet">
+        <MappingFragment StoreEntitySet="shProductSet">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ItemStatus" ColumnName="ItemStatus" />
+          <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="SectionGuid" ColumnName="SectionGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shSaleDetails">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shSaleDetail">
+        <MappingFragment StoreEntitySet="shSaleDetail">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SaleAttach" ColumnName="SaleAttach" />
+          <ScalarProperty Name="PriceAfterPercents" ColumnName="PriceAfterPercents" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Percents" ColumnName="Percents" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="CategoryGuid" ColumnName="CategoryGuid" />
+          <ScalarProperty Name="CategoryGuidProductGuid" ColumnName="CategoryGuidProductGuid" />
+          <ScalarProperty Name="MaCauHinh" ColumnName="MaCauHinh" />
+          <ScalarProperty Name="DieuKienApDung" ColumnName="DieuKienApDung" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
+          <ScalarProperty Name="CachTinhGiaTriKhuyenMai" ColumnName="CachTinhGiaTriKhuyenMai" />
+          <ScalarProperty Name="SaleGuid" ColumnName="SaleGuid" />
+          <ScalarProperty Name="SaleDetailId" ColumnName="SaleDetailId" />
+          <ScalarProperty Name="SaleDetailGuid" ColumnName="SaleDetailGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shSetSizes">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shSetSize">
+        <MappingFragment StoreEntitySet="shSetSize">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="SizeStatus" ColumnName="SizeStatus" />
+          <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="PriceAfterPercents" ColumnName="PriceAfterPercents" />
+          <ScalarProperty Name="PercentCurrent" ColumnName="PercentCurrent" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Stuff" ColumnName="Stuff" />
+          <ScalarProperty Name="PriceCurrent" ColumnName="PriceCurrent" />
+          <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+          <ScalarProperty Name="SectionGuid" ColumnName="SectionGuid" />
+          <ScalarProperty Name="ProductGuid" ColumnName="ProductGuid" />
+          <ScalarProperty Name="SizeId" ColumnName="SizeId" />
+          <ScalarProperty Name="SizeGuid" ColumnName="SizeGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shSexes">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shSex">
+        <MappingFragment StoreEntitySet="shSex">
+          <ScalarProperty Name="SexName" ColumnName="SexName" />
+          <ScalarProperty Name="SexId" ColumnName="SexId" />
+          <ScalarProperty Name="SexGuid" ColumnName="SexGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shIdeaCustomers">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shIdeaCustomer">
+        <MappingFragment StoreEntitySet="shIdeaCustomer">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Contents" ColumnName="Contents" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IdeaId" ColumnName="IdeaId" />
+          <ScalarProperty Name="IdeaGuid" ColumnName="IdeaGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shOrders">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shOrder">
+        <MappingFragment StoreEntitySet="shOrder">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LaDaXem" ColumnName="LaDaXem" />
+          <ScalarProperty Name="NgayDat" ColumnName="NgayDat" />
+          <ScalarProperty Name="PayType" ColumnName="PayType" />
+          <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+          <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="MemberGuid" ColumnName="MemberGuid" />
+          <ScalarProperty Name="OrderName" ColumnName="OrderName" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="OrderGuid" ColumnName="OrderGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shSales">
+      <EntityTypeMapping TypeName="ShopOnlineModel.shSale">
+        <MappingFragment StoreEntitySet="shSale">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SaleStatus" ColumnName="SaleStatus" />
+          <ScalarProperty Name="DieuKienApDung" ColumnName="DieuKienApDung" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
+          <ScalarProperty Name="CachTinhGiaTriKhuyenMai" ColumnName="CachTinhGiaTriKhuyenMai" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="SaleCode" ColumnName="SaleCode" />
+          <ScalarProperty Name="SaleName" ColumnName="SaleName" />
+          <ScalarProperty Name="SaleDetailGuid" ColumnName="SaleDetailGuid" />
+          <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+          <ScalarProperty Name="SaleGuid" ColumnName="SaleGuid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThongBaos">
+      <EntityTypeMapping TypeName="ShopOnlineModel.ThongBao">
+        <MappingFragment StoreEntitySet="ThongBao">
+          <ScalarProperty Name="OrderGuid" ColumnName="OrderGuid" />
+          <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
+          <ScalarProperty Name="MaLoaiThongBao" ColumnName="MaLoaiThongBao" />
+          <ScalarProperty Name="DaXem" ColumnName="DaXem" />
+          <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
+          <ScalarProperty Name="NguoiNhanThongBaoId" ColumnName="NguoiNhanThongBaoId" />
+          <ScalarProperty Name="NguoiThongBaoID" ColumnName="NguoiThongBaoID" />
+          <ScalarProperty Name="LienKet" ColumnName="LienKet" />
+          <ScalarProperty Name="NoiDungCongViec" ColumnName="NoiDungCongViec" />
+          <ScalarProperty Name="NoiDungThongBao" ColumnName="NoiDungThongBao" />
+          <ScalarProperty Name="ThongBaoId" ColumnName="ThongBaoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

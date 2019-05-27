@@ -1,0 +1,146 @@
+﻿@model IPagedList<shNew>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.Customer.Helper;
+@using C.Core.Common;
+
+@{
+    IEnumerable<shNew> ds1 = (IEnumerable<shNew>)Model.Take(3);
+    IEnumerable<shNew> ds2 = Model.Skip(3) as IEnumerable<shNew>;
+}
+
+<div class="feature_new">
+    <div id="feature_new">
+        @{
+            foreach (var item in ds1)
+            {
+                var titlecase = StringHelper.ConvertToTitleCase(item.TitleNew);
+                <div class="item">
+                    <div class="i-images">
+                        <a href="@item.MetaTitle-@item.NewId">
+                            <img src="@item.ImageFile"
+                                 alt='@titlecase' />
+                        </a>
+                    </div>
+                    <div class="i-decs">
+                        <div class="i-date">@item.CreatedDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")</div>
+                        <div class="i-title">
+                            <h2>
+                                <a href="@item.MetaTitle-@item.NewId"
+                                   title="@titlecase">@titlecase</a>
+                            </h2>
+                        </div>
+                        <div class="i-content">
+                            @item.Summary
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+
+<div class="clear">&nbsp;</div>
+
+<div class="grid_news">
+    @{
+        int index = 0;
+
+        for (int i = 0; i < 2; i++)
+        {
+            <div class="row_news">
+                @if (index < ds2.Count())
+                {
+                    var tintuc = ds2.ElementAtOrDefault(index);
+
+                    <div class="item">
+                        <div class="i-image">
+                            <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                                <img src="@tintuc.ImageFile" alt='@tintuc.TitleNew' title='@tintuc.TitleNew' />
+                            </a>
+                        </div>
+                        <div class="i-decs">
+                            <div class="i-date">@tintuc.CreatedDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")</div>
+                            <div class="i-title">
+                                <h2>
+                                    <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                                        @tintuc.TitleNew
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="i-content"></div>
+                        </div>
+                    </div>
+                    index++;
+                }
+
+                @if (index < ds2.Count())
+                {
+                    var tintuc = ds2.ElementAtOrDefault(index);
+
+                    <div class="item">
+                        <div class="i-image">
+                            <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                                <img src="@tintuc.ImageFile" alt='@tintuc.TitleNew' title='@tintuc.TitleNew' />
+                            </a>
+                        </div>
+                        <div class="i-decs">
+                            <div class="i-date">@tintuc.CreatedDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")</div>
+                            <div class="i-title">
+                                <h2>
+                                    <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                                        @tintuc.TitleNew
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="i-content"></div>
+                        </div>
+                    </div>
+                    index++;
+                }
+
+
+                @if (index < ds2.Count())
+                {
+                    var tintuc = ds2.ElementAtOrDefault(index);
+
+                    <div class="item">
+                        <div class="i-image">
+                            <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                                <img src="@tintuc.ImageFile" alt='@tintuc.TitleNew' title='@tintuc.TitleNew' />
+                            </a>
+                        </div>
+                        <div class="i-decs">
+                            <div class="i-date">@tintuc.CreatedDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")</div>
+                            <div class="i-title">
+                                <h2>
+                                    <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                                        @tintuc.TitleNew
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="i-content"></div>
+                        </div>
+                    </div>
+                    index++;
+                }
+                <div class="clear"></div>
+            </div>
+
+            if (index == ds2.Count())
+            {
+                break;
+            }
+        }
+    }
+
+    <div class="pagination">
+        @Html.PagedListPager(ds2.ToPagedList(1, 10), page => "javascript:changepage(" + page + ")", PagedListRenderOptions.OnlyShowFivePagesAtATime)
+    </div>
+
+
+</div>

@@ -1,0 +1,544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopOnlineDb.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="qtDepartments">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="250" />
+    <Property Name="Fax" Type="nvarchar" MaxLength="250" />
+    <Property Name="Email" Type="nvarchar" MaxLength="250" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="qtPositions">
+    <Key>
+      <PropertyRef Name="PositionId" />
+    </Key>
+    <Property Name="PositionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PositionName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Code" Type="nvarchar" MaxLength="250" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="qtRoles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Application" Type="nvarchar" MaxLength="20" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" />
+    <Property Name="ParentId" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedDete" Type="datetime" />
+  </EntityType>
+  <EntityType Name="qtUnits">
+    <Key>
+      <PropertyRef Name="UnitId" />
+    </Key>
+    <Property Name="UnitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitName" Type="nvarchar" MaxLength="250" />
+    <Property Name="UnitCode" Type="nvarchar" MaxLength="250" />
+    <Property Name="ParentId" Type="int" />
+    <Property Name="LevelCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="250" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="qtUserRole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="DepartmentId" Type="int" />
+    <Property Name="PositionId" Type="int" />
+    <Property Name="Application" Type="nvarchar" MaxLength="250" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="qtUsers">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserLogin" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="ImageFile" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Sex" Type="bit" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tel" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsAdmin" Type="bit" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="DepartmentId" Type="int" />
+    <Property Name="PositionId" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shCart">
+    <Key>
+      <PropertyRef Name="CartId" />
+    </Key>
+    <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MemberId" Type="int" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Total" Type="money" />
+    <Property Name="CartStatus" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shCartDetail">
+    <Key>
+      <PropertyRef Name="CartDetailId" />
+    </Key>
+    <Property Name="CartDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartDetailName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MemberId" Type="int" />
+    <Property Name="CartId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="250" />
+    <Property Name="Number" Type="int" />
+    <Property Name="Prices" Type="money" />
+    <Property Name="Total" Type="money" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shColor">
+    <Key>
+      <PropertyRef Name="ColorId" />
+    </Key>
+    <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ColorName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shComments">
+    <Key>
+      <PropertyRef Name="CommentId" />
+    </Key>
+    <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="500" />
+    <Property Name="Contents" Type="nvarchar" MaxLength="4000" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shMembers">
+    <Key>
+      <PropertyRef Name="MemberId" />
+    </Key>
+    <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MemberName" Type="nvarchar" MaxLength="250" />
+    <Property Name="MemberLogin" Type="nvarchar" MaxLength="250" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="ImageFile" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Sex" Type="bit" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tel" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shNews">
+    <Key>
+      <PropertyRef Name="NewId" />
+    </Key>
+    <Property Name="NewId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" />
+    <Property Name="Descriptions" Type="nvarchar" MaxLength="4000" />
+    <Property Name="ImageFile" Type="nvarchar" MaxLength="250" />
+    <Property Name="Summary" Type="nvarchar" MaxLength="250" />
+    <Property Name="Contents" Type="nvarchar" MaxLength="4000" />
+    <Property Name="SortOrder" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shPrices">
+    <Key>
+      <PropertyRef Name="PriceId" />
+    </Key>
+    <Property Name="PriceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Money" Type="money" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shProductImage">
+    <Key>
+      <PropertyRef Name="ProductImageId" />
+    </Key>
+    <Property Name="ProductImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="250" />
+    <Property Name="FileNameGoc" Type="nvarchar" MaxLength="250" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shProducts">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="Size" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="250" />
+    <Property Name="PriceCurrent" Type="money" />
+    <Property Name="PercentCurrent" Type="int" />
+    <Property Name="PriceAfterPercents" Type="money" />
+    <Property Name="Number" Type="int" />
+    <Property Name="Image" Type="nvarchar" MaxLength="250" />
+    <Property Name="ViewsProduct" Type="int" />
+    <Property Name="ProductStatus" Type="int" />
+    <Property Name="SortOrderby" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shSale">
+    <Key>
+      <PropertyRef Name="SaleId" />
+    </Key>
+    <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="SaleStatus" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shSaleDetail">
+    <Key>
+      <PropertyRef Name="SaleDetailId" />
+    </Key>
+    <Property Name="SaleDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="SaleId" Type="int" />
+    <Property Name="Description" Type="nvarchar" MaxLength="4000" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="4000" />
+    <Property Name="Percents" Type="int" />
+    <Property Name="PriceAfterPercents" Type="money" />
+    <Property Name="SaleAttach" Type="nvarchar" MaxLength="250" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="shSize">
+    <Key>
+      <PropertyRef Name="SizeId" />
+    </Key>
+    <Property Name="SizeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="SizeName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" />
+    <Property Name="Price" Type="money" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_qtUserRole_qtDepartments">
+    <End Role="qtDepartments" Type="Self.qtDepartments" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtDepartments">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtPositions">
+    <End Role="qtPositions" Type="Self.qtPositions" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtPositions">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtRoles">
+    <End Role="qtRoles" Type="Self.qtRoles" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtRoles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUserRole_qtUnits">
+    <End Role="qtUnits" Type="Self.qtUnits" Multiplicity="0..1" />
+    <End Role="qtUserRole" Type="Self.qtUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUnits">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="qtUserRole">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtDepartments">
+    <End Role="qtDepartments" Type="Self.qtDepartments" Multiplicity="0..1" />
+    <End Role="qtUsers" Type="Self.qtUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtDepartments">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="qtUsers">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtPositions">
+    <End Role="qtPositions" Type="Self.qtPositions" Multiplicity="0..1" />
+    <End Role="qtUsers" Type="Self.qtUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtPositions">
+        <PropertyRef Name="PositionId" />
+      </Principal>
+      <Dependent Role="qtUsers">
+        <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_qtUsers_qtUnits">
+    <End Role="qtUnits" Type="Self.qtUnits" Multiplicity="0..1" />
+    <End Role="qtUsers" Type="Self.qtUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="qtUnits">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="qtUsers">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCartDetail_shCart">
+    <End Role="shCart" Type="Self.shCart" Multiplicity="0..1" />
+    <End Role="shCartDetail" Type="Self.shCartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shCart">
+        <PropertyRef Name="CartId" />
+      </Principal>
+      <Dependent Role="shCartDetail">
+        <PropertyRef Name="CartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCartDetail_shMembers">
+    <End Role="shMembers" Type="Self.shMembers" Multiplicity="0..1" />
+    <End Role="shCartDetail" Type="Self.shCartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shMembers">
+        <PropertyRef Name="MemberId" />
+      </Principal>
+      <Dependent Role="shCartDetail">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shCartDetail_shProducts">
+    <End Role="shProducts" Type="Self.shProducts" Multiplicity="0..1" />
+    <End Role="shCartDetail" Type="Self.shCartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shCartDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shComments_shMembers">
+    <End Role="shMembers" Type="Self.shMembers" Multiplicity="0..1" />
+    <End Role="shComments" Type="Self.shComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shMembers">
+        <PropertyRef Name="MemberId" />
+      </Principal>
+      <Dependent Role="shComments">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shComments_shProducts">
+    <End Role="shProducts" Type="Self.shProducts" Multiplicity="1" />
+    <End Role="shComments" Type="Self.shComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shComments">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shProductImage_shProducts">
+    <End Role="shProducts" Type="Self.shProducts" Multiplicity="0..1" />
+    <End Role="shProductImage" Type="Self.shProductImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shProductImage">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shProducts_shCategory">
+    <End Role="shCategory" Type="Self.shCategory" Multiplicity="0..1" />
+    <End Role="shProducts" Type="Self.shProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shCategory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="shProducts">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSaleDetail_shProducts">
+    <End Role="shProducts" Type="Self.shProducts" Multiplicity="0..1" />
+    <End Role="shSaleDetail" Type="Self.shSaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shProducts">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="shSaleDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shSaleDetail_shSale">
+    <End Role="shSale" Type="Self.shSale" Multiplicity="0..1" />
+    <End Role="shSaleDetail" Type="Self.shSaleDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shSale">
+        <PropertyRef Name="SaleId" />
+      </Principal>
+      <Dependent Role="shSaleDetail">
+        <PropertyRef Name="SaleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopOnlineDbStoreContainer">
+    <EntitySet Name="qtDepartments" EntityType="Self.qtDepartments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="qtPositions" EntityType="Self.qtPositions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="qtRoles" EntityType="Self.qtRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="qtUnits" EntityType="Self.qtUnits" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="qtUserRole" EntityType="Self.qtUserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="qtUsers" EntityType="Self.qtUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shCart" EntityType="Self.shCart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shCartDetail" EntityType="Self.shCartDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shCategory" EntityType="Self.shCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shColor" EntityType="Self.shColor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shComments" EntityType="Self.shComments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shMembers" EntityType="Self.shMembers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shNews" EntityType="Self.shNews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shPrices" EntityType="Self.shPrices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shProductImage" EntityType="Self.shProductImage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shProducts" EntityType="Self.shProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shSale" EntityType="Self.shSale" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shSaleDetail" EntityType="Self.shSaleDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="shSize" EntityType="Self.shSize" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_qtUserRole_qtDepartments" Association="Self.FK_qtUserRole_qtDepartments">
+      <End Role="qtDepartments" EntitySet="qtDepartments" />
+      <End Role="qtUserRole" EntitySet="qtUserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtPositions" Association="Self.FK_qtUserRole_qtPositions">
+      <End Role="qtPositions" EntitySet="qtPositions" />
+      <End Role="qtUserRole" EntitySet="qtUserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtRoles" Association="Self.FK_qtUserRole_qtRoles">
+      <End Role="qtRoles" EntitySet="qtRoles" />
+      <End Role="qtUserRole" EntitySet="qtUserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUserRole_qtUnits" Association="Self.FK_qtUserRole_qtUnits">
+      <End Role="qtUnits" EntitySet="qtUnits" />
+      <End Role="qtUserRole" EntitySet="qtUserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtDepartments" Association="Self.FK_qtUsers_qtDepartments">
+      <End Role="qtDepartments" EntitySet="qtDepartments" />
+      <End Role="qtUsers" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtPositions" Association="Self.FK_qtUsers_qtPositions">
+      <End Role="qtPositions" EntitySet="qtPositions" />
+      <End Role="qtUsers" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_qtUsers_qtUnits" Association="Self.FK_qtUsers_qtUnits">
+      <End Role="qtUnits" EntitySet="qtUnits" />
+      <End Role="qtUsers" EntitySet="qtUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCartDetail_shCart" Association="Self.FK_shCartDetail_shCart">
+      <End Role="shCart" EntitySet="shCart" />
+      <End Role="shCartDetail" EntitySet="shCartDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCartDetail_shMembers" Association="Self.FK_shCartDetail_shMembers">
+      <End Role="shMembers" EntitySet="shMembers" />
+      <End Role="shCartDetail" EntitySet="shCartDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shCartDetail_shProducts" Association="Self.FK_shCartDetail_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shCartDetail" EntitySet="shCartDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shComments_shMembers" Association="Self.FK_shComments_shMembers">
+      <End Role="shMembers" EntitySet="shMembers" />
+      <End Role="shComments" EntitySet="shComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shComments_shProducts" Association="Self.FK_shComments_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shComments" EntitySet="shComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shProductImage_shProducts" Association="Self.FK_shProductImage_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shProductImage" EntitySet="shProductImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shProducts_shCategory" Association="Self.FK_shProducts_shCategory">
+      <End Role="shCategory" EntitySet="shCategory" />
+      <End Role="shProducts" EntitySet="shProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSaleDetail_shProducts" Association="Self.FK_shSaleDetail_shProducts">
+      <End Role="shProducts" EntitySet="shProducts" />
+      <End Role="shSaleDetail" EntitySet="shSaleDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shSaleDetail_shSale" Association="Self.FK_shSaleDetail_shSale">
+      <End Role="shSale" EntitySet="shSale" />
+      <End Role="shSaleDetail" EntitySet="shSaleDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

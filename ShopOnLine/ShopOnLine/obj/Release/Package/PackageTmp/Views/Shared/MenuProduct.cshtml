@@ -1,0 +1,33 @@
+﻿@using C.Core.Model;
+@model IEnumerable<shCategory>
+
+<div class="wrapper">
+    <div class="wrapSubmenu">
+        @if (Model != null)
+        {
+            IEnumerable<shCategory> Parents = Model.Where(x => x.ParentId == null || (x.ParentId == ""));
+            foreach (var childCategory in Parents)
+            {
+                <div class="subItem">
+                    <div class="i-title">
+                        <a href="/@childCategory.CategoryId@childCategory.MetaTitle" target="_self">@childCategory.CategoryName</a>
+                    </div>
+                    <div class="i-list">
+                        <ul>
+                            @{
+                                IEnumerable<shCategory>
+                                Childs = Model.Where(x => x.ParentId == childCategory.CategoryGuid);
+                                foreach (var child in Childs)
+                                {
+                                    <li>
+                                        <a href="/@child.CategoryId@child.MetaTitle" target="_self">@child.CategoryName</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

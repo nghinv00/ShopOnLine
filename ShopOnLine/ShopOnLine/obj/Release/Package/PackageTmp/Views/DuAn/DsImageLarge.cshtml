@@ -1,0 +1,18 @@
+﻿@model IEnumerable<shProductImage>
+@using C.Core.Model;
+
+<div class="col-md-12">
+
+    @{ 
+        foreach (var item in Model as IEnumerable<shProductImage>)
+        {
+            <div class="col-md-4">
+                <a href="@item.FileName" title="">
+                    <img src="@item.FileName" id="@item.ProductImageId" alt="@item.FileNameGoc" />
+                </a>
+            </div>
+        }
+
+    }
+
+</div>

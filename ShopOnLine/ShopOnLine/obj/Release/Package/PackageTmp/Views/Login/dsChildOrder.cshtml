@@ -1,0 +1,38 @@
+﻿@model IEnumerable<shOrderDetail>
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+
+@foreach (var item in Model as IEnumerable<shOrderDetail>)
+{
+    <tr class="tr-about" id="">
+        <td></td>
+        <td colspan="6">
+            <div class="feature_new">
+                <div id="feature_new">
+                    <div class="item">
+                        <div class="i-images">
+                            @Html.ProductLinkAndImage(@item.ProductGuid)
+                        </div>
+                        <div class="i-decs">
+                            <div class="i-date">
+                                @Html.ProductLink(@item.ProductGuid)
+                            </div>
+                            <div class="i-title">
+                                @Html.SectionName(@item.SectionGuid) - @Html.SizeName(@item.SizeGuid)
+                            </div>
+                            <div class="i-content">
+                                <p style="text-align: right; font-weight: 700;">
+                                    @item.Number x @Format.FormatDecimalToString(@item.Prices.GetValueOrDefault(0))
+                                    VNĐ
+                                </p>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

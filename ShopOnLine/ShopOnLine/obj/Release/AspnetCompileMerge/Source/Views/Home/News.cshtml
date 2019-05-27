@@ -1,0 +1,54 @@
+﻿@model IEnumerable<shNew>
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Service;
+@using C.Core.Common;
+
+<div class="wrapper">
+    <div class="main_title">
+        <h2>Tin tức & sự kiện</h2>
+    </div>
+    <div class="wNews">
+        <div class="newsLeft">
+            <div class="divNews">
+                <div id="divNews">
+                    @{
+                        foreach (var item in Model as IEnumerable<shNew>)
+                        {
+                            <div class="item">
+                                <div class="i-images">
+                                    <a href="@item.MetaTitle-@item.NewId">
+                                        <img src="@item.ImageFile"
+                                             alt='@StringHelper.ConvertToTitleCase(item.TitleNew)' />
+                                    </a>
+                                </div>
+                                <div class="i-desc">
+                                    <div class="i-date">Ngày @item.CreatedDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")</div>
+                                    <div class="i-title">
+                                        <a href="@item.MetaTitle-@item.NewId"
+                                           title="@StringHelper.ConvertToTitleCase(item.TitleNew)">@StringHelper.ConvertToTitleCase(item.TitleNew)</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="newsRight">
+            <div class="divVideo">
+                <iframe width="570" height="310"  src="https://www.youtube.com/embed/zfUshO1LYTc" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                @*<embed allowfullscreen="true" allowscriptaccess="always" height="320"
+                           src=""
+                           type="application/x-shockwave-flash" width="570">
+                    </embed>*@
+                @*www.youtube.com/v/zjECEI2OSK4?version=3&hl=vi_VN&rel=0*@
+                @*<iframe width="570" height="315" src="https://www.youtube.com/embed/zfUshO1LYTc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>*@
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+

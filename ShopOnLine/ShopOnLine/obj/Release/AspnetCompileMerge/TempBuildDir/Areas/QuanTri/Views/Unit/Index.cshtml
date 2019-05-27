@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Danh sách đơn vị";
+}
+
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+<section class="content-header">
+    <h1>
+        Quản lý thông tin đơn vị
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Quản lý thông tin đơn vị</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/Unit/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+
+            <div class="row">
+                <div class="col-sm-3 no-padding-right">
+                    <ul id="tree" class="ztree"></ul>
+                </div>
+                <div class="col-sm-9 no-padding-left">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                                @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="DonVi">
+                        @{
+                Html.RenderPartial("ListUnits", (IPagedList<C.Core.Model.qtUnit>)ViewBag.ListUnits);
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        // 
+
+        function unitchange(id) {
+            //alert(id);
+        }
+        var zTreeObj;
+
+        var setting = {
+            view: {
+                dblClickExpand: false,
+                //showIcon: showIconForTree
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 0
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent &&!treeNode.children ;
+        };
+
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            zTree.expandNode(treeNode);
+        }
+
+        $.ajax({
+            url: '@Url.Action("UnitTreeview", "DanhMucDungChung")',
+            type: 'POST',
+            data: {
+                isShowDepartment: false
+            },
+            dataType: "json",
+            success: function (data) {
+                zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+
+            },
+            error: function (data) {
+
+            },
+            complete: function (data, response) {
+             
+            }
+        });
+
+        $(document).ready(function () {
+
+            $('ul.ztree .node_name').click(function (e) {
+
+            });
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

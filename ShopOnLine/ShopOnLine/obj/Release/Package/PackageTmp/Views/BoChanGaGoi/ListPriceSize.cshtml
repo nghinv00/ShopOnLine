@@ -1,0 +1,91 @@
+﻿@using C.Core.Model;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+
+@model IEnumerable<shProductSet>
+<style>
+    .format-red-no-bold {
+        font-weight: unset !important;
+        color: #f00;
+        font-size: 18px;
+    }
+
+    table tr td {
+    }
+</style>
+<div>
+    <div class="format_title">Chi tiết sản phẩm</div>
+    <p open="" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0);">
+        <strong style="margin: 0px; padding: 0px;">
+            <span style="margin: 0px; padding: 0px; font-size: 14px;">
+                <span style="margin: 0px; padding: 0px; color: rgb(178, 34, 34);">
+                    Kết cấu và giá sản phẩm:
+                </span>
+            </span>
+        </strong>
+    </p>
+    @{
+        foreach (var item in Model as IEnumerable<shProductSet>)
+        {
+            <p open="" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); text-align: center;">
+                <br>
+                <strong style="margin: 0px; padding: 0px;">
+                    <span style="margin: 0px; padding: 0px; font-size: 14px;">
+                        <span style="color: rgb(0, 100, 0);">
+                            @item.SectionName
+                        </span>
+                    </span>
+                </strong>
+            </p>
+
+            <table border="0" cellpadding="0" cellspacing="0" class="border_schedule" style="line-height: 20.8px; width: 100%;">
+                <tbody>
+                    @{
+                        IEnumerable<shSetSize> dsSizeParent = (new shSizeService()).DanhSachSize_BySectionGuid(item.SectionGuid, item.ProductGuid, null);
+
+                        <!-- Start table -->
+                        <tr class="row_title_schedule">
+                            <td align="left"><b>Kết cấu / kích thước</b></td>
+                            @foreach (var sizeparent in dsSizeParent)
+                            {
+                                <td align="center"   ><b>@sizeparent.SizeName</b></td>
+                            }
+                        </tr>
+
+                        <!-- Content Table -->
+                        IEnumerable<shProductSet> dsSectionChild = (new shSectionService()).DanhSachSection_TheoParentId(item.SectionGuid);
+                        foreach (var sectionchild in dsSectionChild)
+                        {
+                            <tr class="row_detail_schedule">
+                                <td align="left"><b>@sectionchild.SectionName</b></td>
+
+                                @foreach (var sizeparent in dsSizeParent)
+                                {
+                                    <td align="left">@Html.SizeNameByParentId_SectionGuid(sizeparent.SizeGuid, sectionchild.SectionGuid)</td>
+                                    @*<td align="right" class="format-red-no-bold" style="padding-right: 5px;">
+                                        @Html.SizeNameByParentId_SectionGuid_PriceCurrent(sizeparent.SizeGuid, sectionchild.SectionGuid) VNĐ
+                                    </td>*@
+                                   
+                                }
+                            </tr>
+                        }
+
+                        <!--The end table -->
+                        <tr class="row_detail_schedule">
+                            <td align="left"><b>Bộ chăn ga</b></td>
+                            @foreach (var sizeparent in dsSizeParent)
+                            {
+                                <td align="right" class="fortmat-red">@Format.FormatDecimalToString(sizeparent.PriceCurrent.GetValueOrDefault(0)).Replace(',', '.') VNĐ </td>
+                            }
+
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        }
+    }
+
+</div>

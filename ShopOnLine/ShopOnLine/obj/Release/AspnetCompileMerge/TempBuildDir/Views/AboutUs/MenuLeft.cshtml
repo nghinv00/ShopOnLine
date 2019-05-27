@@ -1,0 +1,34 @@
+﻿@model  IEnumerable<shAboutu>
+@using C.Core.Model;
+@using C.Core.Common;
+
+<div class="menuCategory">
+    <ul>
+        @{
+            if (Model.Count() > 0)
+            {
+
+                foreach (var item in Model as IEnumerable<shAboutu>)
+                {
+                    if (item.AboutId == 1)
+                    {
+                        <li class="show">
+                            <a href="@item.MetaTitle">
+                                <span>@StringHelper.ConvertToTitleCase(item.AboutTitle)</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="show">
+                            <a href="@item.MetaTitle-@item.AboutId">
+                                <span>@StringHelper.ConvertToTitleCase(item.AboutTitle)</span>
+                            </a>
+                        </li>
+                    }
+
+                }
+            }
+        }
+    </ul>
+</div>

@@ -1,0 +1,23 @@
+﻿@using C.Core.Model;
+@model IEnumerable<shProduct>
+
+@{
+    foreach (var item in Model as IEnumerable<shProduct>)
+    {
+        <div class="item">
+                <div class="i-images">
+                    <a href="@item.MetaTitle-@item.ProductId" title='@item.ProductName'>
+                        <img src="@item.Image" alt='@item.ProductName' title='' />
+                    </a>
+                </div>
+                <div class="i-title">
+                    <h2>
+                        <a href="@item.MetaTitle-@item.ProductId" title='@item.ProductName'>@item.ProductName</a>
+                    </h2>
+                </div>
+            </div>
+    }
+
+    
+}
+

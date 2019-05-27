@@ -1,0 +1,98 @@
+.the-content{
+    margin-bottom: 20px;
+}
+.divBorder{
+    padding: 50px 140px;
+    text-align: center;
+    font-size: 17px;
+    line-height:36px;
+    color:#666666;
+    font-family: 'UTMAvo';
+    font-style: italic;
+    border: 1px solid #ff0099;
+    margin-top: 20px;
+}
+.list-year{
+    margin-bottom:60px;
+    padding-left:45px;
+    position: relative;
+}
+.list-year:before{
+    position: absolute;
+    content: "";
+    top:0;
+    left:25px;
+    height:100%;
+    width: 1px;
+    background-color:#ff0099;
+}
+.list-year:after{
+    position: absolute;
+    content: "";
+    top:100%;
+    left:10px;
+    border:14px solid transparent;
+    border-bottom:0px;
+    border-top-color: #ff0099;
+}
+.list-year .node_year{
+    margin-bottom: 40px;
+    position: relative;
+}
+.list-year .node_year:before{
+    position: absolute;
+    top: 0;
+    left:-25px;
+    font-family:"fontawesome";
+    content:"\f111";
+    font-size: 13px;
+    line-height: 13px;
+    color: #ff0099;
+}
+.list-year .node_year.n-before:before{
+    content:"";
+}
+.list-year .node_year .n-number{
+    width:180px;
+    min-height: 1px;
+    float: left;
+    padding-right:20px;
+}
+.list-year .node_year .n-number .n-text{
+    font-size: 23px;
+    line-height: 30px;
+    text-transform: uppercase;
+    color:#666666;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -o-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    position: absolute;
+    top:87px;
+    left: -30px;
+    color: #666666;
+}
+.list-year .node_year .n-content{
+    width: 295px;
+    float: left;
+    padding-right:20px;
+}
+.list-year .node_year .n-image{
+    width: 340px;
+    float: right;
+}
+.list-year .node_year .n-number .n-number1{
+    font-size:13px;
+    line-height: 20px;
+    color: #666666;
+    text-indent: 10px;
+}
+.list-year .node_year .n-number .n-number1 span{
+    display: block;
+    font-size: 72px;
+    line-height: 80px;
+    font-family: 'UTMAvo';
+    text-indent: 0;
+}

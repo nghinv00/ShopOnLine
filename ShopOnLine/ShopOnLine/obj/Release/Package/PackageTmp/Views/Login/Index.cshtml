@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_LoginAdmin.cshtml";
+}
+@using C.UI.Helpers;
+<div id="wrapper">
+    <style>
+        .text-danger {
+            color: red;
+        }
+    </style>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("urlPrefix")
+        @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+        <div id="wrappertop"></div>
+        <div id="wrappermiddle">
+            <h2>Đăng nhập hệ thống</h2>
+            <div id="username_input">
+                <div id="username_inputleft"></div>
+                <div id="username_inputmiddle">
+                    @Html.TextBox("MemberName", null, new { @id = "url", @placeholder = "Tài khoản", @onkeypress = "OnUserEnter(event);" })
+                    <img id="url_user" src="~/AdminLTE/login/images/mailicon.png" alt="">
+                </div>
+                <div id="username_inputright"></div>
+            </div>
+            <div id="password_input">
+                <div id="password_inputleft"></div>
+                <div id="password_inputmiddle">
+                    @Html.Password("Password", null, new { @id = "url", @placeholder = "Mật khẩu", @onkeypress = "OnEnter(event);" })
+                    <img id="url_password" src="~/AdminLTE/login/images/passicon.png" alt="">
+                </div>
+                <div id="password_inputright"></div>
+            </div>
+            <div id="submit-form">
+                <input type="button" id="submit-button" value="SIGN IN" />
+            </div>
+            <div id="links_left">
+                <a href="#">Quên mật khẩu?</a>
+            </div>
+            <div id="links_right"><a href="#">Liên hệ với quản trị viên?</a></div>
+        </div>
+        <div id="wrapperbottom"></div>
+        <div id="powered">
+            <p>Powered by <a href="/">Hệ thống quản lý chăn ga gối đệm</a></p>
+        </div>
+    }
+
+</div>
+
+<script>
+
+    function OnEnter(e) {
+        var k = 0;
+
+        if (window.event) {
+            k = e.keyCode;
+        }
+        else if (e.which) {
+            k = e.which;
+        }
+
+        if (k == 13) {
+            OnLogin();
+        }
+    }
+
+
+    function OnLogin() {
+
+        $('#submit-button').click();
+    }
+
+
+    function OnUserEnter(e) {
+        var k = 0;
+
+        if (window.event) {
+            k = e.keyCode;
+        }
+        else if (e.which) {
+            k = e.which;
+        }
+
+        if (k == 13) {
+            focus();
+        }
+    }
+
+    function focus() {
+        document.getElementById("Password").focus();
+    }
+
+
+    $(document).ready(function () {
+        $('#Username').focus();
+
+        $('#wrapper form').validate({
+            messages: {
+                Username: {
+                    required: 'Tên đăng nhập không được bỏ trống'
+                },
+                Password: {
+                    required: 'Mật khẩu không được bỏ trống'
+                }
+            },
+            rules: {
+                Username: {
+                    required: true
+                },
+                Password: {
+                    required: true
+                }
+            }
+        });
+
+        $('#submit-button').click(function (e) {
+            $('#wrapper form').attr('action', '@Url.Action("index" , "login")');
+            $('#wrapper form').submit();
+        });
+
+    });
+
+</script>
+

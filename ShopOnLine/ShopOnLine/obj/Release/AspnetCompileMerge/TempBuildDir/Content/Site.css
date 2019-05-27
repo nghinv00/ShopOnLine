@@ -1,0 +1,2065 @@
+﻿.main-title {
+    position: relative;
+    padding: 0px;
+}
+
+    .main-title > h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .main-title > h3 {
+        padding: 0px 0px 5px 0px;
+        margin: 0px;
+    }
+
+    .main-title > h1 > small {
+        font-size: 15px;
+        display: inline-block;
+        padding-left: 4px;
+        font-weight: 300;
+    }
+
+    .main-title > .breadcrumb {
+        float: right;
+        background: transparent;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        padding: 7px 5px;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        border-radius: 2px;
+    }
+
+        .main-title > .breadcrumb > li > a {
+            color: #444;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .main-title > .breadcrumb > li > a > .fa,
+            .main-title > .breadcrumb > li > a > .glyphicon,
+            .main-title > .breadcrumb > li > a > .ion {
+                margin-right: 5px;
+            }
+
+        .main-title > .breadcrumb > li + li:before {
+            content: '>\00a0';
+        }
+
+.main-footer {
+    background-color: #ecf0f5;
+}
+
+@media (max-width: 991px) {
+    .main-title > .breadcrumb {
+        position: relative;
+        margin-top: 5px;
+        top: 0;
+        right: 0;
+        float: none;
+        background: #d2d6de;
+        padding-left: 10px;
+    }
+
+        .main-title > .breadcrumb li:before {
+            color: #97a0b3;
+        }
+}
+
+.main-view {
+    min-height: 250px;
+    padding: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #ffffff;
+}
+/*******************accordion ******************/
+div.accordion {
+    cursor: pointer;
+    display: block;
+    font-size: 100%;
+    margin: 5px 0px;
+    padding: 0.5em 0.5em 0.5em 0.7em;
+    position: relative;
+    border-radius: 3px;
+    background: #f6f6f6 none repeat scroll 0 0;
+    border: 1px solid #c5c5c5;
+    color: #454545;
+    font-weight: normal;
+}
+
+    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    div.accordion.active, div.accordion:hover {
+        background-color: #ddd;
+    }
+
+/* Style the accordion panel. Note: hidden by default */
+div.panel-accordion {
+    padding: 10px;
+    background-color: white;
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.6s ease-in-out;
+    opacity: 0;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+    /* The "show" class is added to the accordion panel when the user clicks on one of the buttons. This will show the panel content */
+    div.panel-accordion.show {
+        display: block;
+        opacity: 1;
+        max-height: 500px; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */
+    }
+
+div.accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+div.accordion.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+/*************************end accordion *********************/
+
+/*****************grid*************/
+.grid a {
+    color: #3c8dbc;
+    text-decoration: none;
+}
+
+.grid {
+    width: 100%;
+    border-collapse: inherit;
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+    .grid th {
+        /*background-color: #bde373; #c7c8cc*/
+        line-height: 28px;
+        font-weight: bold;
+        color: #222222;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+        min-width: 30px;
+        height: 30px;
+        background: url("Images/bg-grid.png") repeat scroll left top;
+    }
+
+    .grid tr.gridrow_alternate td {
+    }
+
+    .grid tr.gridrow_alternate {
+        background: url("Images/grid-opacity-body.png") repeat scroll left top;
+    }
+
+    .grid tr td {
+        padding: 3px 7px;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+        vertical-align: inherit;
+        line-height: 2;
+        font-size: small;
+    }
+
+    .grid tr.tr-hover td {
+        cursor: pointer;
+        background-color: #fefde7 !important;
+    }
+
+    .grid .td-group {
+        font-weight: bold;
+        background-color: #cccccc;
+    }
+
+.grid-report tr {
+    background: #ffffff;
+}
+
+    .grid-report tr th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        line-height: 43px;
+        vertical-align: middle;
+        text-align: center;
+        text-transform: uppercase;
+        width: 10%;
+    }
+
+    .grid-report tr td {
+        color: #111111;
+        border: 1px solid #ddd;
+        border-left: 1px solid #DDDDDD !important;
+        background: #ffffff;
+    }
+
+    .grid-report tr th.td-donvi {
+        width: 20% !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .grid-report tr td.td-title {
+        width: 100%;
+        border-radius: 4px 4px 0px 0px;
+        -moz-border-radius: 4px 4px 0px 0px;
+        -webkit-border-radius: 4px 4px 0px 0px;
+        border: 0px solid #000000;
+        background: #0185fa;
+        background: -moz-linear-gradient(top, #0185fa 0%, #0a76d6 50%, #1168b5 100%);
+        background: -webkit-linear-gradient(top, #0185fa 0%,#0a76d6 50%,#1168b5 100%);
+        background: linear-gradient(to bottom, #0185fa 0%,#0a76d6 50%,#1168b5 100%);
+    }
+
+        .grid-report tr td.td-title h3 {
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: "Open Sans", sans-serif;
+            text-align: center;
+            line-height: 40px;
+            margin: 0px;
+        }
+
+    .grid-report tr th.td-tiepnhan {
+        border-left: 0px solid !important;
+        border-top: 0px solid !important;
+        background: #50ba55;
+        border-right: 0px solid !important;
+        color: #ffffff;
+        border-bottom: 0px !important;
+    }
+
+    .grid-report tr th.td-dangxuly {
+        border-left: 0px solid !important;
+        border-top: 0px solid !important;
+        background: #43a047;
+        border-right: 0px solid !important;
+        color: #ffffff;
+        border-bottom: 0px !important;
+    }
+
+    .grid-report tr th.td-daxuly {
+        border-left: 0px solid !important;
+        border-top: 0px solid !important;
+        background: #2e7d32;
+        border-right: 0px solid !important;
+        color: #ffffff;
+        border-bottom: 0px !important;
+    }
+
+    .grid-report tr th.td-tile {
+        border-left: 0px solid !important;
+        border-top: 0px solid !important;
+        background: #c6251d;
+        border-right: 1px solid #C6251D !important;
+        color: #ffffff;
+    }
+
+.table-middle {
+    max-height: 496px;
+    overflow: hidden;
+}
+
+.grid-report-middle tr {
+    background-color: #fff;
+}
+
+    .grid-report-middle tr td {
+        border: 1px solid #ddd;
+        line-height: 43px;
+        width: 10%;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .grid-report-middle tr td a {
+            color: #333;
+        }
+
+        .grid-report-middle tr td:first-child {
+            width: 20%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .grid-report-middle tr td:first-child {
+            text-align: left;
+            line-height: 18px;
+            padding: 20px 10px;
+        }
+
+        .grid-report-middle tr td .span-tonghop {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 60px;
+            -moz-border-radius: 60px;
+            -webkit-border-radius: 60px;
+            border: 2px solid #280b0b;
+            color: #000;
+            vertical-align: middle;
+            line-height: 36px;
+        }
+
+        .grid-report-middle tr td .span-quahan {
+            background-color: #d9534f;
+        }
+
+        .grid-report-middle tr td .span-ganhan {
+            background-color: #ffff00;
+        }
+
+.grid-report-bottom tr {
+    background: red;
+    color: #ffffff;
+}
+
+    .grid-report-bottom tr td {
+        background: #c6251d;
+        border: 1px solid #d6d6d6 !important;
+        border-bottom: 1px solid #C6251D;
+        line-height: 43px;
+        width: 10%;
+        text-align: center;
+        font-weight: bold;
+        padding: 20px 10px;
+    }
+
+        .grid-report-bottom tr td a {
+            color: #ffffff;
+        }
+
+        .grid-report-bottom tr td:first-child {
+            width: 20%;
+        }
+
+        .grid-report-bottom tr td:first-child {
+            border-left: 1px solid #C6251D;
+        }
+
+        .grid-report-bottom tr td:last-child {
+            border-right: 1px solid #C6251D;
+        }
+/*************end grid***********/
+.sidebar-menu .active .treeview-menu {
+}
+
+.sett {
+    background: rgba(0, 0, 0, 0) url("Images/sprite_osv2.png") no-repeat scroll -275px -145px;
+    cursor: pointer;
+    height: 18px;
+    /* margin: 3px 5px 0 3px;*/
+    opacity: 0.3;
+    width: 20px;
+}
+
+.tr-hover .sett {
+    background: rgba(0, 0, 0, 0) url("Images/sprite_osv2.png") no-repeat scroll -275px -145px;
+    opacity: 1;
+}
+
+.dropdown-menu.sett_dropdown-caret {
+    margin-top: 11px;
+}
+
+.dropdown-menu {
+    background-clip: padding-box;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+    display: none;
+    float: left;
+    font-size: 14px;
+    left: 0;
+    list-style: outside none none;
+    margin: 2px 0 0;
+    min-width: 160px;
+    padding: 5px 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+}
+
+.pop_arrow_new {
+    background: rgba(0, 0, 0, 0) url("Images/arrow.png") no-repeat scroll 0 0;
+    height: 12px;
+    margin-left: 12px;
+    margin-top: -17px;
+    position: absolute;
+    width: 24px;
+    z-index: 1000000;
+}
+
+.btnCreate {
+    position: fixed;
+    right: 4%;
+    top: 75%;
+    z-index: 9;
+}
+
+.btn-text {
+    display: inline-block;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    position: relative;
+    text-align: right;
+    transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1) 0s;
+    width: 1px;
+}
+
+.ctask_ttip {
+    display: inline-block;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    position: relative;
+    text-align: right;
+    transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1) 0s;
+    width: 1px;
+}
+
+.btn_plus a {
+    background: #f6911d none repeat scroll 0 0;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+    box-sizing: content-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 34px;
+    height: 56px;
+    outline: medium none;
+    pointer-events: auto;
+    text-align: center;
+    text-decoration: none;
+    transform: scale(1) rotate(360deg);
+    transition: transform 150ms cubic-bezier(0.4, 0, 1, 1) 0s;
+    width: 56px;
+}
+
+    .btn_plus a:hover {
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(0, 0, 0, 0.32);
+        transition: box-shadow 150ms cubic-bezier(0, 0, 0.2, 1) 0s;
+    }
+
+.ctask_ttip .label {
+    background: rgba(70, 70, 70, 0.9) none repeat scroll 0 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    font-size: 13px;
+    padding: 6px 8px;
+    position: absolute;
+    right: 8px;
+    top: -35px;
+    color: #ffffff;
+}
+
+.btnCreate:hover .ctask_ttip {
+    opacity: 1;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+
+.btnCreate:hover .ctask_ttip {
+    opacity: 1;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+
+.btn_plus a:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(0, 0, 0, 0.32);
+    transition: box-shadow 150ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+
+.box-footer {
+    text-align: center;
+}
+
+.btn-view-row {
+    padding-top: 25px;
+}
+/****************fix menu left********************/
+.active ul.treeview-menu {
+    display: block !important;
+}
+
+.treeview a {
+    color: #b8c7ce;
+}
+/****************end menu *********************/
+.box-progress {
+    font-weight: bold;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+}
+
+.img-dunghan {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background-color: #428bca;
+    color: #ffffff;
+    line-height: 50px;
+    font-weight: bold;
+}
+
+.img-canhbao {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background-color: yellow;
+    color: #428bca;
+    line-height: 50px;
+    font-weight: bold;
+}
+
+.img-quahan {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background-color: #f8210b;
+    color: #ffffff;
+    line-height: 50px;
+    font-weight: bold;
+}
+/***********man hinh thong bao***********/
+.task-main {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.task-infor, .task-header .header-item {
+    /*background-color: #2ecc71;*/
+    background: url("Images/bg-grid.png") repeat scroll left top;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
+.task-header {
+    font-size: 14px;
+    line-height: 35px;
+    border: 1px solid #ccc;
+}
+
+    .task-header td {
+        border-bottom: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .task-header tr td:last-child {
+        border-right: 0px !important;
+    }
+
+    .task-header td span.icon-trangthai {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 40px;
+        -moz-border-radius: 40px;
+        -webkit-border-radius: 40px;
+        border: 2px solid #280b0b;
+    }
+
+    .task-header td span.icon-gandenhan {
+        background-color: #ffff00 !important;
+    }
+
+    .task-header td span.icon-quahan {
+        background-color: #d9534f !important;
+    }
+
+    .task-header td span.icon-chuadenhan {
+        background-color: #00ff00 !important;
+    }
+
+.grid-sync {
+    font-size: 14px;
+    line-height: 35px;
+    border: 1px solid #ccc;
+}
+
+    .grid-sync tr td {
+        text-align: center;
+    }
+
+        .grid-sync tr td:last-child {
+            border-right: 0px !important;
+        }
+
+.dangxuly td {
+    color: #00ff00;
+}
+
+.canhbao td {
+    color: #ffff00;
+}
+
+.quahan td {
+    color: #d9534f;
+}
+
+p.navbar-text {
+    font-size: 20px;
+    line-height: 40px;
+    float: none;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: inherit;
+}
+
+.table-custom {
+    border-collapse: inherit;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
+    .table-custom tr td {
+        border-top: 1px solid #ddd;
+        line-height: 1.42857;
+        padding: 8px;
+        vertical-align: top;
+    }
+
+    .table-custom .tr-show:nth-of-type(2n+1) {
+        /*background-color: #f9f9f9;*/
+    }
+
+.task-content {
+    padding-top: 10px;
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.expand .td-content {
+    font-weight: bold;
+}
+
+/*******************ket thuc man hinh thong bao***************/
+
+/* --------------- CSS hiển thị bảng -----------------*/
+.lich-hop-thoigian {
+    font-weight: bold;
+    text-align: center;
+    color: #084c73;
+    border-bottom: 1px dashed #084c73;
+}
+
+
+.removed {
+    display: none;
+}
+
+.expands {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.child td:first-child {
+    padding-left: 1em;
+}
+
+.banghienthi {
+    width: 100%;
+    max-height: 270px;
+    overflow-y: scroll;
+}
+/*------------ end ------------*/
+
+/* --------------- CSS icon -----------------*/
+.error {
+    color: red;
+    font-weight: normal;
+}
+
+span.file-icon {
+    background-image: url("Images/sprite-file-icons.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 16px;
+    margin: 0 5px 0 0;
+    position: relative;
+    top: 3px;
+    width: 16px;
+}
+
+span.file-text {
+    display: inline-block;
+    line-height: 16px;
+}
+
+.attachFiles span.file-icon {
+    background-position: 0 -21px;
+}
+
+#iconTreeView-Parent {
+    color: #54a9e9;
+    padding: 0px 5px;
+}
+
+#iconTreeView-Child {
+    color: #54a9e9;
+    padding-left: 20px;
+    padding-right: 5px;
+}
+
+/*------------ end ------------*/
+
+
+/*****************Form ***********/
+.list-unit {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.list-linhvuc {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.list-captrinh {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.list-nguoncongviec {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.list-nhomnhiemvu {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.block {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.block-10 {
+    padding-left: 10px !important;
+}
+
+.nav-trangthai ul {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+    .nav-trangthai ul li {
+        float: left;
+        margin-right: 5px;
+        cursor: pointer;
+        border-radius: 4px 4px 0 0;
+        border: solid #ddd 1px;
+        margin-bottom: -2px;
+        padding-bottom: 3px;
+    }
+
+        .nav-trangthai ul li div {
+            float: left;
+            font-weight: bold;
+            height: 30px;
+            line-height: 27px;
+            text-align: center;
+            min-width: 30px;
+            border-radius: 50%;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .nav-trangthai ul li a {
+            color: #000;
+            padding: 5px;
+            line-height: 24px;
+        }
+
+            .nav-trangthai ul li a:hover {
+                color: #000;
+            }
+
+        .nav-trangthai ul li.success {
+        }
+
+            .nav-trangthai ul li.success a {
+                color: #337ab7;
+                font-weight: bold;
+            }
+
+#tab-count li div {
+    float: left;
+    height: 20px;
+    text-align: center;
+    min-width: 20px;
+    border-radius: 50%;
+    color: #fff;
+    margin-right: 5px;
+    font-size: 10px;
+}
+
+.nav-trangthai ul li a.tatca-congviec div {
+    background-color: #5bc0de;
+    border: 2PX solid #280b0b;
+    color: #000000;
+}
+
+#tab-count a.tatca-congviec div {
+    background-color: #5bc0de;
+    border: 1PX solid #280b0b;
+    color: #000000;
+}
+
+.nav-trangthai ul li a.congviec-dangxuly div {
+    background-color: #00ff00;
+    border: 2PX solid #280b0b;
+    color: #000000;
+}
+
+#tab-count a.congviec-dangxuly div {
+    background-color: #00ff00;
+    border: 1PX solid #280b0b;
+    color: #000000;
+}
+
+.nav-trangthai ul li a.congviec-daxuly div {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2PX solid #280b0b;
+}
+
+#tab-count a.congviec-daxuly div {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1PX solid #280b0b;
+}
+
+.nav-trangthai ul li a.congviec-ganhan div {
+    background-color: #ffff00;
+    border: 2PX solid #280b0b;
+    color: #000000;
+}
+
+#tab-count a.congviec-ganhan div {
+    background-color: #ffff00;
+    border: 1PX solid #280b0b;
+    color: #000000;
+}
+
+.nav-trangthai ul li a.congviec-quahan div {
+    background-color: #ff0000;
+    border: 2PX solid #280b0b;
+    /*background:url("Images/icon-dendo.png") no-repeat left top;*/
+}
+
+#tab-count a.congviec-quahan div {
+    background-color: #ff0000;
+    border: 1PX solid #280b0b;
+    /*background:url("Images/icon-dendo.png") no-repeat left top;*/
+}
+/*****************end form***********/
+
+/*************************tien do bang mau ****************/
+.css-progress {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    font-family: "OPENSANS-REGULAR";
+    font-size: 10px;
+    font-weight: normal;
+    margin-top: 2px;
+    color: #ffffff;
+    border: 2px solid #280b0b;
+}
+
+.css-new {
+    background-color: #afc2da;
+}
+
+.css-del {
+    background-color: #464747;
+    color: #ffffff;
+}
+
+.css-finish {
+    background-color: #ffffff;
+}
+
+.css-warning {
+    background-color: #ffff00;
+}
+
+.css-inprogress {
+    background-color: #00ff00;
+}
+
+.css-danger {
+    background-color: #ff0000;
+}
+/*********************ket thuc tien do bang mau ****************/
+.required {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 7px;
+    color: red;
+}
+
+label {
+    font-weight: normal;
+}
+
+.grid .dropdown {
+    float: left;
+}
+
+.div-kqcongviec {
+    color: #464747;
+    line-height: 20px;
+}
+
+    .div-kqcongviec span {
+        font-style: italic;
+    }
+
+.div-congviec {
+}
+
+.sconhan i {
+    color: #3475cd;
+}
+
+.squahan i {
+    color: #c00000;
+}
+
+.radio-group {
+    float: left;
+    margin-right: 15px;
+}
+
+.nav-trangthai ul li.success {
+    border-bottom: 3px solid #337ab7;
+}
+
+.hide {
+    display: none;
+    visibility: hidden;
+}
+
+.div-tenkehoach {
+    font-weight: bold;
+}
+
+.bg-viewtv {
+    background-color: #3c8dbc;
+    height: 100px;
+}
+
+    .bg-viewtv p {
+        padding: 15px;
+        font-size: 22px;
+    }
+
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+    empty-cells: show;
+    border-right: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+}
+
+    .form-table td {
+        border-bottom: 0 none;
+        border-left: 1px solid #efefef;
+        border-top: 1px solid #efefef;
+        empty-cells: show;
+        height: 25px;
+        padding: 3px;
+    }
+
+        .form-table td.td-lable-form {
+            width: 20%;
+            text-align: right;
+        }
+
+    .form-table .tr-head td {
+        background: rgba(0, 0, 0, 0) url("Images/bg-grid.png") repeat scroll left top;
+        border-bottom: 1px solid #c7c8cc;
+        border-right: 1px solid #c7c8cc;
+        color: #222222;
+        font-weight: bold;
+        height: 30px;
+        line-height: 28px;
+        min-width: 30px;
+        text-align: center;
+    }
+
+.div-tencongviec {
+    color: #000000;
+    font-weight: bold;
+    text-align: justify;
+    line-height: 18px;
+}
+
+    .div-tencongviec a {
+        color: #000000;
+    }
+
+        .div-tencongviec a.link {
+            color: #3c8dbc;
+        }
+
+.iconDoUuTien {
+    padding: 10px 5px;
+    display: block;
+}
+
+a.css-coment {
+    position: relative;
+}
+
+    a.css-coment .label {
+        font-size: 9px;
+        line-height: 0.9;
+        padding: 2px 3px;
+        position: absolute;
+        right: 2px;
+        text-align: center;
+        top: -12px;
+    }
+
+.dropdown-menu ul.menu {
+    list-style: outside none none;
+    margin: 0;
+    max-height: 300px;
+    overflow-x: hidden;
+    padding: 2px;
+}
+
+    .dropdown-menu ul.menu > li > a {
+        border-bottom: 1px solid #f4f4f4;
+        display: block;
+        /*white-space: nowrap;*/
+    }
+
+    .dropdown-menu ul.menu li > a > h4 {
+        color: #444444;
+        font-size: 13px;
+        margin: 0 0 0 10px;
+        padding: 0;
+        position: relative;
+    }
+
+    .dropdown-menu ul.menu li > a > p {
+        color: #888888;
+        font-size: 11px;
+        margin: 0 0 0 10px;
+    }
+
+.sett-file {
+    background: rgba(0, 0, 0, 0) url("Images/sprite_osv2.png") no-repeat scroll -275px -145px;
+    cursor: pointer;
+    height: 18px;
+    opacity: 0.3;
+    width: 20px;
+}
+
+@media print {
+    .noPrint {
+        display: none;
+    }
+}
+
+#tab-count {
+    margin-top: 3px !important;
+}
+
+    #tab-count, #tab-count li {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        float: right;
+    }
+
+.project-name {
+    color: #ffffff;
+    float: left;
+    line-height: 51px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.login-project-name {
+    color: #000000;
+    float: left;
+    line-height: 45px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.text-center b {
+    text-align: center;
+}
+
+
+.text-uppercase b {
+    text-transform: uppercase;
+}
+
+.loading-hide {
+    display: none;
+}
+
+.loading-show {
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 0;
+}
+
+.loading {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(Images/ajax-loader.gif) center no-repeat #fff;
+    opacity: 0.7;
+}
+
+/*css phụ*/
+.tendonvi-normal {
+    color: #333;
+}
+
+.text-VB-giao-NV {
+    line-height: 18px;
+}
+
+/* css tabstrips */
+
+.number-tabs {
+    /*background: red;*/
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.number-tabs0 {
+    border-radius: 10px;
+    color: black;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.number-tabs1 {
+    border-radius: 10px;
+    color: #031e9e;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.number-tabs2 {
+    border-radius: 10px;
+    color: #025f49;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.number-tabs3 {
+    border-radius: 10px;
+    color: #5600ff;
+    font-weight: 600;
+    padding: 2px;
+}
+
+/* Hidden column in grid  */
+.hidden-xs {
+    /*display: none;*/
+}
+
+/** Tabstrips */
+
+.ui-tabs .ui-tabs-nav {
+    padding: 0.2em !important;
+}
+
+/** Active tabstrip*/
+/*.tabstrips-active {
+    font-weight: bold;
+}*/
+
+
+.nav-trangthai-vanban ul li {
+    border-bottom: 1px;
+}
+
+    .nav-trangthai-vanban ul li a {
+        color: black !important;
+    }
+
+    .nav-trangthai-vanban ul li.tabstrips-active a {
+        color: #337ab7;
+        font-weight: bold;
+    }
+
+    .nav-trangthai-vanban ul li.tabstrips-active a {
+        border-bottom: 2px solid #337ab7;
+    }
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.no-padding-left {
+    padding-left: 0px !important;
+}
+
+.no-padding-right {
+    padding-right: 0px !important;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+/*Modal Css*/
+.loginmodal-container {
+    padding: 30px;
+    max-width: 350px;
+    width: 100% !important;
+    background-color: #F7F7F7;
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: roboto;
+}
+
+    .loginmodal-container h1 {
+        text-align: center;
+        font-size: 1.8em;
+        font-family: roboto;
+    }
+
+    .loginmodal-container input[type=button] {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .loginmodal-container input[type=text], .loginmodal-container input[type=password] {
+        height: 44px;
+        font-size: 16px;
+        width: 100%;
+        margin-bottom: 10px;
+        -webkit-appearance: none;
+        background: #fff;
+        border: 1px solid #d9d9d9;
+        border-top: 1px solid #c0c0c0;
+        /* border-radius: 2px; */
+        padding: 0 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+        .loginmodal-container input[type=text]:hover, .loginmodal-container input[type=password]:hover {
+            border: 1px solid #b9b9b9;
+            border-top: 1px solid #a0a0a0;
+            -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+.loginmodal {
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    /* border-radius: 3px; */
+    /* -webkit-user-select: none;
+  user-select: none; */
+}
+
+.loginmodal-submit {
+    /* border: 1px solid #3079ed; */
+    border: 0px;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    background-color: #4d90fe;
+    padding: 17px 0px;
+    font-family: roboto;
+    font-size: 14px;
+    /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
+}
+
+    .loginmodal-submit:hover {
+        /* border: 1px solid #2f5bb7; */
+        border: 0px;
+        text-shadow: 0 1px rgba(0,0,0,0.3);
+        background-color: #357ae8;
+        /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
+    }
+
+.loginmodal-container a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 400;
+    text-align: center;
+    display: inline-block;
+    opacity: 0.6;
+    transition: opacity ease 0.5s;
+}
+
+.login-help {
+    font-size: 12px;
+}
+
+/*Css trạng thái văn bản*/
+span.status_chuaxuly {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #efb30b;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_dangxuly {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #00c0ef;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_choduyet {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #337ab7;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_dahoanthanhvabanhanh {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #0de427;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_dahoanthanhtheoVB {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #0de427;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_dahuy {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #666;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_datrinh {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #337ab7;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+span.status_daxuly {
+    padding: 3px 4px;
+    font-size: 8pt;
+    background: #00a65a;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.textarea-no-resize {
+    resize: none !important;
+}
+
+.textarea-noresize-vertical {
+    resize: vertical !important;
+}
+
+.textarea-noresize-horizontal {
+    resize: horizontal !important;
+}
+
+
+
+/****************chat************/
+.chat-box {
+    position: fixed;
+    bottom: 0px;
+    right: 50px;
+}
+
+.chat-box-title {
+    width: 250px;
+    color: #000;
+    padding-left: 10px;
+    background: linear-gradient(#cbe6f9, #afd4ee, #95c4e4);
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.chatRoom {
+    width: 100%;
+}
+
+/*.content {
+    border: 5px solid #ededed;
+    background-color: #ededed;
+}*/
+
+.chatWindow {
+    height: 400px;
+    background-color: #ffffff;
+    overflow-y: scroll;
+}
+
+.messageBar {
+    border: 0px solid #ededed;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.users {
+    height: 400px;
+    overflow-y: scroll;
+    border-left: 1px solid #d4ebfc;
+    background-color: #ffffff;
+    padding-left: 10px;
+}
+
+    .users a {
+        cursor: pointer;
+    }
+
+.chat-col-left {
+    width: 65%;
+    float: left;
+}
+
+.chat-col-right {
+    width: 35%;
+    float: left;
+}
+
+.draggable {
+    position: absolute;
+    border: #418bca solid 3px !important;
+    width: 270px;
+    z-index: 9999;
+}
+
+    .draggable .header {
+        cursor: move;
+        background-color: #418bca;
+        border-bottom: #ccc solid 1px;
+    }
+
+    .draggable .selText {
+        color: #fff;
+        font-weight: bold;
+        height: 35px;
+        line-height: 35px;
+        padding-left: 5px;
+    }
+
+    .draggable .messageArea {
+        width: 265px;
+        overflow-y: scroll;
+        height: 300px;
+        border-bottom: #5f9482 solid 1px;
+    }
+
+        .draggable .messageArea .message {
+            padding: 4px;
+        }
+
+    .draggable .buttonBar {
+        width: 250px;
+        padding: 4px;
+    }
+
+        .draggable .buttonBar .msgText {
+            width: 172px;
+            height: 48px;
+        }
+
+        .draggable .buttonBar .button {
+            margin-left: 4px;
+            width: 55px;
+        }
+
+.right > .direct-chat-text {
+    background: #f39c12;
+    border-color: #f39c12;
+    color: #fff;
+}
+
+    .right > .direct-chat-text:after, .right > .direct-chat-text:before {
+        border-left-color: #f39c12;
+    }
+/*****************end chat***********/
+
+
+/** css grid text-align  **/
+.text-align-left {
+    text-align: left !important;
+}
+
+.text-align-center {
+    text-align: center !important;
+}
+
+.text-align-right {
+    text-align: right !important;
+}
+
+.display-none {
+    display: none;
+}
+/*   the end css grid text-align */
+
+table#tblChiTietVanBan tr td {
+    padding: 5px !important;
+    font-size: small;
+}
+
+.menu-icon-bottom {
+}
+
+    .menu-icon-bottom ul {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+    }
+
+        .menu-icon-bottom ul li {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 15px;
+        }
+
+            .menu-icon-bottom ul li a:hover {
+                color: red
+            }
+
+/** Template treeview */
+.treeview-active {
+    margin-left: -30px;
+}
+/* The End Template Treeview */
+
+
+.title-header {
+    font-weight: bold !important;
+    font-size: 18px !important;
+}
+
+
+/*icon in td*/
+
+.td-icon-task {
+    padding-bottom: 30px;
+    position: relative
+}
+
+.icon-in-td-task {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: right
+}
+
+    .icon-in-td-task .css-coment i {
+        font-size: 18px;
+    }
+
+    .icon-in-td-task .css-coment span {
+        top: -7px;
+        right: -5px;
+    }
+
+.float-right {
+    float: right;
+}
+
+.title-nhatky-chitiet {
+    padding-bottom: 5px;
+    border-bottom: 2px solid #337ab7;
+}
+
+    .title-nhatky-chitiet a {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+.info-detail {
+    padding: 10px;
+}
+
+    .info-detail .time-label span {
+        font-size: 11px;
+        padding: 3px;
+    }
+
+}
+
+.font-italic {
+    font-style: italic;
+}
+
+.font-weight {
+    font-weight: bold !important;
+}
+
+span.span-with-link {
+    padding: 5px;
+    border-radius: 5px;
+    background: #0094ff;
+    cursor: pointer;
+    font-size: 9pt;
+}
+
+    span.span-with-link a {
+        color: #fff;
+    }
+
+/*css tài liệu*/
+.k-sprite {
+    background-image: url("../Content/Images/sprite-file-icons.png");
+}
+
+.rootfolder {
+    background-position: 0 0;
+}
+
+.folder {
+    background-position: 0 -252px;
+}
+
+.pdf {
+    background-position: 0 -21px;
+}
+
+.other {
+    background-position: 0 -210px;
+}
+
+.image {
+    background-position: 0 -84px;
+}
+
+.word {
+    background-position: 0px -168px;
+}
+
+.excel {
+    background-position: 0px -189px;
+}
+
+.music {
+    background-position: 0px -273px;
+}
+
+.video {
+    background-position: 0px -294px;
+}
+
+.k-treeview .k-in {
+    line-height: 20px !important;
+}
+
+.k-state-selected {
+    color: black !important;
+}
+
+.k-content {
+    padding: 0px;
+    max-height: 500px;
+    overflow: auto;
+    border: 1px solid #ddd;
+}
+
+.table-tailieu {
+    padding-right: 0px !important;
+}
+
+.tbl-tailieu {
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+phần tử {
+}
+
+.k-icon, .k-sprite {
+    background-color: transparent;
+}
+
+.k-sprite {
+    width: 20px !important;
+    /*height: 20px !important;*/
+}
+
+.k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list > .k-state-highlight, .k-list > .k-state-selected, .k-marquee-color, .k-panel > .k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected, .k-state-selected:link, .k-state-selected:visited {
+    background-color: rgba(36, 200, 25, 0.24) !important;
+}
+
+.icon-download {
+    background-image: url(Images/download-icon.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 16px;
+    margin: 0 5px 0 0;
+    position: relative;
+    top: 3px;
+    width: 16px;
+}
+
+.div-tentailieu {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.ten-tai-lieu {
+    margin-left: 5px;
+}
+
+
+/* */
+
+.validation-summary-errors {
+    color: red !important;
+}
+
+.div-thongbao {
+    width: 350px;
+}
+
+    .div-thongbao .slimScrollDiv {
+        height: auto !important;
+        max-height: 500px;
+    }
+
+
+/*fix template*/
+.sidebar-menu .treeview-menu > li > a {
+    font-size: 13px !important;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span {
+    padding: 15px 5px 15px 20px !important;
+}
+
+.ui-state-hover {
+    margin: 0px !important;
+}
+
+/**/
+
+.item-sovanban {
+    padding: 10px;
+    /*border: 1px solid;*/
+    border-radius: 10px;
+    background: #20586d;
+    color: #fff;
+    text-align: center;
+    min-height: 90px;
+    vertical-align: middle;
+    cursor: pointer;
+    line-height: 20px;
+    box-shadow: 2px 2px 5px #46907f;
+    margin-bottom: 15px;
+}
+
+    .item-sovanban:hover {
+        background: #6ca6bb;
+    }
+
+    .item-sovanban.active {
+        background: #cb911b;
+    }
+
+        .item-sovanban.active:hover {
+            background: #ca9e45;
+        }
+
+        .item-sovanban.active .soluong {
+            color: #0f04b5 !important;
+        }
+
+    .item-sovanban a {
+        color: #fff;
+    }
+
+.CheckOfTable {
+    text-align: center !important;
+}
+
+/** Grid phat hanh van ban .grid */
+.grid tbody tr.active {
+    background: #f7eeb4 !important
+}
+/** Ket thuc grid phat hanh van ban */
+
+ul.ui-autocomplete {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.width-10 {
+    width: 100%;
+}
+
+.bgbanner {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px;
+    color: #ffffff;
+    background-color: #6bbae8;
+}
+
+.txt-banner {
+    float: left;
+    color: #ffffff;
+    padding-left: 20px;
+    font-weight: 600;
+    padding-top: 6px;
+    font-size: 14px;
+}
+
+    .txt-banner span {
+        color: #fff700;
+    }
+
+.grid-v3 {
+    width: 100%;
+}
+
+    .grid-v3 .td-noboder {
+        border: 0px;
+        font-weight: bold;
+    }
+
+    .grid-v3 td {
+        border: 1px solid #bbdceb;
+        line-height: 24px;
+        height: 24px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .grid-v3 th {
+        text-align: center;
+        font-weight: bold;
+        background: linear-gradient(#cbe6f9, #afd4ee, #95c4e4);
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #bbdceb;
+    }
+
+
+#image {
+    width: 150px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.imageFile {
+    margin: 10px auto;
+    /*width: 150px;*/
+    width: inherit;
+    height: inherit;
+}
+
+
+/*  css to table width DanhMuc/ProductController/Section */
+.table-roll {
+    min-height: 400px;
+    width: 100%;
+    color: #2B2B2B;
+    border: 1px none #d1d1d1;
+    border-style: solid;
+    border-collapse: separate;
+}
+
+/*the end    */
+
+/*  */
+
+.product-child-title {
+    height: 30px;
+    background-color: #fafafa;
+    text-align: center;
+    margin: 0 auto;
+    padding: 5px;
+    color: #7e7e7e;
+    white-space: nowrap;
+    text-align: left;
+    overflow: hidden;
+}
+
+/* */
+
+/* Css định hình khung nhìn TreeView */
+
+.container-treeview {
+    min-height: 100%;
+    position: relative;
+    height: 100%;
+}
+
+.header-treeview {
+}
+
+.body-treeview {
+    padding-bottom: 30px;
+    height: 100%;
+    position: relative
+}
+
+.footer-treeview {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px; /* Height of the footer */
+    width: 100%;
+}
+/*  The End Css định hình khung nhìn TreeView*/
+
+
+a.hover-underline:hover {
+    text-decoration: underline !important;
+}
+
+.bg-expandable {
+    background-color: rgba(224, 241, 251, 0.47843137254901963) !important;
+}
+
+/* Click Tabstrip */
+.active-ui {
+    background-color: white !important;
+}
+
+.no-active-ui {
+    background-color: #eae7e7 !important;
+    color: red !important;
+    font-weight: bold !important;
+}
+
+
+/* The end click tabstrip */
+
+.task-icon {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+}
+
+    .task-icon li {
+        list-style: none;
+        float: left;
+        margin: 5px 5px;
+    }
+
+        .task-icon li a.css-coment {
+            position: relative;
+        }
+
+.grid a {
+    color: #3c8dbc;
+    text-decoration: none;
+}
+
+.task-icon li a.css-coment .label {
+    font-size: 9px;
+    line-height: 0.9;
+    padding: 2px 3px;
+    position: absolute;
+    right: -2px;
+    text-align: center;
+    top: -8px;
+}
+
+/* danh mục cha */
+
+.category-parent a {
+    color: #1377da !important;
+}
+
+/* k-input Kendonumberic  */
+.k-input {
+    box-shadow: none;
+    border-color: #d2d6de;
+    border-radius: 4px;
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

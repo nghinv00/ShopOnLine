@@ -1,0 +1,7 @@
+﻿
+@model SelectList
+@Html.DropDownList("Town", Model as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control", @onchange = "changeTown(this.value)" })
+
+<script>
+            //$('#Town').select2();
+</script>

@@ -1,0 +1,17 @@
+﻿@model shBanner
+
+@using C.Core.Model;
+
+<div class="vnt-banner">
+    <div class="item">
+        <div class="i-images">
+            <a href="javascript:void(0)" target="_blank">
+
+                @if (Model != null && Model.BannerId > 0)
+                {
+                    <img src="@Model.Url" alt="Banner" />
+                }
+            </a>
+        </div>
+    </div>
+</div>

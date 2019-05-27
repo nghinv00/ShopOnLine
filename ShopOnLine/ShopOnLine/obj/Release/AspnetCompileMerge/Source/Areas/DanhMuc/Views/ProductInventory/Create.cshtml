@@ -1,0 +1,608 @@
+﻿@model C.Core.Model.shProduct
+@using C.UI.Helpers;
+@using C.Core.Model;
+@{
+    ViewBag.Title = "Thêm mới Bộ Sản Phẩm";
+}
+
+<style>
+    .div-tailieu {
+        margin-top: 60px;
+    }
+
+    #preview-design a.previewimg {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+<script src="~/Scripts/ckeditor/ckeditor.js" charset="utf-8"></script>
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh Bộ Sản Phẩm
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Product/Index">Danh mục</a></li>
+        <li class="active">Thêm và hiệu chỉnh thông tin Bộ Sản Phẩm</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Product/Index")
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("ProductGuid")
+            <div class="form-horizontal">
+                <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Danh mục:", new { @class = "control-label" }) (<span class="required">*</span>)
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-9 no-padding">
+                                    @Html.Hidden("CategoryGuid")
+                                    @Html.Hidden("ProductId")
+                                    @Html.TextBox("citySel", null, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-3 no-padding">
+
+                                    <a id="menuBtn" class="hover-underline" href="#" onclick="showMenu(); return false;">Chọn danh mục</a>
+                                </div>
+                                <div id="menuContent" class="menuContent" style="display:none; position: absolute; z-index: 1;">
+                                    <ul id="treeDemo" class="background-tree ztree " style="margin-top:0; width:160px;"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Mã sản phẩm:", new { @class = "control-label" }) (<span class="required">*</span>)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("ProductName", null, new { @class = "form-control", @placeholder = "Mã sản phẩm " })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Mô tả sản phẩm :", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9 ">
+                                @Html.TextArea("Description", null, 4, 5, new { @class = "form-control ", @placeholder = "Mô tả sản phẩm " })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="display: none;">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Trọn bộ bao gồm:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-8">
+                                @Html.TextBox("CompleteSetInclude", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="display: none;">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Số lượng tồn:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("Number", null, new { @class = "form-control", @placeholder = "Số lượng tồn " })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Số thứ tự hiển thị:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("SortOrder", null, new { @class = "form-control", @placeholder = "Số thứ tự hiển thị" })
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Chi tiết sản phẩm :", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9 ">
+                                @Html.TextArea("Details", null, 5, 5, new { @class = "form-control ", @placeholder = "Chi tiết sản phẩm " })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box bg-expandable" style="">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cập nhật hình ảnh <span style="font-weight: 600;"> Mẫu Mã </span>theo sản phẩm </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body" style="">
+                        <div class="col-md-3">
+                            <div class="form-group div-tailieu">
+                                <div class="col-md-12 no-padding">
+                                    @Html.Label("Chọn 1 hoặc nhiều ảnh đính kèm: ")
+                                </div>
+                                <div class="col-md-12">
+                                    <div>
+                                        <input type="file" value="Chọn file" id="FileUploader-Design" name="FileUploader-Design" accept="image/*" />
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <input type="hidden" class="form-control" id="UrlImageDesign" name="UrlImageDesign" placeholder="Link file ảnh sau khi upload." />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no-padding">
+                                    <i>Hệ thống chỉ chấp nhận đuôi file jpg, png, gif, jpeg</i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div id="list-image">
+                                <div class="form-group">
+                                    <input type="hidden" id="listFile" />
+                                    @Html.Hidden("DeleteImage")
+                                    <div class="col-sm-3" style="padding: 10px; display: none;">
+                                        <b style="display: block"></b>
+                                        <img src="~/Content/Images/background.jpg" style="width: 300%; height: auto; max-height: 300px;" />
+                                    </div>
+                                    <div id="preview-design">
+                                        @{
+                                            if (ViewBag.DsDesignImage != null)
+                                            {
+                                                foreach (var item in ViewBag.DsDesignImage as IEnumerable<shProductImage>)
+                                                {
+                                                    <div class="col-md-3" style="padding:10px;">
+                                                        <b id="name-image" style="display:none;">@item.FileName</b>
+                                                        <img src="@item.FileName" style="width: 100%; height:150px;">
+                                                        <a href="javascript:void(0)" value="@item.ProductImageGuid" class="hover-underline previewimg" onclick="deleteImage('@item.ProductImageGuid', this)">Xóa</a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer" style="">
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+
+                <div class="box collapsed-box bg-expandable" style=" ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cập nhật hình ảnh <span style="font-weight: 600;"> Chất Liệu </span> sản phẩm </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" style="display: none;">
+                        <div class="col-md-3">
+                            <div class="form-group div-tailieu">
+                                <div class="col-md-12 no-padding">
+                                    @Html.Label("Chọn 1 hoặc nhiều ảnh đính kèm: ")
+                                </div>
+                                <div class="col-md-12">
+                                    <div>
+                                        <input type="file" value="Chọn file" id="FileUploader-Material" name="FileUploader-Material" accept="image/*" />
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <input type="hidden" class="form-control" id="UrlImageDesign" name="UrlImageMaterial" placeholder="Link file ảnh sau khi upload." />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no-padding">
+                                    <i>Hệ thống chỉ chấp nhận đuôi file jpg, png, gif, jpeg</i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div id="list-image">
+                                <div class="form-group">
+                                    <input type="hidden" id="listFile" />
+                                    <div class="col-sm-3" style="padding: 10px; display: none;">
+                                        <b style="display: block"></b>
+                                        <img src="~/Content/Images/background.jpg" style="width: 300%; height: auto; max-height: 300px;" />
+                                    </div>
+                                    <div id="preview-material">
+                                        @{
+                                            if (ViewBag.DsMaterialImage != null)
+                                            {
+                                                foreach (var item in ViewBag.DsMaterialImage as IEnumerable<shProductImage>)
+                                                {
+                                                    <div class="col-md-3" style="padding:10px;">
+                                                        <b id="name-image" style="display:none;">@item.FileName</b>
+                                                        <img src="@item.FileName" style="width: 100%; height:150px;">
+                                                        <a href="javascript:void(0)" value="@item.ProductImageGuid" class="hover-underline previewimg" onclick="deleteImage('@item.ProductImageGuid', this)">Xóa</a>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer" style="display: none;">
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+
+                <div class="box collapsed-box bg-expandable" style=" ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Tài liệu hướng dẫn sử dụng</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="col-md-4 " style="">
+                                    @Html.Label("Hướng dẫn sử dụng:", new { @class = "control-label font-weight" })
+                                </div>
+                                @Html.TextArea("UserManual", null, new { @class = "form-control" })
+                                <script>
+                                    CKEDITOR.replace("UserManual")
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer" style="display: none;">
+
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6" style="margin-top:10pt">
+                            @{
+                                if (Model.ProductId > 0)
+                                {
+                                    @Html.CheckBox("Status")
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("Status", true)
+                                }
+                            }
+                            <label for="Status">Còn sử dụng</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        var setting = {
+            view: {
+                dblClickExpand: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                beforeClick: beforeClick,
+                onClick: onClick
+            }
+        };
+
+        function beforeClick(treeId, treeNode) {
+            var check = (treeNode && !treeNode.isParent);
+            //if (!check) {
+            //    alert("Không thể chọn danh mục cha...");
+            //    return check;
+            //}
+            hideMenu();
+            check = true; // Chọn phần tử con hoặc phần tử cha đều chấp nhận
+            return check;
+        }
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+                nodes = zTree.getSelectedNodes(),
+                v = "",
+                id = "";
+
+            nodes.sort(function compare(a, b) { return a.id - b.id; });
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                v += nodes[i].name + ",";
+                id = nodes[i].id + ","
+            }
+            if (v.length > 0) {
+                v = v.substring(0, v.length - 1);
+            }
+            if (id.length > 0) {
+                id = id.substring(0, id.length - 1);
+            }
+
+            var cityObj = $("#citySel");
+            cityObj.attr("value", v);
+            $('#CategoryGuid').val(id)
+        }
+
+        function showMenu() {
+            var cityObj = $("#citySel");
+            $("#menuContent").css(
+                {
+                    //left: cityOffset.left + "px",
+                    top: cityObj.get(0).offsetHeight + "px"
+                }
+            ).slideDown("fast");
+
+            $("body").bind("mousedown", onBodyDown);
+
+        }
+
+        function hideMenu() {
+            $("#menuContent").fadeOut("fast");
+            $("body").unbind("mousedown", onBodyDown);
+        }
+
+        function onBodyDown(event) {
+            if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length > 0)) {
+                hideMenu();
+            }
+        }
+
+        function category(id) {
+
+        }
+
+        $.ajax({
+            url: '@Url.Action("CategoryTreeviewNotRoot", "DanhMuc")',
+            type: 'POST',
+            dataType: "json",
+            success: function (data) {
+
+                $.fn.zTree.init($("#treeDemo"), setting, data);
+            },
+            error: function (data) {
+
+            },
+            complete: function (data, response) {
+
+            }
+        });
+
+
+        function rcheck() {
+            $("input[type='file']").each(function () {
+                $(this).rules("add", {
+                    extension: "jpg,jpeg,png"
+                });
+            });
+        }
+
+        var counter = 1;
+        function AddFileUpload() {
+            var div = document.createElement('DIV');
+            div.innerHTML = '<input id="FileAttach' + counter + '" name = "FileAttach' + counter +
+                '" type="file" />' +
+                '<input id="Button' + counter + '" type="button" ' +
+                'value="Xóa" onclick = "RemoveFileUpload(this)" class="btn btn-default" />';
+            if (document.getElementById("FileUploadContainer") != null)
+                document.getElementById("FileUploadContainer").appendChild(div);
+            counter++;
+            rcheck();
+        }
+
+        var apiBaseUrl = '@Url.Content(ShopOnLine.WebApiConfig.UrlPrefixRelative)';
+        var formdataDesign = '@Url.Content(C.Core.Common.Config.DesignImage)';
+        var formatMaterial = '@Url.Content(C.Core.Common.Config.MaterialImage)';
+
+        function deleteImage(a, div) {
+            $('#DeleteImage').val($('#DeleteImage').val() + ';' + a);
+            $(div).parent().remove();
+        }
+
+        function delimagedesign(a) {
+            var ghichu = $(a).parent().find("b").html();
+
+            // Add the uploaded image content to the form data collection
+            var data = {
+                value: ghichu,
+                category: formdataDesign
+            }
+
+            // call ajax
+            $.ajax({
+            url: '@Url.Action("DeleteImageProduct")',
+            type: 'POST',
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data == 'OK') {
+                    $(a).parent().remove();
+
+                    var $el = $('input#FileUploader-Design');
+                    $el.wrap('<form>').closest('form').get(0).reset();
+                    $el.unwrap();
+                }
+                else {
+                    alert('Xóa không thành công. Xin vui lòng thử lại')
+                }
+            },
+            error: function (data) {
+                alert('Có lỗi xảy ra. Vui lòng thử lại. ')
+            },
+            complete: function (data, response) {
+
+            }
+            });
+        }
+
+        function delimagematerial(a) {
+            var ghichu = $(a).parent().find("b").html();
+
+            // Add the uploaded image content to the form data collection
+            var data = {
+                value: ghichu,
+                category: formatMaterial
+            }
+
+            // call ajax
+            $.ajax({
+            url: '@Url.Action("DeleteImageProduct")',
+            type: 'POST',
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data == 'OK') {
+                    $(a).parent().remove();
+                    var $el = $('input#FileUploader-Material');
+                    $el.wrap('<form>').closest('form').get(0).reset();
+                    $el.unwrap();
+                }
+                else {
+                    alert('Xóa không thành công. Xin vui lòng thử lại')
+                }
+            },
+            error: function (data) {
+                alert('Có lỗi xảy ra. Vui lòng thử lại. ')
+            },
+            complete: function (data, response) {
+
+            }
+            });
+        }
+
+        $(document).ready(function () {
+
+            $('#formview form').validate({
+                messages: {
+                    citySel: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                    ProductName: {
+                        required: 'Mã sản phẩm không được bỏ trống'
+                    }
+                },
+                rules: {
+                    citySel: {
+                        required: true
+                    },
+                    ProductName: {
+                        required: true
+                    }
+                }
+            });
+
+            $('input#FileUploader-Design').on('change', function (e) {
+                var data = new FormData();
+                var files = $('#FileUploader-Design').get(0).files;
+
+                // Add the uploaded image content to the form data collection
+                if (files.length > 0) {
+                    data.append(formdataDesign, files[0]);
+                }
+                // call ajax
+                $.ajax({
+                    url: apiBaseUrl +'/FileUploadProduct/UploadImageProduct',
+                    data: data,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    success: function (response) {
+                        if (response != '' && response != null) {
+
+                            $('#UrlImageDesign').val($('#UrlImageDesign').val() + response + ';');
+
+                            $('#preview-design').append('<div class="col-md-3" style="padding:10px;">' +
+                                '<b id="name-image" style="display:none;">' + response + '</b>' +
+                                '<img src="' + response + '" style="width: 100%; height:150px;" />' +
+                                '<a href="javascript:void(0)" class="hover-underline previewimg" onclick="delimagedesign(this)">Xóa</a>' +
+                                '</div>');
+                        }
+
+
+                    }, error: function (response) {
+
+                    },
+                    complete: function (response) {
+
+                    }
+                });
+            });
+
+            $('input#FileUploader-Material').on('change', function (e) {
+                var data = new FormData();
+                var files = $('#FileUploader-Material').get(0).files;
+
+                // Add the uploaded image content to the form data collection
+                if (files.length > 0) {
+                    data.append(formatMaterial, files[0]);
+                }
+                // call ajax
+                $.ajax({
+                    url: apiBaseUrl + '/FileUploadProduct/UploadImageProduct',
+                    data: data,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    success: function (response) {
+                        if (response != '' && response != null) {
+                            $('#UrlImageMaterial').val($('#UrlImageMaterial').val() + response + ';');
+
+                            $('#preview-material').append('<div class="col-md-3" style="padding:10px;">' +
+                                '<b id="name-image" style="display:none">' + response + '</b>' +
+                                '<img src="' + response + '" style="width: 100%; height:150px;" />' +
+                                '<a href="javascript:void(0)" class="hover-underline previewimg"  onclick="delimagematerial(this)">Xóa</a>' +
+                                '</div>');
+                        }
+
+
+                    }, error: function (response) {
+
+                    },
+                    complete: function (response) {
+
+                    }
+                });
+            });
+
+        });
+    </script>
+}

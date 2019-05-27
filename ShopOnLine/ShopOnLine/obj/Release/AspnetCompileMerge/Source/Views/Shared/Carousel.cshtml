@@ -1,0 +1,40 @@
+﻿@using C.Core.Model;
+@using C.DanhMuc.Helper;
+@model IEnumerable<C.Core.Model.shProduct>
+
+<div class="vnt-banner">
+    <div id="vnt-banner">
+        @{
+            if (Model != null)
+            {
+                foreach (shProduct product in Model as IEnumerable<C.Core.Model.shProduct>)
+                {
+                    <div class="item">
+                        <div class="i-images">
+                            <a href="@product.MetaTitle-@product.ProductId" target="_blank">
+                                <img src="@product.Image" alt="@product.ProductName" />
+                            </a>
+                        </div>
+                        <div class="i-desc">
+                            <div class="i-title">@product.ProductName</div>
+                            <div class="i-content">
+                                @product.Description
+                            </div>
+                            <div class="i-link">
+                                <a href="@product.MetaTitle-@product.ProductId">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        @*<div class="item">
+            <div class="i-images">
+                <a href="/dai-ly" target="_blank">
+                    <img src="~/SongHongVn/vnt_upload/weblink/cong_ty_may_song_hong_banner_dai_ly_02_1.jpg" alt="Tro_thanh_dai_ly" />
+                </a>
+            </div>
+        </div>*@
+    </div>
+    <div class="linkScroll" data-href="#Svnt-about"></div>
+</div>

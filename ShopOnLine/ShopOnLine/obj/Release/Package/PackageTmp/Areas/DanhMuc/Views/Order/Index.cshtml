@@ -1,0 +1,273 @@
+﻿@{
+    ViewBag.Title = "Danh sách Đơn hàng";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+@using C.Core.Common;
+@using C.Core.Service;
+@using C.Membership.Helper;
+<link href="~/Content/baocao.css" rel="stylesheet" />
+<link href="~/Content/common.css" rel="stylesheet" />
+<section class="content-header">
+    <h1>
+        Danh sách Đơn hàng
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Danh sách Đơn hàng</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Order/Index")
+            @Html.Hidden("page")
+            @Html.Hidden("OrderGuid")
+            @Html.Hidden("Description")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row no-margin">
+                <div class="form-group " style="margin-bottom: 0;">
+                    <div class="row ">
+                        <div class="col-md-12">
+                            <style>
+                                .box-header {
+                                    color: #fff;
+                                    background: #00a65a;
+                                    background-color: #00a65a;
+                                }
+
+                                .tr-about .box-header {
+                                    color: #fff;
+                                    background: #f39c12;
+                                    background-color: #f39c12;
+                                }
+
+                                .tr-about .box.box-success {
+                                    border-top-color: #f39c12;
+                                    /*background-color: #f39c12;*/
+                                }
+                            </style>
+
+                            <div class="box box-success collapsed-box" style="width: auto; border: 1px solid #00a65a;">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Tìm kiếm nâng cao </h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group input-filter">
+                                                <label for="Search">Tìm kiếm nhanh :</label>
+                                                @Html.TextBox("Search", null, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group input-filter">
+                                                <label for="Search">Lọc theo nhân viên:</label>
+                                                @{
+                                                    string disabled = string.Empty;
+                                                    int? UserId = CommonHelper.KiemTraTaiKhoanCoPhaiLanhDaoDonVi(User.Identity.GetUserLogin().Userid, Config.LANH_DAO_DON_VI);
+
+                                                    if (UserId.HasValue)
+                                                    {
+                                                        @Html.DropDownList("UserId", ViewBag.UserId as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control", @disabled = "disabled" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DropDownList("UserId", ViewBag.UserId as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group input-filter">
+                                                <label for="Search">Tìm kiếm nhanh :</label>
+                                                @Html.Button("Tìm kiếm nhanh", "btn btn-primary", "Serch", "fa fa-search")
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        @Html.Button("Thêm mới đơn hàng", "btn btn-success", "Serch", "fa fa-plus-square")
+
+                                        @*@Html.Button("Xem thống kê", "btn btn-warning", "Serch", "fa fa-bar-chart")*@
+                                    </div>
+
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    @*@Html.Button("Chuyển xử lý đơn hàng", "btn btn-primary", "Serch", "fa fa-plus-square")*@
+                </div>
+
+                <div class="container no-padding no-margin">
+                    <ul class="tabs">
+                        <li class="tab-link current" data-tab="tab-1" OrderStatus="@OrderStatus.DangXuLy.GetHashCode()">
+                            <span class="status-vb badge badge-info">Đang xử lý</span>
+                        </li>
+                        <li class="tab-link" data-tab="tab-2" OrderStatus="@OrderStatus.DangGiaoHang.GetHashCode()">
+                            <span class="status-vb badge badge-warning">Đang giao hàng</span>
+                        </li>
+                        <li class="tab-link" data-tab="tab-3" OrderStatus="@OrderStatus.DaGiaoHang_ChuaXacNhan.GetHashCode()">
+                            <span class="status-vb badge badge-success">Đã giao hàng </span>
+                        </li>
+                        <li class="tab-link" data-tab="tab-4" OrderStatus="@OrderStatus.HuyDonHang.GetHashCode()">
+                            <span class="status-vb badge badge-danger">Hủy đơn hàng</span>
+                        </li>
+                    </ul>
+                    <div id="tab-1" class="tab-content current">
+
+                        <div id="DanhMuc">
+                            @{
+                                Html.RenderPartial("ListOrder", (IPagedList<C.Core.Model.shAboutu>)ViewBag.ListAbout);
+                            }
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-content">
+                    </div>
+                    <div id="tab-3" class="tab-content">
+                    </div>
+                    <div id="tab-4" class="tab-content">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<div>
+    <div class="modal" id="dialog-Order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Chi tiết Đơn Hàng</h4>
+                </div>
+                <div class="modal-body" id="dialogOrder">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        function OrderProcessing(OrderGuid) {
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("OrderProcessing")',
+                data: { OrderGuid: OrderGuid },
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogOrder").html(data);
+                    $("#dialogOrder .modal-title").text('Chi tiết Đơn Hàng');
+                    $('#dialog-Order').modal('toggle');
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+
+        function ChuyenToiNhanVienXuLy(OrderGuid) {
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("ChuyenXuLyDonHang")',
+                data: { OrderGuid: OrderGuid },
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogOrder").html(data);
+                    $("#dialogOrder .modal-title").text('Chuyển xử lý đơn hàng');
+
+                    $('#dialog-Order').modal('toggle');
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+
+        function DeleteOrder(OrderGuid) {
+            $('#OrderGuid').val(OrderGuid);
+            $('#Description').val('Hủy đơn hàng')
+            $('#formview form').attr('action', '@Url.Action("OrderStatus")')
+            $('#formview form').submit();
+        }
+
+        function HienThiBaiViet(OrderGuid) {
+
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("DetailOrder")',
+                data: { OrderGuid: OrderGuid },
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogOrder").html(data);
+                    $('#dialog-Order').modal('toggle');
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#UserId').select2();
+
+            $('#UserId').on('change', function (e) {
+                $('#formview form').submit();
+            })
+        });
+
+        $(document).ready(function () {
+            $('ul.tabs li').click(function () {
+                var tab_id = $(this).attr('data-tab');
+
+                $('ul.tabs li').removeClass('current');
+                $('.tab-content').removeClass('current');
+
+                $(this).addClass('current');
+                $("#" + tab_id).addClass('current');
+
+                var OrderStatus = $(this).attr('OrderStatus')
+
+                $('#loader').fadeIn();
+                $.ajax({
+                    url: '@Url.Action("ListOrder")',
+                    data: { OrderStatus: OrderStatus },
+                    type: 'GET',
+                    dataType: "html",
+                    success: function (data) {
+                        $("#" + tab_id).html(data);
+                    },
+                    complete: function (data) {
+                        $('#loader').fadeOut('fast');
+                    }
+                });
+
+            });
+        });
+    </script>
+}

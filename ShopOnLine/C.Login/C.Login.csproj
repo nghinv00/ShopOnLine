@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD5476BA-ADEE-4028-BA85-F8CC63916180}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C.Login</RootNamespace>
+    <AssemblyName>C.Login</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TV.DbHelper">
+      <HintPath>..\..\TV.DbHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\LoginAdminController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="Common\" />
+    <Folder Include="Helper\" />
+    <Folder Include="MapRoute\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Release\TempPE\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C.Core\C.Core.csproj">
+      <Project>{1a2d8b32-b88f-45ad-aa97-a61bf0c917cd}</Project>
+      <Name>C.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C.DanhMuc\C.DanhMuc.csproj">
+      <Project>{0ABE2F57-A8EF-45F0-AAD3-921275C75907}</Project>
+      <Name>C.DanhMuc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C.Membership\C.Membership.csproj">
+      <Project>{A0C1D099-5F59-4C28-866D-7E44AFB40BF0}</Project>
+      <Name>C.Membership</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C.QuanTri\C.QuanTri.csproj">
+      <Project>{CB190989-474D-41E9-84A6-B2B200C55D50}</Project>
+      <Name>C.QuanTri</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C.UI\C.UI.csproj">
+      <Project>{7D25DD11-130A-4397-939B-2DF759538FF4}</Project>
+      <Name>C.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\C.Core.dll.config" />
+    <None Include="bin\Debug\C.Membership.dll.config" />
+    <None Include="bin\Debug\C.UI.dll.config" />
+    <None Include="obj\Debug\C.Login.csproj.CopyComplete" />
+    <None Include="obj\Debug\C.Login.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\C.Login.csprojResolveAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\build.force" />
+    <None Include="obj\Release\C.Login.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Release\C.Login.csprojResolveAssemblyReference.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\C.Core.dll" />
+    <Content Include="bin\Debug\C.Core.pdb" />
+    <Content Include="bin\Debug\C.DanhMuc.dll" />
+    <Content Include="bin\Debug\C.DanhMuc.pdb" />
+    <Content Include="bin\Debug\C.Login.dll" />
+    <Content Include="bin\Debug\C.Login.pdb" />
+    <Content Include="bin\Debug\C.Membership.dll" />
+    <Content Include="bin\Debug\C.Membership.pdb" />
+    <Content Include="bin\Debug\C.QuanTri.dll" />
+    <Content Include="bin\Debug\C.QuanTri.pdb" />
+    <Content Include="bin\Debug\C.UI.dll" />
+    <Content Include="bin\Debug\C.UI.pdb" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.xml" />
+    <Content Include="bin\Debug\Microsoft.Web.Mvc.dll" />
+    <Content Include="bin\Debug\MvcContrib.dll" />
+    <Content Include="bin\Debug\System.Web.Mvc.dll" />
+    <Content Include="bin\Debug\System.Web.Mvc.xml" />
+    <Content Include="bin\Debug\System.Web.Razor.dll" />
+    <Content Include="bin\Debug\System.Web.Razor.xml" />
+    <Content Include="bin\Debug\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\Debug\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\Debug\TV.DbHelper.dll" />
+    <Content Include="obj\Debug\C.Login.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\C.Login.dll" />
+    <Content Include="obj\Debug\C.Login.pdb" />
+    <Content Include="obj\Release\C.Login.csproj.FileListAbsolute.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

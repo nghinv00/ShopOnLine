@@ -1,0 +1,48 @@
+﻿@model  IEnumerable<shNew>
+@using C.Core.Model;
+@using C.Core.Common;
+
+<ul>
+    @foreach (var tintuc in Model as IEnumerable<shNew>)
+    {
+        <li>
+            <a href="@tintuc.MetaTitle-@tintuc.NewId">
+                @StringHelper.ConvertToTitleCase(tintuc.TitleNew)
+            </a>
+        </li>
+    }
+    @*<li>
+            <a href="#">
+                Chăn ga gối cao cấp Sông Hồng ấm áp trong mùa lạnh
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                Chăn ga gối đệm giá bao nhiêu? Thương hiệu nào tốt cho sức khỏe?
+            </a>
+        </li>
+        <li>
+            <a href="#">Lựa chọn chăn ga gối đệm sạch và đẹp cho trẻ em</a>
+        </li>
+        <li>
+            <a href="#">Lựa chọn bộ chăn ga gối đệm thế nào để ngủ ngon?</a>
+        </li>
+        <li>
+            <a href="#">Bí quyết chọn chăn ga gối đệm cao cấp giá “mềm”?</a>
+        </li>
+        <li>
+            <a href="#">Chọn đệm tốt cho sức khỏe</a>
+        </li>
+        <li>
+            <a href="#">Nằm đệm “mới”… cũng ngứa</a>
+        </li>
+        <li>
+            <a href="#">Mua chăn ga gối đệm hàng Công ty để đảm bảo sức khỏe</a>
+        </li>
+        <li>
+            <a href="#">Màu sắc chăn ga gối đệm dành cho mùa cưới</a>
+        </li>
+        <li>
+            <a href="#">Chọn chăn ga gối đệm nào cho tổ ấm?</a>
+        </li>*@
+</ul>

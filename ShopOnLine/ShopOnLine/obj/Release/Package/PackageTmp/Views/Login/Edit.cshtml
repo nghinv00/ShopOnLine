@@ -1,0 +1,188 @@
+﻿@model shMember
+@using C.UI.Helpers;
+@using C.Core.Model;
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Hidden("MemberGuiId")
+    @Html.Hidden("MemberId")
+
+    <div class="col-md-12 no-padding">
+        <div class="col-md-8 no-padding">
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Tên thành viên: ")  <span class="required"> (*) </span>
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBox("MemberName", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Tên đăng nhập:") <span class="required"> (*) </span>
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBox("MemberLogin", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Mật khẩu: ")  <span class="required"> (*) </span>
+                </div>
+                <div class="col-md-9">
+                    @if (Model.MemberId > 0)
+                    {
+                        @Html.Password("Password", Model.Password, new { @class = "form-control" })
+                    }
+                    else
+                    {@Html.Password("Password", null, new { @class = "form-control" })
+
+                }
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Địa chỉ:")
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBox("Address", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Giới tính: ")
+                </div>
+                <div class="col-md-9">
+                    &nbsp;&nbsp;&nbsp;
+                    @Html.RadioButton("Sex", 1, new { @id = "Nam" })
+                    @Html.Label("Nam", new { @for = "Nam" })
+                    &nbsp;&nbsp;&nbsp;
+                    @Html.RadioButton("Sex", 2, new { @id = "Nu" })
+                    @Html.Label("Nữ", new { @for = "Nu" })
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Email: ")
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBox("Email", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Số điện thoại: ")
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBox("Phone", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 no-padding">
+                <div class="col-md-3">
+                    @Html.Label("Chú thích: ")
+                </div>
+                <div class="col-md-9">
+                    @Html.TextArea("Notes", null, new { @class = "form-control textarea-noresize-vertical" })
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4" style="border-left: 2px solid #efefef;">
+            <div id="image">
+                <div class="imageFile">
+                    @{
+                        if (Model.MemberId > 0)
+                        {
+                            <img src="@Model.ImageFile" id="img-file" />
+                        }
+                        else
+                        {
+                            <img src="/Content/Images/background.jpg" id="img-file" />
+                        }
+                    }
+
+                </div>
+                @Html.Hidden("ImageFile")
+                <input type="file" value="Chọn file" id="FileUploader" name="FileUploader" accept="image/x-png,image/gif,image/jpeg" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" style=" ;">
+        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+    </div>
+
+    <div class="clear"></div>
+}
+
+<script>
+    $('#formview form').validate({
+        messages: {
+            MemberName: {
+                required: 'Tên đăng nhập không được bỏ trống'
+            },
+            Password: {
+                required: 'Mật khẩu không được bỏ trống'
+            },
+            MemberLogin: {
+                required: 'Tên đăng nhập được bỏ trống'
+            }
+        },
+        rules: {
+            MemberName: {
+                required: true
+            },
+            Password: {
+                required: true
+            },
+            MemberLogin: {
+                required: true
+            }
+        }
+    });
+
+    $('#btnGhiLai').click(function (e) {
+        $('#formview form').attr('action', '@Url.Action("info", "login")');
+        $('#formview form').submit();
+    });
+
+    $('#btnBack').click(function (e) {
+        window.history.go(-1);
+    });
+
+    $('#FileUploader').on('change', function (e) {
+        var data = new FormData();
+        var files = $("#FileUploader").get(0).files;
+
+        // Add the uploaded image content to the form data collection
+        if (files.length > 0) {
+            data.append("PreviewImage", files[0]);
+        }
+        // call ajax
+        $.ajax({
+            url: '/api/FileUpload/Preview',
+            data: data,
+            type: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+            success: function (response) {
+                $('#img-file').attr('src', response);
+                $('#ImageFile').val(response)
+            }, error: function (response) {
+
+            },
+            complete: function (response) {
+
+            }
+        });
+    });
+
+</script>

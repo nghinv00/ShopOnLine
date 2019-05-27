@@ -1,0 +1,118 @@
+﻿@using C.Core.Model;
+@using C.UI.Tool;
+
+@model IEnumerable<shCategory>
+
+<div id="category-ui">
+    @if (Model != null)
+    {
+        IEnumerable<shCategory> dsParent = Model.Where(x => string.IsNullOrEmpty(x.ParentId) || string.IsNullOrWhiteSpace(x.ParentId));
+        <label>
+            <input type="checkbox" name="All" />
+            <a>
+                Chọn tất cả
+            </a>
+        </label>
+        <ul class="treeview">
+            @foreach (var item in dsParent as IEnumerable<shCategory>)
+            {
+
+                <li class="li-parent" id="li-parent-@item.CategoryId">
+                    <input type="checkbox" value="@item.CategoryGuid" id="input-parent-@item.CategoryId" categoryid="@item.CategoryId" name="CagegoryParent" />
+                    <a categoryid="@item.CategoryGuid">
+                        <span for="@item.CategoryGuid">@item.CategoryName</span>
+                    </a>
+
+                    <ul class="treeview child " id="treeview-child-@item.CategoryId">
+                        @{
+                            IEnumerable<shCategory> dsChild = Model.Where(x => x.ParentId == item.CategoryGuid);
+                            foreach (var child in dsChild as IEnumerable<shCategory>)
+                            {
+                                <li class="li-child" id="li-child-@child.CategoryId">
+                                    <label>
+                                        <input type="checkbox" name="CagegoryChild" value="@child.CategoryGuid" categoryguid="@child.CategoryGuid" categoryid="@child.CategoryId" total="@(dsChild.Count())" parentid="@item.CategoryId" />
+                                        @child.CategoryName
+                                    </label>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </li>
+
+
+            }
+        </ul>
+    }
+
+</div>
+
+
+<script>
+    $('ul.treeview li.li-parent input').on('click', function (e) {
+        var category = $(this).attr('categoryid');
+        console.log(category)
+        if ($(this).is(':checked')) {
+            $('ul.treeview li#li-parent-' + category + ' input').prop('checked', true);
+        }
+        else {
+            $('ul.treeview li#li-parent-' + category + ' input').prop('checked', false);
+        }
+
+        var check = true; // 
+        $('input[name=CagegoryParent]').each(function (index) {
+            if (!$(this).is(':checked')) {
+                check = false;
+            }
+        });
+        if (check) {
+            $('input[name=All]').prop('checked', true);
+        }
+        else {
+            $('input[name=All]').prop('checked', false);
+        }
+    });
+
+    $('ul.treeview li.li-parent a').on('click', function (e) {
+        var target = $('.treeview li.li-parent a');
+
+        var check = $(this).next().hasClass('child');
+         
+        if (check) {
+            $(this).next().removeClass('child');
+        }
+        else {
+            $(this).next().addClass('child');
+        }
+    });
+
+    $('ul.treeview li.li-child input').on('click', function (e) {
+        var parentid = $(this).attr('parentid');
+        if ($(this).is(':checked')) {
+            var value = $(this).attr('categoryid');
+            var total = $(this).attr('total');
+            var dsCheck = $('ul#treeview-child-' + parentid + ' li.li-child input:checked').length;
+            if (total == dsCheck) {
+                $('input#input-parent-' + parentid + '').prop('checked', true);
+            }
+            else {
+                $('input#input-parent-' + parentid + '').prop('checked', false);
+            }
+        }
+        else {
+            $('input#input-parent-' + parentid + '').prop('checked', false);
+        }
+        
+    });
+
+
+    $('input[name=All]').on('change', function (e) {
+        if ($(this).is(':checked')) {
+            $('#category-ui input[type=checkbox]').prop('checked', true);
+        }
+        else {
+            $('#category-ui input[type=checkbox]').prop('checked', false);
+        }
+
+    });
+</script>

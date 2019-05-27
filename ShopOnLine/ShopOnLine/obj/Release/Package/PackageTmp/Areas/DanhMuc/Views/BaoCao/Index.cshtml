@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "Báo cáo";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+<script src="~/AdminLTE/canvanjs/jquery.canvasjs.min.js"></script>
+<script>
+ 
+</script>
+<section class="content-header">
+    <h1><small></small></h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>  </a></li>
+        <li><a href="#"> </a></li>
+        <li class="active"></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/BaoCao/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+
+            <div class="row no-margin">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="/DanhMuc/Order/Index">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-shopping-cart"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tổng đơn hàng trong ngày</span>
+                                <span class="info-box-number">@ViewBag.DonHang</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="/DanhMuc/Member/Index">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="fa fa-user-plus"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Thành viên mới</span>
+                                <span class="info-box-number">@ViewBag.NewMember</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="/DanhMuc/ProductInventory/Index">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-aqua"><i class="fa fa-product-hunt"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> Số lượng sản phẩm tồn </span>
+                                <span class="info-box-number">@ViewBag.SoLuongTon<small></small></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="/DanhMuc/DoanhThu/Index">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-money"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Doanh thu theo ngày</span>
+                                <span class="info-box-number">@ViewBag.DoanhThuTheoNgay</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row no-margin" style="min-height: 450px;">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                    </ul>
+                    <div class="tab-content no-padding">
+                        <div id="revenue-chart"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        window.onload = function () {
+            var dataPointsDoanhThu = [];
+            var dataPointsDonHang = [];
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: '/BaoCao/DoanhThuDonHang',
+                data: {},
+                //async: false,
+                dataType: "json",
+                success: function (data) {
+
+                    console.log(data)
+                    dataPointsDoanhThu = data.dsDoanhThu;
+                    dataPointsDonHang = data.dsDonHang;
+
+                    var options = {
+                        exportEnabled: true,
+                        animationEnabled: true,
+                        title: {
+                            //text: 'Units Sold VS Profit'
+                        },
+                        subtitles: [{
+                            text: 'Doanh thu hàng tháng'
+                        }],
+                        axisX: {
+                            title: 'Biểu đồ doanh thu hàng tháng'
+                        },
+                        axisY: {
+                            title: 'Doanh thu',
+                            titleFontColor: '#4F81BC',
+                            lineColor: '#4F81BC',
+                            labelFontColor: '#4F81BC',
+                            tickColor: '#4F81BC',
+                            includeZero: false
+                        },
+                        axisY2: {
+                            title: 'Số đơn hàng',
+                            titleFontColor: '#C0504E',
+                            lineColor: '#C0504E',
+                            labelFontColor: '#C0504E',
+                            tickColor: '#C0504E',
+                            includeZero: false
+                        },
+                        toolTip: {
+                            shared: true
+                        },
+                        legend: {
+                            cursor: 'pointer',
+                            itemclick: toggleDataSeries
+                        },
+                        data:
+                            [{
+                                type: 'spline',
+                                name: 'Doanh thu',
+                                showInLegend: true,
+                                //axisXIndex: 1, //defaults to 0
+                                xValueFormatString: 'Ngày #,##0.#',
+                                yValueFormatString: 'Doanh thu: $#,##0.#',
+                                dataPoints: dataPointsDoanhThu,
+                            },
+                            {
+                                type: 'spline',
+                                name: 'Số đơn hàng',
+                                axisYType: 'secondary',
+                                //axisXIndex: 1, //defaults to 0
+                                showInLegend: true,
+                                xValueFormatString: 'Ngày #,##0.#',
+                                yValueFormatString: 'Số đơn hàng: #,##0.#',
+                                dataPoints: dataPointsDonHang,
+                            }]
+                    };
+
+                    $('#revenue-chart').CanvasJSChart(options);
+                },
+                error: function (data) {
+
+                },
+                complete: function (data) {
+
+                }
+            });
+
+            function toggleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === 'undefined' || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+        }
+
+        $(document).ready(function () {
+
+
+        });
+    </script>
+}

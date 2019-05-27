@@ -1,0 +1,52 @@
+﻿@using C.Core.Model;
+@model IPagedList<shComment>
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+
+<div id="ext_comment">
+    @{
+        foreach (var item in Model as IPagedList<shComment>)
+        {
+
+            <div class="node-commnet" value="@item.ProductGuid">
+                <div class="avatar">
+                    <img src="~/SongHongVn/modules/product/images/avatar.jpg">
+                </div>
+                <div class="info-comment">
+                    <div class="info-preson">
+                        <span class="name">@item.MemberName </span>
+                        <span class="email">
+                            (
+                            <span class="email">@item.Email</span>)
+                        </span>  -  <span class="time">Gửi vào: @item.CreatedDate.Value.ToString("dd/MM/yyy HH:mm:ss")</span>
+                    </div>
+                    <div class="ccomment">
+                        @item.Contents
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        }
+    }
+
+    @Html.PagedListPager(Model, page => "javascript:changpagecomment(" + page + ")", PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>
+
+<script>
+    function changpagecomment(page) {
+
+        $.ajax({
+            url: '/Common/CommentProduct',
+            data: {
+                page: page,
+                ProductGuid: $('#ProductGuid').val(),
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#list-comment').html(data);
+            }
+        });
+
+    }
+</script>

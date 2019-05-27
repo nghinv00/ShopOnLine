@@ -1,0 +1,88 @@
+﻿
+@model IEnumerable<C.Core.Model.shComment>
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Common;
+@using C.UI.Helpers;
+
+@{
+    if (Model != null && Model.Count() > 0)
+    {
+        <tr class="tr-about" style="display: table-row;">
+            <td colspan="9" style="padding:10px; background:#fff">
+                <div class="box box-success" style="margin-bottom: 0px; display: block;">
+                    <div class="box-header with-border" style="padding:5px;">
+                        <h4 style="font-size:15px" class="box-title">Danh mục con  </h4>
+                        <div class="box-tools pull-right" style="top:0px">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="">
+                            <div class="form-group">
+                                <table class="grid">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%;">STT</th>
+                                            <th width="5%;">#</th>
+                                            <th width="10%;">Tên tài khoản</th>
+                                            <th width="10%;"> Email </th>
+                                            <th width="10%;">Tên khách hàng</th>
+                                            <th width="5%;">Đánh giá</th>
+                                            <th width="40%;">Nội dung</th>
+                                            <th width="10%;"> Trạng thái </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int sodem = 0;
+                                            foreach (var item in Model as IEnumerable<shComment>)
+                                            {
+                                                sodem++;
+
+                                                <tr id="tr_childabout_@item.CommentGuid" class="data" commentguid="@item.CommentGuid" commentid="@item.CommentId">
+                                                    <td class="text-align-center">@sodem</td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <div class="sett" data-toggle="dropdown"></div>
+                                                            <ul class="dropdown-menu sett_dropdown-caret">
+                                                                <li class="pop_arrow_new"></li>
+                                                                @{
+                                                                    <li><a href="javascript:XoaBinhLuan('@item.CommentGuid')"><i class='fa fa-edit'> Xóa bình luận </i></a></li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="native">@Html.MemberName(@item.MemberGuiId)</td>
+                                                    <td class="native">@item.Email</td>
+                                                    <td class="text-align-center">@item.MemberName</td>
+                                                    <td class="native">@item.Rating</td>
+                                                    <td class="native">@item.Contents</td>
+                                                    <td class="native">
+                                                        @{
+                                                            if (item.Status.GetValueOrDefault(false))
+                                                            { <span>Hoạt động</span> }
+                                                            else
+                                                            { <span>Không hoạt động</span>}
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class='tr-about' style='display:none;'><td colspan='9'> <span class='required'><b>Chưa có thông sản phẩm con</b></span> </td> </tr>
+    }
+}

@@ -1,0 +1,223 @@
+﻿@{
+    ViewBag.Title = "Danh sách Danh mục";
+}
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+@using C.Core.Model;
+
+<!-- DataTables -->
+<link href="~/Content/common.css" rel="stylesheet" />
+<link href="~/AdminLTE/datatable/css/dataTables.bootstrap.css" rel="stylesheet" />
+<script src="~/AdminLTE/datatable//js/jquery.dataTables.min.js"></script>
+<script src="~/AdminLTE/datatable/js/dataTables.bootstrap.min.js"></script>
+
+<style>
+    .table-roll {
+        min-height: 500px;
+    }
+
+    .body-treeview .input-filter {
+        margin: 0 10px 15px 10px;
+    }
+
+    .phieu {
+        font-weight: bold;
+    }
+
+    .phieu-nhap {
+        color: red;
+    }
+
+    .phieu-xuat {
+        color: #3c8dbc;
+    }
+
+    .thao-tac a {
+        cursor: pointer;
+        font-size: 18px !important;
+        color: black;
+    }
+
+        .thao-tac a:hover {
+            cursor: pointer;
+        }
+
+    #example1 .trang-thai {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Phiếu nhập/xuất kho
+        <small></small>
+
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Phiếu nhập/xuất kho</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/ProductManage/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="table-roll">
+                        <div class="table-roll container-treeview" style="">
+                            <div class="product-child-title header-treeview">Bộ lọc phiếu nhập - xuất</div>
+                            <div class="body-treeview">
+                                <div class="form-group input-filter">
+                                    <label for="TuNgay">Từ ngày :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                        </div>
+                                        @Html.TextBox("TuNgay", null, new { @class = "form-control", @placeholder = "Từ ngày" })
+                                    </div>
+                                </div>
+                                <div class="form-group input-filter">
+                                    <label for="DenNgay">Đến ngày :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar-plus-o"></i>
+                                        </div>
+                                        @Html.TextBox("DenNgay", null, new { @class = "form-control", @placeholder = "Đến ngày" })
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group input-filter">
+                                    <label for="TuKhoa">Từ khóa :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-key"></i>
+                                        </div>
+                                        @Html.TextBox("TuKhoa", null, new { @class = "form-control", @placeholder = "Từ khóa" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group input-filter">
+                                    <label for="TrangThai">Trạng thái :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-life-ring"></i>
+                                        </div>
+                                        @Html.DropDownList("TrangThai", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group input-filter">
+                                    <label for="NguoiTao">Người tạo :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user-o"></i>
+                                        </div>
+                                        @Html.DropDownList("NguoiTao", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group input-filter">
+                                    @Html.Button("Tìm kiếm", "btn btn-primary", "btnSearch", "fa fa-search")
+                                </div>
+
+                            </div>
+                            <div class="product-child-title footer-treeview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <div class="row" style="text-align: right;">
+                            <div class="col-md-12">
+                                @Html.Button("Tạo phiếu nhập", "btn btn-primary", "Create", "fa fa-plus-square")
+                                @Html.Button("Tạo phiếu xuất", "btn btn-success", "Delete", "fa fa-sign-out")
+                            </div>
+                        </div>
+                    </div>
+                    <div id="DanhMuc">
+                        @{ Html.RenderPartial("ListReceiptIsuue", (IEnumerable<C.Core.Model.shGoodReceiptIsuue>)ViewBag.ListSize); }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+<div>
+    <div class="modal" id="dialog-NhapXuat">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Chọn hình thức nhập dữ liệu </h4>
+                </div>
+                <div class="modal-body" id="dialogNhapXuat">
+                    @Html.Hidden("UrlAction")
+                    <div id="Excel" class="btn btn-info"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Import từ Excel</div>
+                    &nbsp;
+                    <div id="Hand" class="btn btn-info"><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Nhập dữ liệu bằng tay</div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            //$('#example1').DataTable()
+            $('#example1').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true
+            });
+        });
+
+        $('#TrangThai, #NguoiTao').select2();
+
+        $(document).ready(function () {
+
+            $("#TuNgay, #DenNgay").datepicker({
+                changeYear: true,
+                changeMonth: true,
+                yearRange: '-99:+99'
+            });
+
+
+            $('#Create').click(function (e) {
+                $('#UrlAction').val('@Url.Action("Nhap")');
+                $('#dialog-NhapXuat').modal('toggle');
+            });
+
+            $('#Hand').on('click', function (e) {
+                window.location.href = $('#UrlAction').val();
+            });
+
+            $('#Delete').click(function (e) {
+                $('#UrlAction').val('@Url.Action("Xuat")');
+                $('#dialog-NhapXuat').modal('toggle');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Tin mới -";
+}
+@using C.Core.Common;
+@using C.Core.Model;
+@model IPagedList<shNew>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+<style type="text/css">
+    .wrapper > .sliderProd .slick-dots li {
+        margin: 0 10px
+    }
+
+    .wrapper > .sliderProd .item, .sliderProd .item .item_img {
+        margin-bottom: 8px
+    }
+
+    .newsLeft > .divNews .item .i-desc {
+        height: 125px
+    }
+</style>
+
+<link rel="stylesheet" href="~/SongHongVn/modules/news/css/news.css" type="text/css" />
+<script type="text/javascript" src="~/SongHongVn/modules/news/js/news.js"></script>
+<script type="text/javascript" src="~/SongHongVn/js/yetii.js"></script>
+
+
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_TinTucSuKien });
+    }
+    @Html.Hidden("hdurl", "/tin-tuc")
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li>
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li>TIN MỚI</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="box_mid">
+        <div class="mid-title">
+            <div class="wrapper">
+                <div class="titleL">
+                    <h1>TIN MỚI</h1>
+                </div>
+                <div class="titleR"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div class="mid-content">
+            <div class="mod-content">
+                <div class="wrapper">
+                    <div id="vnt-siderbar">
+                    </div>
+
+
+                    <div id="vnt-main">
+
+                        @{ Html.RenderPartial("DsNews", ViewBag.DsNews as IPagedList<shNew>); }
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="clear"></div>
+</div>
+
+@section scripts{
+
+    <script>
+         $.ajax({
+            url: '@Url.Action("CategoryCommon", "Common")',
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#vnt-siderbar').html(data);
+            }
+        });
+
+    </script>
+}

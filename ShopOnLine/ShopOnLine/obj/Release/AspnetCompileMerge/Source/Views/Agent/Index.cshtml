@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Danh sách đại lý ";
+}
+@using C.Core.Common;
+@using C.Core.Model;
+
+<link href="~/SongHongVn/skins/default/style/screen.css" rel="stylesheet" />
+<link href="~/SongHongVn/modules/dealer/css/dealer.css" rel="stylesheet" />
+@*<link href="~/SongHongVn/js/thickbox/thickbox.css" rel="stylesheet" />*@
+<script src="~/SongHongVn/modules/dealer/js/dealer.js"></script>
+@*<script src="~/SongHongVn/js/thickbox/thickbox.js"></script>*@
+<script src="~/SongHongVn/js/floater_xlib.js"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBikYIDBDDubAu0QRppNl9fVVwX7y5pg3M&callback=initMap" type="text/javascript"></script>
+
+<script>
+
+    function initMap() {
+        //var map = new google.maps.Map(document.getElementById("map-canvas"), {
+        //    center: { lat: 21.0168864, lng: 105.7855574 },
+        //    zoom: 15
+        //});
+    }
+
+    $(document).ready(function () {
+        initStore('@ViewBag.id', '@ViewBag.state', '@ViewBag.AgentAddress');
+
+        //initMap();
+    });
+
+</script>
+
+
+<div id="map"></div>
+
+<script>
+    var map;
+    function initMap() {
+        //map = new google.maps.Map(document.getElementById('map'), {
+        //    center: { lat: -34.397, lng: 150.644 },
+        //    zoom: 8
+        //});
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    .fancybox-margin {
+        margin-right: 17px;
+    }
+</style>
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_DaiLy });
+    }
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li><a href="/">Trang chủ</a> </li>
+                    <li> <a href="/dai-ly">HỆ THỐNG ĐẠI LÝ</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mod-content">
+        <div class="wrapper">
+            <div class="box_mid">
+                <div class="mid-title">
+                    <div class="wrapper">
+                        <div class="titleL"><h1>HỆ THỐNG ĐẠI LÝ</h1></div>
+                        <div class="titleR"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="mid-content">
+                    <div class="formSystem">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "modSearch", @name = "modSearch" }))
+                        {
+                            @Html.Hidden("hdurl", "/dai-ly")
+                            <div class="formSystem-l">
+                                <div class="table-system">
+                                    <span class="title-system">Các đại lý trên: </span>
+                                    <div class="row-input">
+                                        <div class="fl">
+                                            <div id="Province">
+                                                @Html.DropDownList("City", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control", @onchange = "changeCity(this.value)" })
+                                                <input type="hidden" id="DistrictId" name="DistrictId" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="fr">
+                                            <div id="District">
+                                                @Html.DropDownList("Town", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control", @onchange = "changeTown(this.value)" })
+                                            </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="formSystem-r">
+                                <div class="input-group">
+                                    @Html.TextBox("AgentAddress", null, new { @class = "form-control", @placeholder = "Nhập tên đường, hoặc tên đại lý ..." })
+                                    <span class="input-group-btn">
+                                        <button type="button" name="btn-submit" id="btn-submit" class="btn btn-submit-search" onclick="Search();" value="">
+                                            <span>Tìm kiếm đại lý</span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        }
+                    </div>
+                </div>
+                <div class="showresult">
+                    <div class="showmap">
+                        <div id="map-canvas"></div>
+                    </div>
+                    <div class="result" style="float: left; width: 100%;">
+                        <div class="r-count" id="ext_mess_result"></div>
+                        <div class="show-result" id="list_dealer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

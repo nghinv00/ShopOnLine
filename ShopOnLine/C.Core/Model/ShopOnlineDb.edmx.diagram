@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d52767fafabf4b4ca25f153a419373d1" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="ShopOnlineModel.landDistrict" Width="1.5" PointX="2.875" PointY="0.75" />
+        <EntityTypeShape EntityType="ShopOnlineModel.landProvince" Width="1.5" PointX="0.625" PointY="0.875" />
+        <EntityTypeShape EntityType="ShopOnlineModel.landQuanHuyen" Width="1.5" PointX="5.5" PointY="1" />
+        <EntityTypeShape EntityType="ShopOnlineModel.landTinhThanh" Width="1.5" PointX="8.25" PointY="1.125" />
+        <EntityTypeShape EntityType="ShopOnlineModel.LoaiPhieuNhap" Width="1.5" PointX="13.75" PointY="1.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtDepartment" Width="1.5" PointX="11.75" PointY="5.125" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtPosition" Width="1.5" PointX="11.75" PointY="9.25" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtRole" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtSubstitute" Width="1.5" PointX="13.75" PointY="9.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtSubstituteDetail" Width="1.5" PointX="13.75" PointY="12.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtUnitManager" Width="1.5" PointX="13.75" PointY="15.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtUnit" Width="1.5" PointX="11.75" PointY="23.5" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtUserConfig" Width="1.5" PointX="15.75" PointY="10.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtUserConfigDetail" Width="1.5" PointX="15.75" PointY="1.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtUserRole" Width="1.5" PointX="14" PointY="5.125" />
+        <EntityTypeShape EntityType="ShopOnlineModel.qtUser" Width="1.5" PointX="17" PointY="4.25" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shAboutu" Width="1.5" PointX="19.25" PointY="4.875" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shAgent" Width="1.5" PointX="15.75" PointY="13.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shBanner" Width="1.5" PointX="17.75" PointY="10.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shCategory" Width="1.5" PointX="0.75" PointY="14.875" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shCategoryImage" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shColor" Width="1.5" PointX="17.75" PointY="14.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shComment" Width="1.5" PointX="5.25" PointY="14" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shGoodReceiptIsuue" Width="1.5" PointX="13.75" PointY="18.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shGoodReceiptIsuueDetail" Width="1.5" PointX="15.75" PointY="18.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shMember" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shNew" Width="1.5" PointX="17.75" PointY="17.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shOrderDetail" Width="1.5" PointX="11.25" PointY="13.5" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shOrderHistory" Width="1.5" PointX="19.75" PointY="9.625" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shPrice" Width="1.5" PointX="9.75" PointY="19.125" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shProductImage" Width="1.5" PointX="5.25" PointY="24" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shProduct" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shProductSet" Width="1.5" PointX="5.25" PointY="19" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shSaleDetail" Width="1.5" PointX="8.25" PointY="12.125" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shSetSize" Width="1.5" PointX="7.5" PointY="18.375" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shSex" Width="1.5" PointX="17.75" PointY="1.625" />
+        <AssociationConnector Association="ShopOnlineModel.FK_landDistrict_landProvince" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUserRole_qtDepartments" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUsers_qtDepartments" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUserRole_qtPositions" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUsers_qtPositions" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUserRole_qtRoles" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUserRole_qtUnits" />
+        <AssociationConnector Association="ShopOnlineModel.FK_qtUsers_qtUnits" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shAboutus_qtUsers" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shCategoryImage_shCategory" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shProducts_shCategory" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shComments_shMembers" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shComments_shProducts" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shOrderDetail_shProducts" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shPrices_shSize" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shProductImage_shProducts" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shSaleDetail_shProducts" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shSection_shProducts" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shSize_shSection" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shIdeaCustomer" Width="1.5" PointX="20.375" PointY="0.75" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shOrderDetail_shSetSize" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shOrder" Width="1.5" PointX="5.5" PointY="5.375" />
+        <EntityTypeShape EntityType="ShopOnlineModel.shSale" Width="1.5" PointX="8.375" PointY="6.625" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shOrder_shMembers1" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shOrderDetail_shOrder" />
+        <AssociationConnector Association="ShopOnlineModel.FK_shSaleDetail_shSale1" />
+        <EntityTypeShape EntityType="ShopOnlineModel.ThongBao" Width="1.5" PointX="20.375" PointY="13.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

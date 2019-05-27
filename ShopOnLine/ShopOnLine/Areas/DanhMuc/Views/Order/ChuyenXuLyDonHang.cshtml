@@ -1,0 +1,62 @@
+﻿@model C.Core.Model.shOrder
+<div id="shOrder">
+    @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.Hidden("OrderGuid")
+        <div class="container col-md-12">
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.Label("Nhân viên xử lý: ") (<span class="required">*</span>)
+                    @Html.DropDownList("UserId", null, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Mô tả nội dung: ")
+                    (<span class="required">*</span>)
+                    @Html.TextArea("OrderName", null, new { @class = "form-control" })
+                </div>
+
+
+                <div class="float-right">
+                    <button type="button" class="btn btn-danger" onclick="HuyBo()">Hủy Bỏ</button>
+                    <button type="button" class="btn btn-primary" onclick="GhiLai()">Ghi lại</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+
+    function HuyBo() {
+        $('#OrderGuid').val('');
+        $('#dialog-Order').modal('toggle');
+    }
+
+    function GhiLai() {
+
+        if ($('#shOrder form').valid()) { // submit trước khi nhảy vào hàm
+            $('#loader').fadeIn('slow');
+
+           // thỏa mãn điều kiện
+            $.ajax({
+                url: '@Url.Action("ChuyenXuLyDonHang")',
+                data: {
+                    OrderGuid: $('#shOrder #OrderGuid').val(),
+                    UserId: $('#shOrder #UserId').val(),
+                    OrderName: $('#shOrder #OrderName').val(),
+                },
+                type: 'POST',
+                dataType: "json",
+                success: function (data) {
+                    $('#dialog-Order').modal('toggle');
+                    window.location.reload();
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+
+        }
+    }
+</script>

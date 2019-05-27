@@ -1,0 +1,48 @@
+﻿@model shOrder
+@using C.Core.Model;
+@using C.DanhMuc.Helper;
+<ul class="timeline">
+
+
+    @{
+        IEnumerable<shOrderHistory> ds = ViewBag.dsOrderHistory as IEnumerable<shOrderHistory>;
+        if (ds != null && ds.Count() > 0)
+        {
+            foreach (var item in ds)
+            {
+
+                <li class="time-label">
+                    <span class="bg-red">
+                        @item.CreateDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")
+                    </span>
+                </li>
+
+                <li>
+
+                    <i class="fa fa-envelope bg-blue"></i>
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i>  @item.CreateDate.GetValueOrDefault(DateTime.Now).ToString("HH:mm")</span>
+
+                        <h3 class="timeline-header">
+                            <a href="#">
+                                @Html.OrderHistoryMemberName_UserName(item.UserId, item.MemberGuid)
+                            </a>
+                        </h3>
+                        <div class="timeline-body">
+                            @item.Description
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+        else
+        {
+            <li class="time-label">
+                <span>
+                    Chưa có dữ liệu trên hệ thống
+                </span>
+            </li>
+        }
+    }
+
+</ul>

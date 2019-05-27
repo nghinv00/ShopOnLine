@@ -1,0 +1,107 @@
+﻿@using C.Core.Model;
+@model shNew
+@using C.Core.Common;
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_TinTucSuKien });
+    }
+    @Html.Hidden("hdurl", "/tin-tuc")
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li>
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li><a href="/tin-tuc">TIN MỚI</a></li>
+                    <li>Tin thế giới Chăn Nệm</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="box_mid">
+        <div class="mid-title">
+            <div class="wrapper">
+                <div class="titleL">
+                    <h1>@Model.TitleNew</h1>
+                </div>
+                <div class="titleR"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="mid-content">
+            <div class="mod-content">
+                <div class="wrapper">
+                    <div id="vnt-siderbar">
+                    </div>
+                    <div id="vnt-main">
+                        <div class="the-content">
+                            <div align="justify">
+                                @Html.Raw(Model.Contents)
+                            </div>
+                        </div>
+                        <div class="tag">
+                            <p>
+                                <span class="title">TAG: </span>
+                            </p>
+                        </div>
+                        <div class="like_share">
+                            <div class="like_facebook">
+                            </div>
+                            <div class="feedback">
+                                <a href="#Feddback" onclick="vnTcomment.ShowFormComment()" class="link-feedback">Viết phản hồi</a>
+                                <a href="javascript:void(0);" class="thickbox link-email" title="Gửi cho bạn bè">Gửi cho bạn bè</a>
+                                <a class="link-print" href="javascript:void();" onclick="javascript:openPopUp('','Print',750,600, 'Yes')">In bài viết</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="boxComment">
+                            <div id="FormComment" class="FormComment" style="display:none;">
+                            </div>
+                        </div>
+                        <div class="news_related">
+                            <h4>Các tin khác</h4>
+                            <div id="news_related_list"></div>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="clear"></div>
+</div>
+
+@section scripts {
+    <script>
+        //
+
+         $.ajax({
+            url: '@Url.Action("CategoryCommon", "Common")',
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#vnt-siderbar').html(data);
+            }
+        });
+
+        $.ajax({
+            url: '@Url.Action("NewsRelated")',
+            data: {
+                NewGuiId: '@Model.NewGuiId'
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#news_related_list').html(data);
+            }
+        });
+
+    </script>
+
+
+}

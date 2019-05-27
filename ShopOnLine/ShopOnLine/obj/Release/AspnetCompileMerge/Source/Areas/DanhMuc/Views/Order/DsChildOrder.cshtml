@@ -1,0 +1,92 @@
+﻿@model IEnumerable<C.Core.Model.shOrderDetail>
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Common;
+
+@{
+    if (Model != null && Model.Count() > 0)
+    {
+        <tr class="tr-about" style="display: table-row;">
+            <td colspan="13" style="padding:10px; background:#fff">
+               
+                <div class="box box-success" style="margin-bottom: 0px; display: block;">
+                    <div class="box-header with-border" style="padding:5px;     background: #3c8dbc;   background-color: #3c8dbc;">
+                        <h4 style="font-size:15px" class="box-title">Danh sách chi tiết sản phẩm</h4>
+                        <div class="box-tools pull-right" style="top:0px">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="">
+                            <div class="form-group">
+                                <table class="grid">
+                                    <thead>
+                                        <tr>
+                                            <th width="7%;">#</th>
+                                            <th width="15%;">Tên bộ sản phẩm</th>
+                                            <th width="15%;">Sản phẩm cấp dưới</th>
+                                            <th width="10%;">Kích thước</th>
+                                            <th width="5%;">Số lượng</th>
+                                            <th width="15%;">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in Model as IEnumerable<shOrderDetail>)
+                                            {
+                                                <tr id="tr_childabout_@item.OrderDetailId" class="data" aboutid="@item.OrderDetailId">
+                                                    <td align="center">
+                                                        <ul class="task-icon">
+                                                            <li>
+                                                                <a class="css-coment" href="javascript:HienThiSanPham('@item.OrderDetailGuid', '@item.OrderGuid', '@item.ProductGuid', '@item.SectionGuid', '@item.SizeGuid')"
+                                                                   data-toggle="tooltip" title="Xem chi tiết mặt hàng">
+                                                                    <i class="fa fa-file-text-o fa-lg"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td class="native">
+                                                        @Html.ProductLink(@item.ProductGuid)
+                                                    </td>
+                                                    <td class="native" style="text-align:left">
+                                                        @Html.SectionName(@item.SectionGuid)
+                                                    </td>
+                                                    <td class="native" style="text-align:center">
+                                                        @Html.SizeName(@item.SizeGuid)
+                                                    </td>
+                                                    <td class="native">
+                                                        @item.Number
+                                                    </td>
+                                                    <td class="native text-align-right">
+                                                        @Format.FormatDecimalToString(@item.Total.GetValueOrDefault(0))
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class='tr-about' style='display:none;'><td colspan='13'> <span class='required'><b>Chưa có thông tin mặt hàng </b></span> </td> </tr>
+    }
+}
+
+<script>
+
+    function HienThiSanPham(OrderDetailGuid, OrderGuid, ProductGuid, SectionGuid, SizeGuid) {
+       
+    }
+
+</script>

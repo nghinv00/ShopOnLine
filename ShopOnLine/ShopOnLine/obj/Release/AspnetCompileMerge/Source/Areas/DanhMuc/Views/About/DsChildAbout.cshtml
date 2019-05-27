@@ -1,0 +1,120 @@
+﻿@model IEnumerable<C.Core.Model.shAboutu>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Customer.Helper;
+@{
+    if (Model != null && Model.Count() > 0)
+    {
+        <tr class="tr-about" style="display: table-row;">
+            <td colspan="8" style="padding:10px; background:#fff">
+
+                <div class="box box-success" style="margin-bottom: 0px; display: block;">
+                    <div class="box-header with-border" style="padding:5px;">
+                        <h4 style="font-size:15px" class="box-title">Thông tin bài viết chi tiết</h4>
+                        <div class="box-tools pull-right" style="top:0px">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="">
+                            <div class="form-group">
+                                <table class="grid">
+                                    <thead>
+                                        <tr>
+                                            <th width="7%;">#</th>
+                                            <th width="10%;">Thao tác</th>
+                                            <th width="10%;">Tiêu đề</th>
+                                            <th width="30%;">Mô tả</th>
+                                            <th width="20%;">Năm</th>
+                                            <th width="10%;">Trạng thái </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in Model as IEnumerable<shAboutu>)
+                                            {
+                                                <tr id="tr_childabout_@item.AboutId" class="data" aboutid="@item.AboutId">
+                                                    <td align="center">
+                                                        <ul class="task-icon">
+                                                            <li>
+                                                                <a class="css-coment" href="javascript:HienThiBaiViet('@item.AboutGuid')"
+                                                                   data-toggle="tooltip" title="Xem chi tiết bài viết">
+                                                                    <i class="fa fa-file-text-o fa-lg"></i>
+
+                                                                </a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td class="native" style="text-align:left">
+                                                        <div class="dropdown">
+                                                            <div class="sett" data-toggle="dropdown"></div>
+                                                            <ul class="dropdown-menu sett_dropdown-caret">
+                                                                <li class="pop_arrow_new"></li>
+                                                                @{
+                                                                    <li><a href="/DanhMuc/About/Create/@item.AboutGuid"><i class='fa fa-edit'> Hiệu chỉnh </i></a></li>
+                                                                    <li><a href="javascript:DeleteAbout(@item.AboutGuid)"><i class='fa fa-trash-o'> Xóa </i></a></li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="native">
+                                                        @Html.AboutTitle(item.AboutGuid, item.AboutTitle)
+                                                    </td>
+                                                    <td class="native" style="text-align:left">
+                                                        @item.AboutName
+                                                    </td>
+                                                    <td class="native" style="text-align:center">
+                                                        @item.Year
+                                                    </td>
+                                                    <td class="native">
+                                                        @if (item.Status.Value)
+                                                        {
+                                                            <span>
+                                                                Hoạt động
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>
+                                                                Không Hoạt động
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class='tr-about' style='display:none;'><td colspan='8'> <span class='required'><b>Chưa có bài viết mô tả</b></span> </td> </tr>
+    }
+}
+
+<script>
+
+    function HienThiBaiViet(AboutGuid) {
+        //HienThiBaiViet(AboutGuid);
+        alert('Làm form modal hiển thị bài viết ');
+    }
+
+</script>

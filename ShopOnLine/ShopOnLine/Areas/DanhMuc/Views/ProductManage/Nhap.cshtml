@@ -1,0 +1,145 @@
+﻿@model C.Core.Model.shGoodReceiptIsuue
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Nhập kho";
+}
+<link href="~/Content/baocao.css" rel="stylesheet" />
+<section class="content-header">
+    <h1>
+        Nhập kho
+        <small> </small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/ProductManage/Index">Quản trị</a></li>
+        <li class="active">Nhập kho</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        <div id="loader" class="loading loading-hide"></div>
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/ProductManage/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("ReceiptIsuueGuid")
+            @Html.Hidden("ReceiptIsuueName")
+            <div class="form-horizontal">
+                <hr />
+                <div class="col-md-9 ">
+                    <div class="col-md-12 ">
+                        <div class="form-group input-filter">
+                            <div class="col-md-12 no-padding" style="margin: 0 -15px;">
+                                <div class="col-md-7 no-padding">
+                                    <div id="divProduct"></div>
+                                </div>
+                                <div id="SizeProduct" class="col-md-5">
+                                    @Html.DropDownList("SizeGuid", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px;"></div>
+                            <div class="col-md-12 no-padding" id="dsNhap"  style="margin-top: 15px;">
+                                @{ Html.RenderPartial("dsNhap", (IEnumerable<C.Core.Model.shGoodReceiptIsuueDetail>)ViewBag.dsNhap); }
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group input-filter">
+                                <label for="Loai">Trạng thái :</label>
+                                @Html.DropDownList("TrangThai", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="form-group input-filter">
+                            <label for="Loai">Loại :</label>
+                            @Html.DropDownList("LoaiPhieu", null, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group input-filter">
+                            <label for="Kho">Thuộc kho :</label>
+                            @Html.DropDownList("Kho", null, new { @class = "form-control" , @readonly="readonly"})
+                        </div>
+                        <div class="form-group input-filter">
+                            <label for="GhiChu">Ghi chú :</label>
+                            @Html.TextArea("GhiChu", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Tạo phiếu", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $('#SizeGuid').select2();
+            $('#CategoryId').on('change', function (e) {
+            });
+            $('#formview form').validate({
+                messages: {
+                    CategoryName: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                },
+                rules: {
+                    CategoryName: {
+                        required: true
+                    },
+                }
+            });
+
+            $('#SizeGuid').on('change', function (e) {
+                $('#loader').fadeIn();
+                var SizeAdd = '';
+
+                $('#dsNhap .number input').each(function (e) {
+                    var value = $(this).attr('sizeguid');
+                    var receipt = $(this).attr('receiptissuedetail');
+                    var val = $(this).val();
+                    SizeAdd += value + '$' + val + '$' + receipt +  ';' ;
+                });
+
+                $.ajax({
+                    url: '@Url.Action("dsNhap2")',
+                    data: {
+                        ReceiptIsuueGuid: '@ViewBag.ReceiptIsuueGuid',
+                        SizeGuid: $(this).val(),
+                        Number: 1,
+                        SizeAdd: SizeAdd
+                    },
+                    type: 'POST',
+                    dataType: "html",
+                    success: function (data) {
+                        $('#dsNhap').html(data);
+                    },
+                    complete: function () {
+                        $('#loader').fadeOut('fast');
+                    }
+                });
+            });
+
+            $.ajax({
+                url: '@Url.Action("divProduct")',
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#divProduct').html(data)
+                },
+                error: function (data) {
+                },
+                complete: function (data, response) {
+                }
+            });
+
+        });
+    </script>
+}

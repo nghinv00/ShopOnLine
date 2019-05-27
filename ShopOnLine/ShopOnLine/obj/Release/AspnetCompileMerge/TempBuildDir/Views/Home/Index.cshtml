@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Hệ thống chăn ga gối đệm";
+}
+
+@Html.Hidden("hdurl", "/")
+
+<div id="vnt-content">
+    <!-- Carousel  -->
+    <div id="carousel">
+        @{
+            Html.RenderAction("Carousel");
+        }
+    </div>
+    <!-- The end Carousel  -->
+    <!-- Product-Highlights -->
+    <div class="vnt-product lazyloading" id="Svnt-product">
+        @{
+            Html.RenderAction("Product");
+        }
+    </div>
+    <!-- The End Product-Highlights -->
+    <!-- News highlight  -->
+    <div class="vnt-news lazyloading" id="Svnt-news">
+        @{
+            Html.RenderAction("News");
+        }
+    </div>
+    <!-- The end News highlight  -->
+    <!-- Idea - Customer -->
+    <div class="vnt-idea lazyloading" id="idea">
+        @{
+            Html.RenderAction("IdeaCustomer");
+        }
+    </div>
+    <!-- The end Idea - Customer -->
+    <!-- Demo about with compary -->
+    @*<div class="vnt-about lazyloading" id="Svnt-about" style="background-image: url('/SongHongVn/vnt_upload/weblink/bg-about.jpg')">
+        
+
+        @{
+        Html.RenderAction("AboutUs");
+        }
+    </div>*@
+    <!--The end  Demo about with compary -->
+    <!-- Agent -->
+    <div class="vnt-dealer lazyloading" id="Svnt-dealer" style="background-image: url('/SongHongVn/vnt_upload/weblink/bg-map_12.png')">
+        @*@{
+                Html.RenderAction("SearchAgent");
+            }*@
+    </div>
+    <!-- The end Agent -->
+
+    <div class="div_info_link">
+        <div class="wrapper">
+            <ul>
+                <li class="khuyenmai">
+                    <a>Quà tặng và Khuyến mãi</a>
+                </li>
+                <li class="phanphoi"><a href="/dai-ly">Xem tất cả kênh phân phối</a></li>
+                <li class="hostline">Hotline: MB : 038.686.2605 - 038.686.2605; MN : 038.686.2605</li>
+            </ul> <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script>
+
+        @*$.ajax({
+            url: '@Url.Action("IdeaCustomer")',
+            data: { },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#idea').html(data);
+            },
+            complete: function (data) {
+
+            },
+            error: function (data) {
+            }
+        });*@
+
+        $.ajax({
+            url: '@Url.Action("AboutUs")',
+            data: { },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#Svnt-about').html(data);
+            },
+            complete: function (data) {
+
+            },
+            error: function (data) {
+            }
+        });
+
+         $.ajax({
+            url: '@Url.Action("SearchAgent")',
+            data: { },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#Svnt-dealer').html(data);
+            },
+            complete: function (data) {
+
+            },
+            error: function (data) {
+            }
+        });
+</script>
+

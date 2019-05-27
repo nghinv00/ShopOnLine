@@ -1,0 +1,111 @@
+﻿@model C.Core.Model.qtPosition
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Thêm mới người dùng";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Đơn Vị
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/QuanTri/Department/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin đơn vị</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/Position/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("PositionId")
+            <div class="form-horizontal">
+                <hr />
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Tên chức vụ:") <span class="required">*</span>
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("PositionName", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Mã chức vụ:") <span class="required">*</span>
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("Code", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Số thứ tự hiển thị:")
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("SortOrder", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9">
+                                @{
+                                    if (Model.PositionId > 0)
+                                    {
+                                        @Html.CheckBox("Status")
+                                    }
+                                    else
+                                    {
+                                        @Html.CheckBox("Status", true)
+                                    }
+                                }
+
+                                @Html.Label("Còn sử dụng", new { @for = "Status" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="box-footer">
+                                @Html.Button("Ghi lại", "btn btn-primary", "btnSave", "fa fa-save")
+                                @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+
+        $('#formview form').validate({
+            messages: {
+                PositionName: {
+                    required: 'Tên chức vụ không được bỏ trống'
+                },
+                Code: {
+                    required: 'Mã chức vụ không được bỏ trống'
+                }
+            },
+            rules: {
+
+                PositionName: {
+                    required: true
+                },
+                Code: {
+                    required: true
+                }
+            }
+        });
+
+
+    </script>
+}

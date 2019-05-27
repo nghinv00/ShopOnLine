@@ -1,0 +1,40 @@
+﻿@using C.Core.Model;
+@model IEnumerable<shAboutu>
+
+@{
+    IEnumerable<shAboutu> ds = Model;
+    if (ds == null)
+    {
+        ds = new List<shAboutu>();
+    }
+    foreach (var item in ds)
+    {
+        string before = string.Empty;
+        string after = string.Empty;
+        string _default = "n-number1";
+        if (item.Year == null || item.Year == 0)
+        {
+            before = "n-before";
+            after = "n-text";
+            _default = string.Empty;
+        }
+        <div class="node_year @before">
+            <div class="n-number">
+                <div class="@_default@after">
+                    @item.AboutTitle <span>
+                        @{ if (item.Year != null && item.Year != 0)
+                            {
+                                <span>@item.Year.Value</span>
+                            }
+                        }
+                    </span>
+                </div>
+            </div>
+            <div class="n-content">
+                @Html.Raw(item.AboutContent)
+            </div>
+            <div class="n-image"><img alt="about1" src="@item.ImageUrl"></div>
+            <div class="clear">&nbsp;</div>
+        </div>
+    }
+}

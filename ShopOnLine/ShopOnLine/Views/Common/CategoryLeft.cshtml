@@ -1,0 +1,69 @@
+﻿@using C.Core.Model;
+@model List<shCategory>
+@using C.Customer.Helper;
+@using C.Core.Common;
+<div class="menuCategory">
+    <ul>
+        @{
+            foreach (var item in Model as IEnumerable<shCategory>)
+            {
+                if (string.IsNullOrEmpty(item.ParentId) || string.IsNullOrWhiteSpace(item.ParentId))
+                {
+                    string hassSub = "";
+                    IEnumerable<shCategory> ds = Model.Where(x => x.ParentId == item.CategoryGuid);
+                    if (ds.Count() > 0)
+                    {
+                        hassSub = "hassSub";
+                    }
+                    <li class="@hassSub">
+                        <a href='/@item.CategoryId@item.MetaTitle' title="@StringHelper.ConvertToTitleCase(item.CategoryName)">
+                            @StringHelper.ConvertToTitleCase(item.CategoryName)
+                        </a>
+                        @{
+                            if (ds.Count() > 0)
+                            {
+                                <ul style="display: none; ">
+                                    @foreach (var childCategory in ds)
+                                    {
+                                        <li>
+                                            <a href='/@childCategory.CategoryId@childCategory.MetaTitle' title="@StringHelper.ConvertToTitleCase(childCategory.CategoryName)">
+                                                @StringHelper.ConvertToTitleCase(childCategory.CategoryName)
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                                <div class="button-submenu" style="height:42px"></div>
+                            }
+                        }
+                    </li>
+                }
+            }
+
+
+        }
+    </ul>
+</div>
+
+@*<p class=advertise>
+        <a onmousedown="return rwt(this,'advertise',15)"
+           href='#'
+           target='_blank' title=''>
+            <img border=0 src="~/SongHongVn/vnt_upload/weblink/adv1.jpg" width='270' alt='' />
+        </a>
+    </p>
+    <p class=advertise>
+        <a onmousedown="return rwt(this,'advertise',17)" href='#'
+           target='_blank' title=''>
+            <img border=0 src="~/SongHongVn/vnt_upload/weblink/adv2.jpg" width='270' alt='' />
+        </a>
+    </p>
+    <p class=advertise>
+        <a onmousedown="return rwt(this,'advertise',71)" href='#'
+           target='_blank' title='bannerthuonghieu'>
+            <img border=0 src="~/SongHongVn/vnt_upload/weblink/bannerthuonghieu.gif" width='270' alt='bannerthuonghieu' />
+        </a>
+    </p>*@
+
+@{ Html.RenderPartial("~/Views/Common/Adv.cshtml");}
+
+

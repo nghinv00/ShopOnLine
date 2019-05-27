@@ -1,0 +1,85 @@
+﻿@model IPagedList<C.Core.Model.qtUnitManager>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.QuanTri.Helper;
+@{
+    ViewBag.Title = "Danh sách người quản lý đơn vị";
+}
+<style>
+    .treeview .ul-tree li a {
+        color: #3c8dbc;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Thông tin quản lý đơn vị
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Thông tin quản lý đơn vị</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/UnitManager/Index");
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="tree-view">
+                        @Html.Raw(ViewBag.DonVi)
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+
+                        @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus")
+                        @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+
+                    </div>
+                    @Html.Grid(Model).Columns(column =>
+               {
+                   column.For(m => Html.htmlCheckBox("cbxItem", m.UserId)).Attributes(style => "width:5%;text-align:center;").Named(Html.htmlCheckBox("cbxList").ToString());
+                   column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+                   column.For(m => Html.UnitLink(m.UnitId, m.UserId)).Named("Họ và tên").Attributes(style => "width:30%");
+                   column.For(m => Html.UnitName(m.UnitId)).Named("Đơn vị").Attributes(style => "width:30%");
+               }).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.qtUnitManager>(10)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+                    <div class="form-group">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicCustomPage)
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</section>   
+    
+    @section Scripts {
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function () {
+                $('#Create').click(function () {
+                    document.location = '@Url.Action("Create")';
+                });
+                $('#Delete').click(function () {
+                    $("#formview form").attr('action', '@Url.Action("Delete")');
+                    $("#formview form").submit();
+                });
+            });
+            $(".ul-tree img").click(function () {
+                var css = $(this).attr('class');
+                if (css.trim() == 'toggler')//hien thi cac don vi con
+                {
+                    $(this).addClass('expanded');
+                    $(this).parent().addClass('expanded');
+                } else {//an cac don vi con
+                    $(this).removeClass('expanded');
+                    $(this).parent().removeClass('expanded');
+                }
+            });
+        </script>
+    }
+

@@ -1,0 +1,441 @@
+﻿@using C.Core.Model;
+@model shProduct
+@using C.UI.Helpers;
+@using C.Core.Common;
+@{
+    ViewBag.Title = Model.ProductName;
+}
+@*<link rel="stylesheet" href="~/SongHongVn/js/slideSlick/css/slick.css" type="text/css" />
+    <link rel="stylesheet" href="~/SongHongVn/js/slideSlick/css/slick-theme.css" type="text/css" />*@
+
+<link rel="stylesheet" href="~/SongHongVn/js/jquery_alerts/jquery.alerts.css" type="text/css" />
+<script type="text/javascript" src="~/SongHongVn/js/slideSlick/js/jquery.easing.1.3.js"></script>
+@*<script type="text/javascript" src="~/SongHongVn/modules/product/js/product.js"></script>*@
+<script type="text/javascript" src="~/SongHongVn/js/jquery_alerts/jquery.alerts.js"></script>
+
+<link rel="stylesheet" href="~/SongHongVn/modules/product/css/product.css" type="text/css" />
+
+<script type="text/javascript" src="~/SongHongVn/modules/product/js/product.js"></script>
+
+<script type="text/javascript" src="~/SongHongVn/js/slideSlick/js/jquery.elevateZoom-3.0.8.min.js"></script>
+<script src="~/Scripts/details.js"></script>
+@*<script type="text/javascript" src="~/SongHongVn/js/slideSlick/js/slick.js"></script>*@
+<div id="vnt-content">
+    @Html.Hidden("ProductGuid")
+    <div id="loader" class="loading loading-hide"></div>
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_GioiThieu });
+    }
+    @Html.Hidden("hdurl", "/san-pham")
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li><a href='/'>Trang chủ</a></li>
+                    <li><a href='@Model.MetaTitle-@Model.ProductId'>Sản phẩm</a></li>
+                    <li>@Model.ProductName </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-content">
+        <div class="wrapper">
+
+            <div class="box_mid">
+                <div class="mid-title">
+                    <div class="wrapper">
+                        <div class="titleL">@Model.ProductName</div>
+                        <div class="titleR"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="mid-content">
+                    <div class="infoPro">
+                        <div class="infoProLeft">
+                            <div class="slider-detail">
+                                <div id="slider-detail">
+                                    @{
+                                        Html.RenderPartial("~/Views/Common/DsImage.cshtml", ViewBag.dsImageMauMa as IEnumerable<shProductImage>);
+                                    }
+                                </div>
+                                <div id="slider-thumbnail">
+                                    @{
+                                        Html.RenderPartial("~/Views/Common/DsImage.cshtml", ViewBag.dsImageMauMa as IEnumerable<shProductImage>);
+                                    }
+                                </div>
+                            </div>
+                            <div class="divselect">
+                                <div class="fl" id="Section">
+
+                                </div>
+                                <div class="fr" id="Size">
+                                    <select class="form-control">
+                                        <option value="0">Chọn size</option>
+                                    </select>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="infoProRight">
+                            <div class="infoContent">
+                                <div class="i-content">
+                                    <p style="text-align: justify;">
+                                        @Model.Description
+                                    </p>
+                                </div>
+                                <div class="i-dealer">
+                                    <div class="col-md-8  " style="padding-left: 0px !important;">
+                                        <a href="javascript:void(0)" onclick="AddCart()" style="border: 2px solid #ec008c ; background-color: #fff ; color: #ec008c;">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 19px; "></i>
+                                            <span>Thêm vào giỏ hàng</span>
+                                            <input type="hidden" value="" id="SizeSelected" />
+                                            <input type="hidden" value="" id="SectionSelected" />
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-4 no-padding" style="padding-right: 0px !important; padding-left: 0px !important; ">
+                                        <a href="javascript:void(0)" onclick="BuyCart(1)">
+                                            <span>Mua ngay</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="i-hotline" id="price-size">
+
+                                    <div class="text1">
+                                        <input type="hidden" value="@ViewBag.ProductSize" id="ProductSize" name="ProductSize" />
+                                        Kích thước: <span id="size-u">@ViewBag.ProductSize</span>
+                                    </div>
+                                    <div class="text2">
+                                        <input type="hidden" value="@ViewBag.ProductPrice" id="ProductPrice" name="ProductPrice" />
+                                        Giá:
+                                        <span id="sale">@ViewBag.ProductPrice đ</span>
+                                        <span id="price-u">@ViewBag.ProductSale đ </span>
+
+                                        &nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="tab_wrapper">
+                        <ul class="tab_nav clearfix">
+                            <li><a href="#tab_1">Chi tiết</a></li>
+                            <li><a href="#tab_2">Hướng dẫn mua hàng</a></li>
+                            <li><a class="ykien">Ý kiến của bạn</a></li>
+                            <li><a href="#" target="_blank">Câu hỏi thường gặp</a></li>
+                        </ul>
+
+                        <div class="clear"></div>
+                        <div id="tab_1" class="tab_content">
+                            @Html.Raw(Model.UserManual)
+                            <div id="product-image">
+                                @{
+                                    Html.RenderPartial("~/Views/Dem/DsImageLarge.cshtml", ViewBag.dsImageChatLieu as IEnumerable<shProductImage>);
+                                }
+                            </div>
+                        </div>
+                        <div id="tab_2" class="tab_content">
+
+                        </div>
+                    </div>
+                    <div class="tag">
+                        <p>
+                            <span class="title">TAG: </span>
+                        </p>
+                    </div>
+
+
+                    <div class="like_share">
+                        <div class="like_facebook">
+                            @*<a title="Chia sẻ qua Facebook."
+                                   href="https://www.facebook.com/sharer.php?u=https://changagoisonghong.vn/vn/dem-bong-tinh-khiet-the-he-thu-hai.html"
+                                   rel="nofollow" style="margin-right:5px" target="_blank">
+                                    <img src="../skins/default/images/icon_facebook_share.gif" />
+                                </a>
+                                <a title="Chia sẻ qua Google Plus." href="https://plus.google.com/share?url=https://changagoisonghong.vn/vn/dem-bong-tinh-khiet-the-he-thu-hai.html" rel="nofollow"
+                                   style="margin-right:5px" target="_blank">
+                                    <img src="../skins/default/images/icon_google_share.gif" />
+                                </a>
+                                <iframe src="https://www.facebook.com/plugins/like.php?href=https://changagoisonghong.vn/vn/dem-bong-tinh-khiet-the-he-thu-hai.html&amp;layout=button_count&amp;show_faces=true&amp;width=90&amp;action=like&amp;colorscheme=light&amp;height=20"
+                                        scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe>
+                                <g:plusone href="dem-bong-tinh-khiet-the-he-thu-hai.html" size="medium">
+
+                                </g:plusone>*@
+                        </div>
+                        <div class="feedback" style="float: right;">
+                            <a class="link-print" href="javascript:print();">In trang này</a>
+
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+
+
+                    <div class="comment" id="comment">
+                        <div class="title">Ý kiến của bạn</div>
+                        <script language=javascript>
+                            var js_lang = new Array();
+                            js_lang['announce'] = "Thông báo";
+                            js_lang['error'] = "Báo lỗi";
+                            js_lang['err_name_empty'] = "Vui lòng nhập họ tên";
+                            js_lang['err_email_empty'] = "Vui lòng nhập Email";
+                            js_lang['err_email_invalid'] = "Email không hợp lệ";
+                            js_lang['security_code_invalid'] = "Mã bảo vệ không đúng";
+                            js_lang['err_security_code_empty'] = "Vui lòng nhập mã bảo vệ";
+                            js_lang['err_title_empty'] = "";
+                            js_lang['err_content_comment_empty'] = "";
+                            js_lang['send_comment_success'] = "Viết đánh giá thành công . Vui lòng đợi xét duyệt của BQT";
+                            js_lang['mess_error_post'] = "";
+                        </script>
+                        @*<script type="text/javascript" src="~/SongHongVn//modules/product/js/comment.js"></script>*@
+                        <a name="Comment"></a>
+                        <div class="formComment">
+                            @using (Html.BeginForm())
+                            {
+
+                                <div class="choose-evaluate">
+                                    <span class="title">Điểm đánh giá </span>
+                                    <ul>
+                                        <li title="Không tốt"><input type="radio" name="chon-dt" value="1" /></li>
+                                        <li title="Tạm được"><input type="radio" name="chon-dt" value="2" /></li>
+                                        <li title="Tốt"><input type="radio" name="chon-dt" value="3" /></li>
+                                        <li title="Rất tốt"><input type="radio" name="chon-dt" value="4" /></li>
+                                        <li title="Hoàn hảo"><input type="radio" name="chon-dt" value="5" /></li>
+                                    </ul>
+                                    <span class="show-title">&nbsp;</span>
+                                    <input type="hidden" name="hvote" id="hvote" value="0">
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="w_content">
+                                        <textarea id="txtComment" name="txtComment" class="form-control" placeholder="Mời nhập thắc mắc hoặc ý kiến của bạn"></textarea>
+                                        <div class="content-info">
+                                            <div class="info-title">Nhập thông tin của bạn</div>
+                                            <input name="com_email" id="com_email" type="text" class="form-control" placeholder="Email" />
+
+                                            <input name="com_name" id="com_name" type="text" class="form-control" placeholder="Nhập tên của bạn" />
+
+                                        </div>
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button name="btnSen" id="btnSend" value="submit" class="btn" type="button"><span>Gửi</span></button>
+                                    </span>
+                                </div>
+
+                            }
+                            @*<form action="#" method="post" name="fComment" id="fComment" onsubmit="return vnTcomment.post_comment('164','vn');"></form>*@
+                        </div>
+
+                        <style>
+                            #list-comment .pagination a {
+                                height: 30px;
+                            }
+                        </style>
+
+                        <div class="grid-comment" id="list-comment">
+                            @{
+                                Html.RenderAction("CommentProduct", "Common", new { ProductGuid = Model.ProductGuid });
+                            }
+                        </div>
+                    </div>
+
+                    <div class="comment-facebook">
+                        <div class="facebook-comment" style="padding-top:10px;">
+                            <div class="fb-comments"
+                                 data-href="#"
+                                 data-width="100%" data-num-posts="5" data-colorscheme="light">
+                            </div>
+                            <div id="fb-root"></div>
+                            <script>
+                                //(function (d, s, id) {
+                                //    var js,
+                                //        fjs = d.getElementsByTagName(s)[0];
+                                //    if (d.getElementById(id)) return;
+                                //    js = d.createElement(s);
+                                //    js.id = id;
+                                //    js.src = "../../connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+                                //    fjs.parentNode.insertBefore(js, fjs);
+                                //}
+                                //    (document, "script", "facebook-jssdk"));
+                            </script>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="orther-prod">
+                <div class="o_title">Sản phẩm @Model.CategoryName KHÁC</div>
+                <div class="slider_prod" style="max-height: 215px;">
+                    <div id="slider_prod">
+                        @{
+                            Html.RenderAction("RelatedProducts", "Common", new { ProductGuid = Model.ProductGuid, CategoryGuid = Model.CategoryGuid });
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+@section scripts{
+    <script>
+
+        // Hàm load kích thước sản phẩm theo danh mục
+        function SizeGuid(ProductGuid, SectionGuid, SizeGuid ) {
+            $.ajax({
+                url: '@Url.Action("SizeGuid", "Common")',
+                data: {
+                    SizeGuid: SizeGuid,
+                    SectionGuid: SectionGuid,
+                    ProductGuid : ProductGuid
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#Size').html(data);
+
+                    ChangeSizeGuid($('#SizeGuid').val());
+
+                    $('#SizeGuid').on('change', function (e) {
+
+                        var value = $(this).val();
+
+                        ChangeSizeGuid(value);
+                    });
+
+                }
+            });
+        }
+
+       function ChangeSizeGuid(Size) {
+            if (Size == null || Size == '') {
+                $('#size-u').text('');
+                $('#price-u').text('0');
+                return;
+            }
+
+            var text = $("#SizeGuid :selected").text()
+            var obj = text.split('-');
+            
+            $('#size-u').text(obj[0]);
+            $('#sale').text(obj[1]);
+
+            $.ajax({
+                url: '@Url.Action("TinhToanGiaTriKhuyenMai", "BoChanGaGoi")',
+                data: {
+                    SizeGuid: Size,
+                    ProductGuid: '@Model.ProductGuid'
+                },
+                type: 'POST',
+                dataType: "json",
+                success: function (data) {
+                    $('#price-u').text(data);
+                   
+                }
+            });
+
+            $('#price-u').text(obj[1]);
+
+            var text = $("#SectionGuid :selected").text();
+
+            $('#size-u').text(text + ' ---  ' + $('#size-u').text());
+        }
+        // Load danh mục sản phẩm cấp con
+        $.ajax({
+            url: '@Url.Action("SectionGuid", "Common")',
+            data: {
+                SectionGuid: '',
+                ProductGuid : '@Model.ProductGuid'
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#Section').html(data);
+
+                $('#SectionGuid').on('change', function (e) {
+
+                    var sectionguid = $(this).val();
+                    SizeGuid('@Model.ProductGuid', sectionguid, '')
+                });
+            }
+        });
+
+        // load danh sách kích thước theo sản phẩm cấp con đầu tiên
+        $.ajax({
+            url: '@Url.Action("SizeGuid", "Common")',
+            data: {
+                SizeGuid: '',
+                SectionGuid: '',
+                ProductGuid : '@Model.ProductGuid'
+            },
+            type: 'POST',
+            dataType: "html",
+            success: function (data) {
+                $('#Size').html(data);
+
+                $('#SizeGuid').on('change', function (e) {
+
+                     var value = $(this).val();
+
+                    ChangeSizeGuid(value);
+                });
+            }
+        });
+
+        // Sự kiện chọn kích thước sản phẩm
+        $('#SectionGuid').on('change', function (e) {
+
+            var section = $(this).val();
+
+            SizeGuid('@Model.ProductGuid', section, '')
+        });
+
+        $('#SizeGuid').on('change', function (e) {
+
+            var value = $(this).val();
+
+            ChangeSizeGuid(value);
+        });
+
+        // Comment
+        $('#btnSend').on('click', function (e) {
+
+            var rating = $('input[name=chon-dt]:checked').val();
+            var name = $("#com_name").val()
+            var email = $("#com_email").val();
+            var content = $("#txtComment").val();
+            var ProductGuid = $('#ProductGuid').val()
+
+            CommentUser.postcomment(rating, name, email, content, ProductGuid);
+
+        });
+
+        // Add giỏ hàng
+        function AddCart() {
+            var ProductGuid = $('#ProductGuid').val();
+            var SectionSelected = $('#SectionGuid').val();
+            var SizeSelected = $('#SizeGuid').val();
+
+            console.log(SectionSelected)
+            console.log(SizeSelected)
+
+            Cart.AddItemCart(ProductGuid, 1, SectionSelected, SizeSelected);
+        }
+
+        function BuyCart() {
+            var ProductGuid = $('#ProductGuid').val();
+            var SectionSelected = $('#SectionGuid').val();
+            var SizeSelected = $('#SizeGuid').val();
+
+            Cart.BuyCart(ProductGuid, 1, SectionSelected, SizeSelected);
+        }
+
+    </script>
+}

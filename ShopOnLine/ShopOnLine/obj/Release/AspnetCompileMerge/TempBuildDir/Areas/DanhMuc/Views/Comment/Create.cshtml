@@ -1,0 +1,124 @@
+﻿@model C.Core.Model.shCategory
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Hiệu chỉnh thông tin Danh mục";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Danh mục
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Category/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin Danh mục</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Category/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("DanhMucGuid")
+
+            <div class="form-horizontal">
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Tên danh mục:", new { @class = "control-label" }) (<span class="required">*</span>)
+                        </div>
+                        <div class="col-md-9">
+                            @Html.TextBox("CategoryName", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                            @Html.Label("Danh mục cha:", new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-9">
+                            <div id="drl_ParentId">
+                                @{
+                                    Html.RenderPartial("~/Areas/QuanTri/Views/DanhMucDungChung/Categories.cshtml", new SelectList(new List<SelectListItem>()));
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6" style="margin-top:10pt">
+                            @{
+                                if (Model.CategoryId > 0)
+                                {
+                                    @Html.CheckBox("Status")
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("Status", true)
+                                }
+                            }
+                            <label for="Status">Còn sử dụng</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+    
+            $.ajax({
+                url: '@Url.Action("Categories", "DanhMuc")',
+                data: {
+                    CategoryId: '@ViewBag.ParentId',
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    console.log(data)
+                    $('#drl_ParentId').html(data);
+
+                    $('#CategoryId').select2();
+                }
+            });
+
+            $('#CategoryId').on('change', function (e) {
+
+            });
+
+            $('#formview form').validate({
+                messages: {
+                    CategoryName: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                },
+                rules: {
+                    CategoryName: {
+                        required: true
+                    },
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,124 @@
+﻿@model IEnumerable<shCategory>
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Service;
+
+<div class="wrapper">
+    <div class="main_title"><h2>Sản phẩm</h2></div>
+    <div class="sliderProd">
+        <div id="sliderProd">
+            @{
+                foreach (var item in Model as IEnumerable<shCategory>)
+                {
+                    <div class="item" data-text="@item.CategoryName"
+                         data-img="@Html.CategoryImageIcon(item.CategoryGuid)"
+                         data-img-active="@Html.CategoryImageIconActive(item.CategoryGuid)">
+                        <div class="itemLeft">
+                            <div class="item_wrapper">
+                                <div class="i-img">
+                                    <img src="@item.FileName"
+                                         alt='@item.CategoryName' title='@item.CategoryName' />
+                                </div>
+                                <div class="i-desc">
+                                    <div class="i-title">
+                                        <h3>
+                                            <span>
+                                                @item.CategoryName
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <div class="i-content">
+                                        @item.Description
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="i-link">
+                                <a href="/@item.CategoryId@item.MetaTitle">Xem tất cả sản phẩm</a>
+                            </div>
+                        </div>
+
+                        <div class="itemRight">
+                            <div class="gProd">
+                                @{
+                                    int _max = 4;
+                                    IEnumerable<shCategory> dsC = (new shCategoryService()).DanhSachCategory().Where(x => x.ParentId == item.CategoryGuid).Take(_max);
+
+                                    int socconlai = _max - dsC.Count();
+
+                                    IEnumerable<shProduct> dsP = (new shProductService()).DanhSachProduct_TheoDanhMuc(item.CategoryGuid).Take(socconlai);
+
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        <div class="rProd">
+                                            @{
+                                                int sophantuC = 0;
+
+                                                int j = 0;
+                                                foreach (var category in dsC)
+                                                {
+                                                    if (sophantuC < 2)
+                                                    {
+                                                        j++;
+                                                        <div class="item" id="danhmuc" value="@category.CategoryGuid">
+                                                            <div class="i-image">
+                                                                <a href="/@category.CategoryId@category.MetaTitle">
+                                                                    <img src="@category.FileName"
+                                                                         title="@category.CategoryName" alt="@category.CategoryName" />
+                                                                </a>
+                                                            </div>
+                                                            <div class="i-title">
+                                                                <h3>
+                                                                    <a href="/@category.CategoryId@category.MetaTitle">@category.CategoryName</a>
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        sophantuC++;
+                                                    }
+
+                                                }
+                                                dsC = dsC.Skip(j);
+
+                                                //if (dsC.Count() > 0) { continue; }
+
+                                                int sodemP = 0;
+                                                foreach (var product in dsP)
+                                                {
+                                                    if (sodemP < (2 - sophantuC))
+                                                    {
+                                                        <div class="item" id="sanpham" value="@product.ProductGuid">
+                                                            <div class="i-image">
+                                                                <a href="@product.MetaTitle-@product.ProductId">
+                                                                    <img src="@product.Image"
+                                                                         title="@product.ProductName" alt="@product.ProductName" />
+                                                                </a>
+                                                            </div>
+                                                            <div class="i-title">
+                                                                <h3>
+                                                                    <a href="@product.MetaTitle-@product.ProductId">@product.ProductName</a>
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+
+                                                    }
+                                                    sodemP++;
+                                                }
+
+                                                dsP = dsP.Skip(sodemP);
+                                            }
+
+                                            <div class="clear"></div>
+                                        </div>
+                                    }
+                                }
+
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div class="linkScroll" data-href="#Svnt-news"></div>

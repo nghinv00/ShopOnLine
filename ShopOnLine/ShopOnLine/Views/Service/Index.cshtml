@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Tin mới -";
+}
+@using C.Core.Common;
+@using C.Core.Model;
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@model IEnumerable<shIdeaCustomer>
+
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_TinTucSuKien });
+    }
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li>
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li><a href="/y-kien" class="none">Ý KIẾN KHÁCH HÀNG</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mod-content">
+
+        <div class="box_mid">
+            <div class="mid-title">
+                <div class="wrapper">
+                    <div class="titleL">Ý KIẾN KHÁCH HÀNG</div>
+                    <div class="titleR"></div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="mid-content">
+                <div class="list-feeling">
+                    @{
+                        if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model as IEnumerable<shIdeaCustomer>)
+                            {
+                                <div class="item">
+                                    <div class="wrapper">
+                                        <div class="i-image">
+                                            <div class="w-images">
+                                                <img src="@item.Image"
+                                                     alt="@item.Name" title="@item.Name">
+                                            </div>
+                                        </div>
+                                        <div class="i-description">
+                                            <div class="i-content">
+                                                <span style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; font-size: 12px; line-height: normal;">
+                                                    @item.Contents
+                                                </span>
+                                            </div>
+                                            <div class="i-name">@item.Name</div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <style type="text/css">
+            .list-feeling {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+                .list-feeling .item {
+                    padding: 15px 0;
+                    width: 100%;
+                }
+
+                    .list-feeling .item:nth-child(even) {
+                        background-color: #f9fafa;
+                    }
+
+                    .list-feeling .item .i-image {
+                        width: 136px;
+                        height: 136px;
+                        float: left;
+                        position: relative;
+                        z-index: 1;
+                        overflow: hidden;
+                        -webkit-border-radius: 50%;
+                        -moz-border-radius: 50%;
+                        -o-border-radius: 50%;
+                        -ms-border-radius: 50%;
+                        border-radius: 50%;
+                        background-color: #ffffff;
+                        padding: 4px;
+                        border: 1px solid #cccccc;
+                    }
+
+                        .list-feeling .item .i-image .w-images {
+                            position: relative;
+                            width: 100%;
+                            height: 100%;
+                            overflow: hidden;
+                            -webkit-border-radius: 50%;
+                            -moz-border-radius: 50%;
+                            -o-border-radius: 50%;
+                            -ms-border-radius: 50%;
+                            border-radius: 50%;
+                            z-index: 1;
+                        }
+
+                            .list-feeling .item .i-image .w-images img {
+                                width: 100%;
+                                -webkit-transition: all 0.5s ease;
+                                -moz-transition: all 0.5s ease;
+                                -o-transition: all 0.5s ease;
+                                transition: all 0.5s ease;
+                            }
+
+                            .list-feeling .item .i-image .w-images:hover img {
+                                -webkit-transform: scale(1.15);
+                                -moz-transform: scale(1.15);
+                                -o-transform: scale(1.15);
+                                -ms-transform: scale(1.15);
+                                transform: scale(1.15);
+                            }
+
+                    .list-feeling .item .i-description {
+                        margin-left: 180px;
+                        padding: 20px 0px 20px 80px;
+                        background: url(../../SongHongVn/modules/feel/images/icon_quote.png) no-repeat 0 17px;
+                    }
+
+                        .list-feeling .item .i-description .i-content {
+                            font-size: 15px;
+                            line-height: 22px;
+                            color: #1b1b1b;
+                            padding-bottom: 15px;
+                            margin-bottom: 15px;
+                            background: url(../../SongHongVn//modules/feel/images/line-feel.png) no-repeat 0 100%;
+                        }
+
+                        .list-feeling .item .i-description .i-name {
+                            color: #666666;
+                            font-style: italic;
+                            font-size: 15px;
+                            line-height: 22px;
+                        }
+        </style>
+    </div>
+    <div class="clear"></div>
+</div>

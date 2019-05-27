@@ -1,0 +1,72 @@
+.list-feeling{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.list-feeling .item{
+    padding: 15px 0;
+    width: 100%;
+}
+.list-feeling .item:nth-child(even){
+    background-color: #f9fafa;
+}
+.list-feeling .item .i-image{
+    width: 136px;
+    height: 136px;
+    float: left;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -o-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #ffffff;
+    padding:4px;
+    border: 1px solid #cccccc;
+}
+.list-feeling .item .i-image .w-images{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -o-border-radius:50%;
+    -ms-border-radius:50%;
+    border-radius:50%;
+    z-index: 1;
+}
+.list-feeling .item .i-image .w-images img{
+	width: 100%;
+    -webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5s ease;
+    transition:all 0.5s ease;
+}
+.list-feeling .item .i-image .w-images:hover img{
+    -webkit-transform:scale(1.15);
+    -moz-transform:scale(1.15);
+    -o-transform:scale(1.15);
+    -ms-transform:scale(1.15);
+    transform:scale(1.15);
+}
+.list-feeling .item .i-description{
+    margin-left: 180px;
+    padding:20px 0px 20px 80px;    
+    background: url(../images/icon_quote.png) no-repeat 0 17px; 
+}
+.list-feeling .item .i-description .i-content{
+    font-size: 15px;
+    line-height: 22px;
+    color: #1b1b1b;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    background: url(../images/line-feel.png) no-repeat 0 100%;
+}
+.list-feeling .item .i-description .i-name{
+	color: #666666;
+	font-style: italic;
+	font-size:15px;
+	line-height:22px;
+}

@@ -1,0 +1,325 @@
+﻿@model C.Core.Model.shSale
+@using C.UI.Helpers;
+@using C.Core.Common;
+@{
+    ViewBag.Title = "Hiệu chỉnh thông tin Khuyến mại";
+}
+
+<style>
+</style>
+<section class="content-header">
+    <h1>
+        Hiệu chỉnh thông tin Khuyến mại
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Sale/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin Khuyến mại</li>
+    </ol>
+</section>
+<link href="~/Content/common.css" rel="stylesheet" />
+<script src="~/AdminLTE/daterangepicker/moment.min.js"></script>
+<script src="~/AdminLTE/daterangepicker/daterangepicker.js"></script>
+<link href="~/AdminLTE/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+
+<style>
+    .input-group .form-control {
+        z-index: 0;
+    }
+
+   
+    .treeview, .treeview li {
+        list-style: none;
+        cursor: pointer;
+    }
+
+    .treeview a {
+        color: #3c8dbc;
+    }
+
+    .child {
+        display: none;
+    }
+</style>
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Sale/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("SaleGuid")
+            <div class="row no-margin">
+                <div class="sale-left">
+                    Thông tin khuyến mại
+                </div>
+                <div class="sale-right">
+
+                    <div class="col-md-6">
+                        @Html.Label("Tên chương trình :") (<span class="required">*</span>)
+                        @Html.TextBox("SaleName", null, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Mã :") (<span class="required">*</span>)
+                        @Html.TextBox("SaleCode", null, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Trạng thái :") (<span class="required">*</span>)
+                        @Html.DropDownList("SaleStatus", (SelectList)ViewBag.Status as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-10">
+                        @Html.Label("Mô tả :")
+                        @Html.TextArea("Description", null, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.Label("Thời gian bắt đầu - kết thúc chương trình:") (<span class="required">*</span>)
+                        @Html.TextBox("StartEnd", null, new { @class = "form-control" })
+
+                        @Html.Hidden("StartTime")
+                        @Html.Hidden("EndTime")
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row no-margin">
+                <div class="sale-left">
+                    Cách tính giá trị khuyến mãi
+                </div>
+                <div class="sale-right">
+                    <div class="col-md-3">
+                        @Html.Label("Cách tính :") (<span class="required">*</span>)
+                        @Html.DropDownList("CachTinhGiaTriKhuyenMai", (SelectList)ViewBag.KhuyenMai as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-3" id="PhanTram" style="display: none;">
+                        @Html.Label("Phần trăm: ")
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-percent"></i>
+                            </div>
+                            @Html.TextBox("Percent", null, new { @class = "", @placerholder = "Từ 1 - 100%" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3" id="SoTien" style="display: none;">
+                        @Html.Label("Số tiền: ")
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-usd"></i>
+                            </div>
+                            @Html.TextBox("USD", null, new { @class = "Số tiền" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row no-margin">
+                <div class="sale-left">
+                    Các điều kiện áp dụng
+                </div>
+                <div class="sale-right">
+                    <div class="col-md-12">
+                        &nbsp;&nbsp;
+                        <input type="radio" name="DieuKienApDung" id="All-Product" checked value="@DieuKienApDungKhuyenMai.TatCaSanPham.GetHashCode()" />
+                        <label for="All-Product" style="font-weight: 600;">Tất cả các sản phẩm</label>
+                        &nbsp;&nbsp;
+                        <input type="radio" name="DieuKienApDung" id="Category" value="@DieuKienApDungKhuyenMai.TheoDanhMuc.GetHashCode()" />
+                        <label for="Category" style="font-weight: 600;">Theo nhóm sản phẩm</label>
+                        &nbsp;&nbsp;
+                        <input type="radio" name="DieuKienApDung" id="Product" value="@DieuKienApDungKhuyenMai.TheoSanPhamRiengBiet.GetHashCode()" />
+                        <label for="Product" style="font-weight: 600;">Theo sản phẩm riêng biệt</label>
+                        &nbsp;&nbsp;
+                        <div id="div-Category" style="display: none;">
+                            <div class="table-roll container-treeview" style="">
+                                <div class="product-child-title header-treeview">Danh sách danh mục</div>
+                                <div class="body-treeview">
+                                    <div id="Content-Category">
+                                    </div>
+                                </div>
+                                <div class="product-child-title footer-treeview"></div>
+                            </div>
+                        </div>
+                        <div id="div-Product" style="display: none;">
+                            <div id="Content-Product">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                    @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        var startDate;
+        var endDate;
+
+        $(document).ready(function () {
+            //$('#EndTime').datepicker( {
+            //        changeYear: true,
+            //        changeMonth: true,
+            //        yearRange: '-99:+99'
+            //});
+            $("#USD").kendoNumericTextBox({
+                culture: "en-US",
+                placeholder: 'Số tiền',
+                min: 1000,
+                max: 100000000,
+                format: "{0:n0}",
+                title: "Sequence Number",
+                type: "number",
+            });
+            $('#Percent').kendoNumericTextBox({
+                //format: "p0",
+                min: 0,
+                max: 99,
+                step: 0.1,
+                placeholder: 'Từ 1 - 99%',
+                format: "{0:n0}",
+                type: "number",
+            });
+
+            $('#StartEnd').daterangepicker({
+                //startDate: moment().subtract('days', 29),
+                //endDate: moment(),
+                //minDate: '01/01/2012',
+                //maxDate: '12/31/2014',
+                //dateLimit: { days: 60 },
+                showDropdowns: true,
+                //showWeekNumbers: true,
+                timePicker: false,
+                timePickerIncrement: 1,
+                timePicker12Hour: true,
+                //ranges: {
+                //    'Today': [moment(), moment()],
+                //    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                //    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                //    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                //    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                //    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                //},
+                opens: 'left',
+                buttonClasses: ['btn btn-default'],
+                applyClass: 'btn-small btn-primary',
+                cancelClass: 'btn-small',
+                format: 'DD/MM/YYYY',
+                separator: ' to ',
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: 'Áp dụng',
+                    cancelLabel: 'Hủy bỏ',
+                    fromLabel: 'Từ',
+                    toLabel: 'đến',
+                    customRangeLabel: 'Tủy chỉnh',
+                    daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                    monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                    firstDay: 1
+                }
+            },
+            function (start, end) {
+                startDate = start;
+                endDate = end;
+
+                $('#StartTime').val(start.format('DD/MM/YYYY'));
+                $('#EndTime').val(end.format('DD/MM/YYYY'));
+
+            });
+
+
+            $('#All-Product').on('click', function (e) {
+                $('#div-Category,#div-Product').css('display', 'none');
+            });
+
+            $('#Category').on('click', function (e) {
+                $('#div-Product').css('display', 'none');
+                $('#div-Category').css('display', 'block');
+            });
+
+            $('#Product').on('click', function (e) {
+                $('#div-Product').css('display', 'block');
+                $('#div-Category').css('display', 'none');
+            });
+
+            $('#CachTinhGiaTriKhuyenMai').on('change', function (e) {
+                var CachTinhGiaTriKhuyenMai = $('#CachTinhGiaTriKhuyenMai').val();
+                if (CachTinhGiaTriKhuyenMai == '@CachTinhGiaTriKhuyenMai.GiamTheoPhanTramGiaTri.GetHashCode()') {
+                    $('#SoTien').css('display','none')
+                    $('#PhanTram').css('display','block')
+                }
+                else if (CachTinhGiaTriKhuyenMai == '@CachTinhGiaTriKhuyenMai.GiamTheoSoTien.GetHashCode()') {
+                    $('#SoTien').css('display', 'block')
+                    $('#PhanTram').css('display', 'none')
+                }
+                else {
+                    $('#SoTien').css('display', 'none')
+                    $('#PhanTram').css('display', 'none')
+                }
+            });
+
+            $.ajax({
+                url: '@Url.Action("divCategory")',
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#Content-Category').html(data)
+                },
+                error: function (data) {
+
+                },
+                complete: function (data, response) {
+
+                }
+            });
+
+            $.ajax({
+                url: '@Url.Action("divProduct")',
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $('#Content-Product').html(data)
+                },
+                error: function (data) {
+
+                },
+                complete: function (data, response) {
+
+                }
+            });
+
+            $('#formview form').validate({
+                messages: {
+                    CategoryName: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                },
+                rules: {
+                    CategoryName: {
+                        required: true
+                    },
+                }
+            });
+        });
+    </script>
+}

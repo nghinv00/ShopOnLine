@@ -1,0 +1,193 @@
+.formSystem{
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px 20px;
+    background-color:#f9fafa;
+}
+.formSystem .formSystem-l{
+    width: 49.5%;
+    float: left;
+}
+.formSystem .formSystem-r{
+    width: 49.5%;
+    float: right;
+}
+.formSystem .formSystem-r .form-control{
+    color: #666666;
+    font-size: 15px;
+    line-height: 22px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    font-style: italic;
+}
+.formSystem .formSystem-r button.btn{
+    color: #ffffff;
+    display: block;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    height: auto;
+    padding: 8px 10px 8px 45px;
+    background: url(../images/icon-search.png) no-repeat 15px #ec008c; 
+    border: 0;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.formSystem .formSystem-r button.btn:after{
+    position: absolute;
+    content:"";
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.1);
+    top:0;
+    left:0;
+    opacity: 0;
+    -webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5s ease;
+    transition:all 0.5s ease;
+}
+.formSystem .formSystem-r button.btn:hover:after{
+    opacity: 1;
+}
+.formSystem .formSystem-r button.btn span{
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+}
+.formSystem .formSystem-r .btn:focus,
+.formSystem .formSystem-r .btn:active{
+    outline: 0px;
+}
+.table-system{
+    display: table; width: 100%;
+}
+.table-system .title-system{
+    font-size: 16px;
+    line-height: 22px;
+    display: table-cell; width: 1%;white-space: nowrap; padding-right:10px; vertical-align: middle;
+}
+.table-system .row-input{
+    display: table-cell; width: 100%;
+}
+.table-system .row-input .fl,
+.table-system .row-input .fr{
+    width: 48.5%;
+}
+.table-system .row-input .form-control{
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+.showresult{
+    margin-bottom: 20px;
+}
+.showresult .showmap{
+    width: 470px;
+    float: left;
+    padding: 4px;
+    text-align: center;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+}
+.showresult .result{
+    width: 670px;
+    float: right;
+}
+.result .r-count{
+    width: 100%;
+    font-size: 14px;
+    line-height: 22px;
+    color: #666666;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.result .show-result{
+    max-height: 465px;
+    overflow-y: auto;
+    border-bottom: 1px solid #e0e0e0;
+}
+.result .show-result .item{
+    padding: 0 0 15px 0px;
+    /*border-bottom:  1px solid #e5e5e5;*/
+    cursor: pointer;
+}
+.result .show-result .item .i-thumbnail{
+    width: 110px;
+    height: 110px;
+    border: 1px solid #dddddd;
+    text-align: center;
+    float: left;
+    position: relative;
+}
+.result .show-result .item .i-thumbnail img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform:translate(-50%, -50%);
+    -moz-transform:translate(-50%, -50%);
+    -o-transform:translate(-50%, -50%);
+    -ms-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+}
+.result .show-result .item .i-description{
+    margin-left: 125px;
+    color:#666666;
+    font-size: 14px;
+    line-height: 22px;
+}
+.result .show-result .item .i-description p{
+    padding: 3px 0px;
+}
+.result .show-result .item .i-description p a{
+    color:#666666;
+}
+.result .show-result .item .i-description .name{
+    font-weight: bold;
+    color: #333333;
+}
+.result .show-result .item .i-description .address{
+    padding-left: 30px;
+    background: url(../images/icon-home.png) no-repeat 0% 5px;
+    position: relative;
+}
+
+.result .show-result .item .i-description .phone{
+    padding-left: 30px;
+    background: url(../images/icon-phone.png) no-repeat 0% 5px;
+    position: relative;
+}
+.result .show-result .item .i-description .email{
+    padding-left: 30px;
+    background: url(../images/icon-email.png) no-repeat 0% 9px;
+    position: relative;
+}
+.result .show-result .item .i-description .website{
+    padding-left: 30px;
+    background: url(../images/icon-website.png) no-repeat 0% 5px;
+    position: relative;
+}
+.result .show-result .item .i-description .address:before,
+.result .show-result .item .i-description .phone:before,
+.result .show-result .item .i-description .email:before,
+.result .show-result .item .i-description .website:before{
+    position: absolute;
+    content:":";
+    top: 3px;
+    left: 18px;
+}
+.show-result ul
+{
+    margin: 0;
+    padding: 0;
+}
+.grid-link
+{
+    padding-top:50px;
+}

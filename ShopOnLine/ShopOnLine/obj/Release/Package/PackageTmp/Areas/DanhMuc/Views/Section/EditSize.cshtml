@@ -1,0 +1,147 @@
+﻿@model C.Core.Model.shSetSize
+<div id="EditSize">
+    @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.Hidden("ProductGuid")
+        @Html.Hidden("SizeGuid")
+        <div class="container col-md-12">
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.Label("Sản phẩm cấp cha : ")
+                    (<span class="required">*</span>)
+                    @Html.DropDownList("SectionGuid", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Kích thước cấp cha : ")
+                    (<span class="required">*</span>)
+                    @Html.DropDownList("Parent", null, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Kích thước: ")
+                    (<span class="required">*</span>)
+                    @Html.TextBox("SizeName", null, new { @class = "form-control", @onkeypress = "OnEnterSize(event);" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Chất liệu: ")
+                    @Html.TextBox("Stuff", null, new { @class = "form-control", @onkeypress = "OnEnterSize(event);" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Giá tiền: ")
+                    @Html.TextBox("PriceCurrent", null, new { @class = "form-control", @onkeypress = "OnEnterPrice(event);" })
+                </div>
+
+                <div class="float-right">
+                    <button type="button" class="btn btn-danger" onclick="HuyBo()">Hủy Bỏ</button>
+                    <button type="button" class="btn btn-primary" onclick="GhiLai()">Ghi lại</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+
+    function OnEnterSize(e) {
+        var k = 0;
+
+        if (window.event) {
+            k = e.keyCode;
+        }
+        else if (e.which) {
+            k = e.which;
+        }
+
+        if (k == 13) {
+            $('#EditSize #PriceCurrent').focus();
+        }
+    }
+
+    function OnEnterPrice(e) {
+        var k = 0;
+
+        if (window.event) {
+            k = e.keyCode;
+        }
+        else if (e.which) {
+            k = e.which;
+        }
+
+        if (k == 13) {
+            GhiLai();
+        }
+    }
+
+
+    $('#EditSize #SectionGuid').select2();
+        
+    $("#PriceCurrent").kendoNumericTextBox({
+        culture: "en-US"
+    });
+
+    $('.k-numerictextbox').removeClass('form-control');
+
+    $('#EditSize form').validate({
+        messages: {
+            SizeName: {
+                required: 'Kích thước không được bỏ trống'
+            },
+            PriceCurrent: {
+                required: 'Giá tiền không được bỏ trống',
+                number: 'Giá tiền phải là số dương'
+            }
+        },
+        rules: {
+            SizeName: {
+                required: true
+            },
+            PriceCurrent: {
+                required: true,
+                //digits: true,
+                number: true
+
+            }
+        }
+    });
+
+    function HuyBo() {
+        $('#SizeName, #PriceCurrent').val('');
+        $('#dialog-EditSize').modal('toggle');
+    }
+
+    function GhiLai() {
+        if ($('#dialogEditSize form').valid()) { // submit trước khi nhảy vào hàm
+            $('#loader').fadeIn('slow');
+            $.ajax({
+                url: '@Url.Action("EditSize", "Section")',
+                data: {
+                    SizeGuid: $('#EditSize #SizeGuid').val(),
+                    SectionGuid: $('#EditSize #SectionGuid').val(),
+                    ProductGuid: $('#EditSize #ProductGuid').val(),
+                    SizeName: $('#SizeName').val(),
+                    Stuff: $('#Stuff').val(),
+                    PriceCurrent: $('#PriceCurrent').val(),
+                    Parent: $('#Parent').val()
+                },
+                type: 'POST',
+                dataType: "json",
+                success: function (data) {
+                    $('#dialog-EditSize').modal('toggle');
+
+                    LoadDsSize(
+                        $('#EditSize #ProductGuid').val(),
+                        $('#EditSize #SectionGuid').val(),
+                        $('#EditSize #SizeGuid').val(),
+                        null
+                    );
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+
+        }
+    }
+
+</script>

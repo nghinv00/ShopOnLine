@@ -1,0 +1,161 @@
+﻿@model C.Core.Model.shBanner
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Hiệu chỉnh thông tin Banner";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Banner
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Banner/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin Banner</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Banner/Index")
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("BannerGuid")
+
+            <div class="form-horizontal">
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Tên banner:", new { @class = "control-label" }) (<span class="required">*</span>)
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("BannerName", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Vị trí banner:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                <div id="drl_ParentId">
+                                    <select id="PositionBanner" name="PositionBanner" class="form-control">
+                                        <option value="1">Banner Trang Giới Thiệu</option>
+                                        <option value="2">Banner Trang Sản Phẩm</option>
+                                        <option value="3">Banner Trang Đại Lý</option>
+                                        <option value="4">Banner Trang Bảng Giá</option>
+                                        <option value="6">Banner Trang Tin tức - sự kiện</option>
+                                        <option value="7">Banner Trang Liên Hệ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="image" style="width: 100% !important;">
+                            <div class="file" style="margin: 10px auto; width: inherit; height: inherit;">
+                                @{
+                                    if (Model.BannerId > 0)
+                                    {
+                                        <img src="@Model.Url" style="width:inherit; height: inherit;" id="img-file">
+                                    }
+                                    else
+                                    {
+                                        <img src="/Content/Images/background.jpg" style="width:inherit; height: inherit;" id="img-file">
+                                    }
+                                }
+                                @Html.Hidden("Url")
+                            </div>
+                            <input type="file" value="Chọn file" id="FileUploader" name="FileUploader" style="margin-left: 40%;" accept="image/x-png,image/gif,image/jpeg">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6" style="margin-top:10pt">
+                            @{
+                                if (Model.BannerId > 0)
+                                {
+                                    @Html.CheckBox("Status")
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("Status", true)
+                                }
+                            }
+                            <label for="Status">Còn sử dụng</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        //$('#PositionBanner').select2();
+        $(document).ready(function () {
+
+
+            $('#formview form').validate({
+                messages: {
+                    BannerName: {
+                        required: 'Tên banner không được bỏ trống'
+                    },
+                },
+                rules: {
+                    BannerName: {
+                        required: true
+                    },
+                }
+            });
+
+
+
+            $('#FileUploader').on('change', function (e) {
+                var data = new FormData();
+                var files = $("#FileUploader").get(0).files;
+
+                // Add the uploaded image content to the form data collection
+                if (files.length > 0) {
+                    data.append("PreviewImage", files[0]);
+                }
+                // call ajax
+                $.ajax({
+                    url: '/api/FileUploadBanner/Preview',
+                    data: data,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    success: function (response) {
+                        $('#img-file').attr('src', response);
+                        $('#Url').val(response);
+
+                    }, error: function (response) {
+
+                    },
+                    complete: function (response) {
+
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,30 @@
+﻿@using C.Core.Model;
+@model IEnumerable<shAgent>
+
+<ul>
+    @{
+        foreach (var item in Model as IEnumerable<shAgent>)
+        {
+            <li id="item_@item.AgentId" onclick="activeMap('@item.AgentId','','','')" title="" data-toggle="tooltip" data-original-title="Hiển thị trên bản đồ">
+                <div class="item">
+                    <div class="i-thumbnail">
+                        <img src="@item.Url" alt="@item.AgentName" title="@item.AgentName">
+                    </div>
+                    <div class="i-description">
+                        <p class="name">@item.AgentName</p>
+                        <p class="address">@item.AgentAddress</p>
+                        <p class="phone">@item.Phone</p>
+                        <p class="email"><a href="mailto:@item.Email">@item.Email</a></p>
+                        <p class="website"><a href="@item.Website" target="_blank">@item.Website</a></p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </li>
+        }
+    }
+</ul>
+
+
+
+
+

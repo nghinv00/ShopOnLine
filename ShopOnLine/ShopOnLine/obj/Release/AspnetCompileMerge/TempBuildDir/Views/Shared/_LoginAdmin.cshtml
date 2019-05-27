@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Hệ thống quản trị</title>
+
+
+    <!-- General meta information -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="robots" content="index, follow" />
+    <!-- // General meta information -->
+    <!-- Load Javascript -->
+    <script src="~/AdminLTE/login/js/jquery.js"></script>
+    <script src="~/AdminLTE/login/js/jquery.query-2.1.7.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/AdminLTE/login/js/rainbows.js"></script>
+    <!-- // Load Javascipt -->
+    <!-- Load stylesheets -->
+    <link href="~/AdminLTE/login/css/style.css" rel="stylesheet" />
+    <!-- // Load stylesheets -->
+
+    <script>
+
+        $(document).ready(function () {
+            //$("#submit10").hover(
+            //    function () {
+            //        $(this).animate({ "opacity": "0" }, "slow");
+            //    },
+            //    function () {
+            //        $(this).animate({ "opacity": "1" }, "slow");
+            //    }
+            //);
+        });
+
+    </script>
+</head>
+<body style="background-color:#d2d6de;">
+
+    <main>
+
+        @RenderBody()
+
+    </main>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

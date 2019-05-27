@@ -1,0 +1,90 @@
+﻿@model IPagedList<C.Core.Model.shProduct>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+<div class="form-group">
+
+    @Html.Grid(Model).Columns(column =>
+{
+    column.For(m => Html.htmlCheckBox("cbxItem2", m.ProductGuid)).Named(Html.htmlCheckBox("cbxList2").ToString()).Attributes(style => "width:5%;text-align:center;");
+    column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+    column.For(m => Html.ActionLink(m.ProductName, "Create", new { id = m.ProductGuid })).Named("Mã sản phẩm").Attributes(style => "width:15%");
+    column.For(m => Html.CategoryName(m.CategoryGuid)).Named("Danh mục").Attributes(style => "width:10%");
+    column.For(m => m.PriceCurrent).Named("Giá hiện tại").Attributes(style => "width:10%", @class => "text-align-right");
+    column.For(m => m.PercentCurrent).Named("Khuyến mại áp dụng").Attributes(style => "width:15%", @class => "text-align-right");
+    //column.For(m => m.Number).Named("Số lượng tồn").Attributes(style => "width:15%; ", @class => "text-align-right");
+
+    //column.For(m => m.ProductStatus).Named("Trạng thái").Attributes(style => "width:15%");
+
+    column.For(m => m.Status.GetValueOrDefault(false) ? "Hoạt động" : "Không hoạt động").Named("Trạng thái").Attributes(style => "width:10%");
+}).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.shProduct>(C.Core.Common.Config.PAGE_SIZE_10)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage2(" + page + ")", PagedListRenderOptions.ClassicCustomPage)
+</div>
+
+<script type="text/javascript">
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage2(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("ListProduct")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#DanhMuc2').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+
+    @*$(".pagination > li >a").click(function () {
+
+        var trangthaixuly = $('#TrangThaiVanBan').val();
+            $.ajax({
+                url: '@Url.Action("VanBanLanhDaoDonVi_Partial")',
+                data: {
+                    page: $(this).html(),
+                    TrangThaiVanBan: $('#TrangThaiVanBan').val(),
+                    SoKyHieu: $('#SoKyHieu').val(),
+                    TrichYeu: $('#TrichYeu').val()
+                },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus) {
+                    $('#dsVanBan').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                },
+                complete: function (data) {
+                    $("#loader").fadeOut();
+                }
+            });
+    });*@
+
+</script>

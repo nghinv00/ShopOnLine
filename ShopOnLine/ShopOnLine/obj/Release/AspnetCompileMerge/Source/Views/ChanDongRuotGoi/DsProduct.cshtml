@@ -1,0 +1,91 @@
+﻿@model IPagedList<C.Core.Model.shProduct>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Core.Model;
+<div class="list-prod">
+    @{
+        IEnumerable<shProduct> dsProduct = Model as IEnumerable<shProduct>;
+
+        int index = 0;
+
+        for (int i = 0; i < 4; i++)
+        {
+            <div class="row-prod">
+                @if (index < dsProduct.Count())
+                {
+                    var product = dsProduct.ElementAtOrDefault(index);
+
+                    <div class="item">
+                        <div class="i-images">
+                            <a href="@product.MetaTitle-@product.ProductId" title='@product.ProductName'>
+                                <img src='@product.Image' />
+                            </a>
+                        </div>
+                        <div class="i-title">
+                            <h2>
+                                <a href="@product.MetaTitle-@product.ProductId"
+                                   title='@product.ProductName'>@product.ProductName</a>
+                            </h2>
+                        </div>
+                    </div>
+
+                    index++;
+                }
+
+                @if (index < dsProduct.Count())
+                {
+                    var product2 = dsProduct.ElementAtOrDefault(index);
+
+                    <div class="item">
+                        <div class="i-images">
+                            <a href="@product2.MetaTitle-@product2.ProductId" title='@product2.ProductName'>
+                                <img src='@product2.Image' />
+                            </a>
+                        </div>
+                        <div class="i-title">
+                            <h2>
+                                <a href="@product2.MetaTitle-@product2.ProductId"
+                                   title='@product2.ProductName'>@product2.ProductName</a>
+                            </h2>
+                        </div>
+                    </div>
+
+                    index++;
+                }
+            </div>
+            if (index == dsProduct.Count())
+            {
+                break;
+            }
+        }
+    }
+</div>
+
+<div class="pagination">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ", '" + ViewBag.CategoryGuid + "')", PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>
+<script type="text/javascript">
+    function changepage(page, CategoryGuid) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("dsProduct")',
+            data: {
+                page: page,
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#dsProduct').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+
+</script>

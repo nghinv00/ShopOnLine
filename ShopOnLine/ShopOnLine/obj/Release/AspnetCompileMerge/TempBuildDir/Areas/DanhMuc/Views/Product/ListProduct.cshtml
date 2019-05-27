@@ -1,0 +1,117 @@
+﻿@model IPagedList<C.Core.Model.shProduct>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+<div class="form-group">
+    @Html.Grid(Model).Columns(column =>
+            {
+                column.For(m => Html.htmlCheckBox_DataToggle("cbxOne", m.ProductGuid, "Xem chi tiết sản phẩm ")).Named(Html.htmlCheckBox("cbxOneList").ToString()).Attributes(style => "width:5%;text-align:center;");
+                column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+                column.Custom(@<div class="dropdown">
+                    <div class="sett" data-toggle="dropdown"></div>
+                    <ul class="dropdown-menu sett_dropdown-caret">
+                        <li class="pop_arrow_new"></li>
+                        @{
+                            <li><a href="/DanhMuc/Product/Create/@item.ProductGuid"><i class='fa fa-edit'> Hiệu chỉnh </i></a></li>
+                            <li><a href="/DanhMuc/Section/Index/@item.ProductGuid?p=@ViewBag.page"><i class='fa fa-product-hunt'> Sản phẩm cấp dưới</i></a></li>
+                            <li><a href="javascript:ViewImages('@item.ProductGuid')"><i class='fa fa-columns'> Xem hình ảnh</i></a></li>
+                            <li><a href="javascript:DeleteProduct('@item.ProductGuid')"><i class='fa fa-trash-o'> Xóa </i></a></li>
+                        }
+                    </ul>
+                </div>).Named("Thao tác").Attributes(style => "text-align:center; width:5%");
+    column.For(m => Html.ProductPreview(m.ProductGuid, m.ProductName, "Xem hình ảnh")).Named("Mã sản phẩm").Attributes(style => "width:15%");
+    column.For(m => Html.CategoryName(m.CategoryGuid)).Named("Danh mục").Attributes(style => "width:10%");
+    //column.For(m => m.PriceCurrent).Named("Giá hiện tại").Attributes(style => "width:10%", @class => "text-align-right");
+    column.For(m => Html.ChuongTrinhKhuyenMaiSanPham(m.ProductGuid, 1)).Named("Khuyến mại áp dụng").Attributes(style => "width:15%", @class => "text-align-right");
+    column.For(m => Html.ChuongTrinhKhuyenMaiSanPham(m.ProductGuid, 2)).Named("Giá trị giảm").Attributes(style => "width:15%", @class => "text-align-right");
+    column.For(m => Html.ChuongTrinhKhuyenMaiSanPham(m.ProductGuid, 3)).Named("TG Áp dụng").Attributes(style => "width:15%", @class => "text-align-right");
+
+    column.For(m => m.Status.GetValueOrDefault(false) ? "Hoạt động" : "Không hoạt động").Named("Trạng thái").Attributes(style => "width:10%");
+}).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.shProduct>(C.Core.Common.Config.PAGE_SIZE_20)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ")", PagedListRenderOptions.ClassicCustomPage)
+</div>
+
+<script type="text/javascript">
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("ListProduct")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#DanhMuc').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+
+    $('input[name=cbxOne]').on('change', function (e) {
+
+        $('.tr-about').hide();
+        $('input[name=cbxOne]').not(this).prop('checked', false);
+        var tr_current = $(this).parent().parent('tr');
+        if ($(this).is(":checked")) {
+            if (tr_current.next('tr').hasClass('tr-about')) { // đã load dữ liệu
+                $(tr_current).next('tr').show();
+                $(tr_current).next('tr').children('td').children('div').slideDown({
+                    progress: function () {
+
+                    }
+                });
+            }
+            else {  // Chưa có dữ liệu
+                $.ajax({
+                    url: '/DanhMuc/Product/DsSection',
+                    data: { ProductGuid: $(this).val() },
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $(tr_current).after(data);
+                        $(tr_current).next('tr').slideDown();
+                        $(tr_current).next('tr').children('td').children('div').slideDown();
+                    },
+                    error: function () {
+                        $(tr_current).after(
+                            "<tr class='tr-about' style='display:none;'><td colspan='9'> <span class='required'><b> Chưa có thông tin sản phẩm theo mục </b></span> </td> </tr>"
+                        );
+                        $(tr_current).next('tr').slideDown('slow');
+                    }
+                });
+            }
+        } else {
+            $(tr_current).next('tr').children('td').children('div').slideUp({
+                complete: function () {
+                    $(tr_current).next('tr').hide();
+                }
+            });
+        }
+    });
+</script>

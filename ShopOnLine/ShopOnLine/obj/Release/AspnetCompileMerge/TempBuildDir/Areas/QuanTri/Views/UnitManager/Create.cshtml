@@ -1,0 +1,86 @@
+﻿@model IPagedList<C.Core.Model.qtUnitManager>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Phân công quản lý đơn vị";
+}
+<section class="content-header">
+    <h1>
+        Phân công quản lý đơn vị
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Thông tin quản lý đơn vị</li>
+    </ol>
+</section>
+<section class="content-header">
+    <input type="hidden" id="locationId" value="" />
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/UnitManager/Index");
+            <div class="row">
+
+                <div class="form-group" style="overflow:hidden; padding-bottom:10px;">
+                    @Html.Label("Người dùng", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("User", "-- Chọn người dùng---")
+                        <input type="hidden" id="UserHide" value="@ViewBag.UserId" />
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.Raw(ViewBag.UnitList)
+
+                </div>
+
+                <div class="form-group">
+                    @Html.Button("Ghi lại", "btn btn-primary", "Create", "fa fa-save")
+                </div>
+            </div>
+
+            <input type="hidden" name="RoleList" />
+        }
+    </div>
+</section>
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/Site")
+        @Styles.Render("~/Content/UI")*@
+
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+
+
+            var user = $('#UserHide').val();
+            //$("#User").combobox();
+            //if (user.toString() != "")
+            //{
+            //    $("#User").prop("readonly", true);
+            //    $(".custom-combobox-input").prop("readonly", true);
+            //    $(".ui-button").prop("readonly", true);
+            //    $(".ui-button").css({ 'pointer-events': 'none' });
+            //}
+            $("#User").select2();
+
+            $("#User").change(function () {
+                document.location = '/QuanTri/UnitManager/Create/' + $(this).val();
+            });
+
+            $('#Create').click(function () {
+                if ($("input[name=cbxUnit]:checked").length > 0) {
+                    $("#formview form").attr('action', '@Url.Action("Create")');
+                    $("#formview form").submit();
+                }
+                else {
+                    ThongBao("Chưa chọn đơn vị phân công quản lý")
+                }
+            });
+        });
+    </script>
+}
+

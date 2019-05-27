@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "         Quản lý Tồn kho";
+}
+
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+<style>
+    .modal-dialog {
+        width: 800px;
+        margin: 30px auto;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Quản lý Tồn kho
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Quản lý Tồn kho</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/ProductInventory/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+                <style>
+                    .box-header {
+                        color: #fff;
+                        background: #00a65a;
+                        background-color: #00a65a;
+                    }
+                </style>
+                <div class="box box-success collapsed-box" style="width: auto; margin: 0 15px 15px 15px;border: 1px solid #00a65a;">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"> Tìm kiếm nâng cao </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="col-md-4">
+                            <div class="form-group input-filter">
+                                <label for="MaSanPham">Mã sản phẩm :</label>
+                                @Html.TextBox("MaSanPham", null, new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group input-filter">
+                                <label for="TenSanPham">Tên sản phẩm :</label>
+                                @Html.TextBox("TenSanPham", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group input-filter">
+                                <label for="TuNgay">Từ ngày :</label>
+                                @Html.TextBox("TuNgay", null, new { @class = "form-control" })
+                            </div>
+
+                            <div class="form-group input-filter">
+                                <label for="DenNgay">Đến ngày :</label>
+                                @Html.TextBox("DenNgay", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group input-filter">
+                                <label for="SoLuongTon">Số lượng tồn :</label>
+                                @Html.TextBox("SoLuongTon", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12 ">
+                    <div class="form-group">
+                        <div id="DanhMuc">
+                            @{
+            Html.RenderPartial("ListProduct", (IPagedList<C.Core.Model.shProduct>)ViewBag.ListProduct);
+                            }
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+        }
+    </div>
+</section>
+
+
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        function History(ProductGuid) {
+
+        }
+
+        $(document).ready(function () {
+
+            $("#TuNgay, #DenNgay").datepicker({
+                changeYear: true,
+                changeMonth: true,
+                yearRange: '-99:+99'
+            });
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,377 @@
+﻿@{
+    ViewBag.Title = "Báo cáo Doanh thu";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+@using C.Core.Common;
+<link href="~/Content/baocao.css" rel="stylesheet" />
+<script src="~/AdminLTE/canvanjs/jquery.canvasjs.min.js"></script>
+<script src="~/AdminLTE/daterangepicker/moment.min.js"></script>
+<script src="~/AdminLTE/daterangepicker/daterangepicker.js"></script>
+<link href="~/AdminLTE/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>
+        Tổng quan kinh doanh
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Báo cáo </a></li>
+        <li><a href="#"> Doanh thu </a></li>
+        <li class="active"></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/DoanhThu/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+
+            <div class="row no-margin">
+                <div class="time-filter">
+                    @Html.TextBox("StartEnd", null, new { @class = "form-control" })
+
+                    @Html.Hidden("StartTime")
+                    @Html.Hidden("EndTime")
+                </div>
+                @Html.Label("Lọc theo thời gian:", new { @class = "filter" })
+            </div>
+
+            <div class="container no-padding no-margin">
+                <ul class="tabs">
+                    <li class="tab-link current" data-tab="tab-1">Kinh doanh</li>
+                    <li class="tab-link" data-tab="tab-2">Top 10 </li>
+                </ul>
+                <div id="tab-1" class="tab-content current">
+                    <div class="row no-margin" style="min-height: 650px;">
+
+                        <div data-reactid=".8.0.1.0.2">
+                            <div id="reportsummary" data-reactid=".9">
+                                <div id="reportsummarybody" data-reactid=".9.0">
+                                    <div class="reportkpigroup" data-reactid=".9.0.0">
+                                        <div class="ui grid stackable five column" data-reactid=".9.0.0.0">
+                                            <div class="column" data-reactid=".9.0.0.0.0">
+                                                <div class="reportkpi" data-toggle="tooltip" title=""
+                                                     data-original-title="Tổng số lượng đơn hàng ở các trạng thái ĐANG XỬ LÝ, ĐANG GIAO HÀNG, ĐÃ GIAO HÀNG, ĐÃ HỦY ĐƠN HÀNG">
+                                                    <div class="reportkpiname" data-reactid=".9.0.0.0.0.0.0">
+                                                        <i class="icon tc-cart" data-reactid=".9.0.0.0.0.0.0.0"></i>
+                                                        <span data-reactid=".9.0.0.0.0.0.0.1"> </span>
+                                                        <span data-reactid=".9.0.0.0.0.0.0.2">Tổng đơn hàng</span>
+                                                    </div>
+                                                    <div class="reportkpivalue" data-reactid=".9.0.0.0.0.0.1">@ViewBag.TongSoDonHang</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="column" data-reactid=".9.0.0.0.2">
+                                                <div class="reportkpi" data-hasqtip="2" aria-describedby="qtip-2"
+                                                     data-toggle="tooltip" title="" data-original-title="Tổng giá trị">
+                                                    <div class="reportkpiname" data-reactid=".9.0.0.0.2.0.0">
+                                                        <i class="icon tc-tick" data-reactid=".9.0.0.0.2.0.0.0"></i>
+                                                        <span data-reactid=".9.0.0.0.2.0.0.1"> </span>
+                                                        <span data-reactid=".9.0.0.0.2.0.0.2">Tổng giá trị</span>
+                                                    </div>
+                                                    <div class="reportkpivalue" data-reactid=".9.0.0.0.2.0.1">@ViewBag.TongGiaTri</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="column" data-reactid=".9.0.0.0.2">
+                                                <div class="reportkpi" data-reactid=".9.0.0.0.2.0" data-hasqtip="2"
+                                                     aria-describedby="qtip-2"
+                                                     data-toggle="tooltip" title="" data-original-title="Đơn hoàn thành">
+                                                    <div class="reportkpiname" data-reactid=".9.0.0.0.2.0.0">
+                                                        <i class="icon tc-tick" data-reactid=".9.0.0.0.2.0.0.0"></i>
+                                                        <span data-reactid=".9.0.0.0.2.0.0.1"> </span>
+                                                        <span data-reactid=".9.0.0.0.2.0.0.2">Đơn hoàn thành</span>
+                                                    </div>
+                                                    <div class="reportkpivalue" data-reactid=".9.0.0.0.2.0.1">@ViewBag.DonHoanThanh</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="column" data-reactid=".9.0.0.0.3">
+                                                <div class="reportkpi" data-reactid=".9.0.0.0.3.0" data-hasqtip="3"
+                                                     data-toggle="tooltip" title="" data-original-title="Doanh thu">
+                                                    <div class="reportkpiname" data-reactid=".9.0.0.0.3.0.0">
+                                                        <i class="icon tc-tick" data-reactid=".9.0.0.0.3.0.0.0"></i><span data-reactid=".9.0.0.0.3.0.0.1"> </span>
+                                                        <span data-reactid=".9.0.0.0.3.0.0.2">Doanh thu</span>
+                                                    </div>
+                                                    <div class="reportkpivalue" data-reactid=".9.0.0.0.3.0.1">@ViewBag.DoanhThu</div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="column" data-reactid=".9.0.0.0.4">
+                                                <div class="reportkpi" data-reactid=".9.0.0.0.4.0" data-hasqtip="4"
+                                                     data-toggle="tooltip" title="" data-original-title="Đơn hàng hủy">
+                                                    <div class="reportkpiname" data-reactid=".9.0.0.0.4.0.0">
+                                                        <i class="icon tc-ban" data-reactid=".9.0.0.0.4.0.0.0"></i>
+                                                        <span data-reactid=".9.0.0.0.4.0.0.1"> </span>
+                                                        <span data-reactid=".9.0.0.0.4.0.0.2">Đơn hàng hủy</span>
+                                                    </div><div class="reportkpivalue" data-reactid=".9.0.0.0.4.0.1">@ViewBag.DonHangHuy</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="reportboxline" data-reactid=".9.0.1"></div>
+                                    <br data-reactid=".9.0.2">
+
+                                    <div class="col-md-12 no-padding">
+                                        <div class="col-md-6">
+                                            <h4>  Tổng giá trị theo trạng thái đơn hàng </h4>
+                                            <div id="tonggiatritheotrangthaidonhang"></div>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5">
+                                            <h4>   Số đơn hàng theo trạng thái   </h4>
+                                            <div id="sodonhangtheotrangthai"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="tab-2" class="tab-content">
+
+                    <div class="row no-margin" style="min-height: 650px;">
+
+                        <div data-reactid=".8.0.1.0.2">
+                            <div id="reportsummary" data-reactid=".9">
+                                <div id="reportsummarybody" data-reactid=".9.0">
+                                    <div class="col-md-12 no-padding">
+                                        <div class="col-md-6">
+                                            <h4>Top 10 sản phẩm theo số lượng </h4>
+                                            <div id="topsanphamtheosoluong"></div>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5">
+                                            <h4>Top 10 sản phẩm theo doanh thu   </h4>
+                                            <div id="topsanphamtheodoanhthu"></div>
+                                        </div>
+                                    </div>
+                                    @*<div class="reportboxline" data-reactid=".9.0.1"></div>
+                                        <br data-reactid=".9.0.2">*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- container -->
+        }
+    </div>
+</section>
+
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        var startDate;
+        var endDate;
+
+
+
+        window.onload = function () {
+            // 1. kinh doanh
+            $.ajax({
+                type: "POST",
+                //contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("TongGiaTriTheoTrangThaiDonHang")',
+                data: {
+                    StartTime: '@ViewBag.StartTime',
+                    EndTime: '@ViewBag.EndTime'
+                },
+                //async: false,
+                dataType: "json",
+                success: function (data) {
+
+                    // 1..
+                    var options = {
+                        title: {
+                            //text: "Tổng giá trị theo trạng thái đơn hàng"
+                        },
+                        data: [
+                            {
+                                // Change type to "doughnut", "line", "splineArea", etc.
+                                type: "column",
+                                dataPoints: data,
+                            }
+                        ]
+                    };
+                    $("#tonggiatritheotrangthaidonhang").CanvasJSChart(options);
+
+                    // 2..
+                    var options = {
+                        title: {
+                            //text: "Số đơn hàng theo trạng thái"
+                        },
+                        data: [{
+                            type: "pie",
+                            startAngle: 45,
+                            showInLegend: "true",
+                            legendText: "{label}",
+                            indexLabel: "{label} ({y})",
+                            yValueFormatString: "#,##0.#" % "",
+                            dataPoints: data,
+                        }]
+                    };
+                    $("#sodonhangtheotrangthai").CanvasJSChart(options);
+                },
+                error: function (data) {
+                },
+                complete: function (data) {
+                }
+            });
+
+            // 2. Top
+            // 2.1 Top sản phẩm theo số lượng
+            $.ajax({
+                type: "POST",
+                //contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("TopSanPham")',
+                //async: false,
+                 data: {
+                     StartTime: '@ViewBag.StartTime',
+                     EndTime: '@ViewBag.EndTime',
+                     TheLoai: '@Config.SoLuong'
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    var options = {
+                        animationEnabled: true,
+                        title: {
+                            //text: "Mobile Phones Used For",
+                            //fontColor: "Peru"
+                        },
+                        axisY: {
+                            tickThickness: 0,
+                            lineThickness: 0,
+                            valueFormatString: " ",
+                            gridThickness: 0
+                        },
+                        axisX: {
+                            tickThickness: 0,
+                            lineThickness: 0,
+                            labelFontSize: 15,
+                            labelFontColor: "Peru"
+                        },
+                        data: [{
+                            type: "bar",
+                            indexLabel: "{y}",
+                            dataPoints:
+                                data
+                        }]
+                    };
+
+                    $("#topsanphamtheosoluong").CanvasJSChart(options);
+                },
+                error: function (data) {
+                },
+                complete: function (data) {
+                }
+            });
+             // 2.2. Top sản phẩm theo doanh thu
+            $.ajax({
+                type: "POST",
+                //contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("TopSanPham")',
+                //async: false,
+                 data: {
+                     StartTime: '@ViewBag.StartTime',
+                     EndTime: '@ViewBag.EndTime',
+                     TheLoai: '@Config.DoanhThu'
+                },
+                dataType: "json",
+                success: function (data) {
+                    var options = {
+                        animationEnabled: true,
+                        title: {
+                            //text: "Mobile Phones Used For",
+                            //fontColor: "Peru"
+                        },
+                        axisY: {
+                            tickThickness: 0,
+                            lineThickness: 0,
+                            valueFormatString: " ",
+                            gridThickness: 0
+                        },
+                        axisX: {
+                            tickThickness: 0,
+                            lineThickness: 0,
+                            labelFontSize: 18,
+                            labelFontColor: "Peru"
+                        },
+                        data: [{
+                            type: "bar",
+                            indexLabel: "{y}",
+                            dataPoints:
+                                data
+                        }]
+                    };
+                    $("#topsanphamtheodoanhthu").CanvasJSChart(options);
+                },
+                error: function (data) {
+                },
+                complete: function (data) {
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            $('#StartEnd').daterangepicker({
+                maxDate: new Date(),
+                showDropdowns: true,
+                timePicker: false,
+                timePickerIncrement: 1,
+                timePicker12Hour: true,
+                opens: 'left',
+                buttonClasses: ['btn btn-default'],
+                applyClass: 'btn-small btn-primary',
+                cancelClass: 'btn-small',
+                format: 'DD/MM/YYYY',
+                separator: ' to ',
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: 'Áp dụng',
+                    cancelLabel: 'Hủy bỏ',
+                    fromLabel: 'Từ',
+                    toLabel: 'đến',
+                    customRangeLabel: 'Tủy chỉnh',
+                    daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                    monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                    firstDay: 1
+                }
+            },
+            function (start, end) {
+                startDate = start;
+                endDate = end;
+                $('#StartTime').val(start.format('DD/MM/YYYY'));
+                $('#EndTime').val(end.format('DD/MM/YYYY'));
+            });
+
+            $('#StartEnd').on('change', function (e) {
+                $('#formview form').attr('action', 'Index');
+                $('#formview form').submit();
+            });
+
+        });
+
+        $(document).ready(function () {
+            $('ul.tabs li').click(function () {
+                var tab_id = $(this).attr('data-tab');
+
+                $('ul.tabs li').removeClass('current');
+                $('.tab-content').removeClass('current');
+
+                $(this).addClass('current');
+                $("#" + tab_id).addClass('current');
+
+            });
+        });
+    </script>
+}

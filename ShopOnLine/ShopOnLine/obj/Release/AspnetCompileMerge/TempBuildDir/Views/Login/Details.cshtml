@@ -1,0 +1,29 @@
+﻿@model shOrder
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.DanhMuc.Helper;
+@using C.Core.Common;
+
+<tr class="tr-about">
+    <td></td>
+    <td colspan="4" class="text-align-right">Tổng tiền hàng</td>
+    <td colspan="2" class="text-align-right">@Format.FormatDecimalToString(Model.Total.GetValueOrDefault(0))</td>
+</tr>
+
+<tr class="tr-about">
+    <td></td>
+    <td colspan="4" class="text-align-right">Vận chuyển-Giao Hàng Nhanh</td>
+    <td colspan="2" class="text-align-right">@Format.FormatDecimalToString(Model.FeeShip.GetValueOrDefault(0))</td>
+</tr>
+
+<tr class="tr-about">
+    <td></td>
+    <td colspan="4" class="text-align-right">Tổng số tiền</td>
+    <td colspan="2" class="text-align-right total-money">@Format.FormatDecimalToString(Model.Total.GetValueOrDefault(0) + Model.FeeShip.GetValueOrDefault(0)) VNĐ</td>
+</tr>
+
+<tr class="tr-about">
+    <td></td>
+    <td colspan="4" class="text-align-right">Phương thức Thanh toán</td>
+    <td colspan="2" class="text-align-right">@Html.PayType(Model.PayType)</td>
+</tr>

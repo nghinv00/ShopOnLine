@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Danh sách Bài viết Giới thiệu";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+
+<section class="content-header">
+    <h1>
+        Danh sách Bài viết Giới thiệu
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Danh sách Bài viết Giới thiệu</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/About/Index")
+            @Html.Hidden("page")
+
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="Create" name="Create" class="btn btn-primary" data-toggle="tooltip" title="Thêm mới bài giới thiệu">
+                                <i class="fa fa-plus-square"></i> Thêm mới
+                            </div>
+                            <div id="Delete" name="Delete" class="btn btn-danger" data-toggle="tooltip" title="" data-original-title="Xóa bài giới thiệu">
+                                <i class="fa fa-trash-o"></i> Xóa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="DanhMuc">
+                    @{
+                        Html.RenderPartial("ListAbout", (IPagedList<C.Core.Model.shAboutu>)ViewBag.ListAbout);
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,207 @@
+﻿@model C.Core.Model.shAboutu
+@using C.UI.Helpers;
+@{
+    ViewBag.Title = "Hiệu chỉnh thông tin Giới thiệu";
+}
+<script src="~/Scripts/ckeditor/ckeditor.js" charset="utf-8"></script>
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Giới thiệu
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Banner/Index">Danh mục</a></li>
+        <li class="active">Hiệu chỉnh thông tin Giới thiệu</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/About/Index")
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("AboutGuid")
+            <div class="form-horizontal">
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Tiêu đề:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("AboutTitle", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Mô tả:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("AboutName", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Nội dung:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextArea("AboutContent", null, new { @class = "form-control" })
+                            </div>
+                            <script type="text/javascript">
+                                CKEDITOR.replace("AboutContent")
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Năm:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("Year", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Danh mục cha:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.DropDownList("Parent", ViewBag.ParentId as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Bút ký:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextArea("Sign", null, new { @class = "form-control" })
+                                <script type="text/javascript">
+                                    CKEDITOR.replace("Sign")
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div id="image" style="margin-left: 19%; width: 80%; height: 100%;">
+                            <div class="file" style="margin: 10px auto; width: inherit; height: inherit;">
+                                @{
+                                    if (Model.AboutId > 0)
+                                    {
+                                        <img src="@Model.ImageUrl" style="width:inherit; height: inherit;" id="img-file">
+                                    }
+                                    else
+                                    {
+                                        <img src="/Content/Images/background.jpg" style="width:inherit; height: inherit;" id="img-file">
+                                    }
+                                }
+                                @Html.Hidden("ImageUrl")
+                            </div>
+                            <input type="file" value="Chọn file" id="FileUploader" name="FileUploader"
+                                   style="margin-left: 40%;" accept="image/x-png,image/gif,image/jpeg,image/png">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                @Html.Label("Thứ tự hiển thị:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBox("SortOrder", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="col-md-8">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6" style="margin-top:10pt">
+                                @{
+                                    if (Model.AboutId > 0)
+                                    {
+                                        @Html.CheckBox("Status")
+                                    }
+                                    else
+                                    {
+                                        @Html.CheckBox("Status", true)
+                                    }
+                                }
+                                <label for="Status">Còn sử dụng</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+        //$('#PositionBanner').select2();
+        $(document).ready(function () {
+
+
+            $('#formview form').validate({
+                messages: {
+                    BannerName: {
+                        required: 'Tên banner không được bỏ trống'
+                    },
+                },
+                rules: {
+                    BannerName: {
+                        required: true
+                    },
+                }
+            });
+
+
+
+            $('#FileUploader').on('change', function (e) {
+                var data = new FormData();
+                var files = $("#FileUploader").get(0).files;
+
+                // Add the uploaded image content to the form data collection
+                if (files.length > 0) {
+                    data.append("PreviewImage", files[0]);
+                }
+                // call ajax
+                $.ajax({
+                    url: '/api/FileUploadBanner/Preview',
+                    data: data,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    success: function (response) {
+                        $('#img-file').attr('src', response);
+                        $('#ImageUrl').val(response);
+
+                    }, error: function (response) {
+
+                    },
+                    complete: function (response) {
+
+                    }
+                });
+            });
+        });
+    </script>
+}

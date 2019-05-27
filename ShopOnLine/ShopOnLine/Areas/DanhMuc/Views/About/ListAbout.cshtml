@@ -1,0 +1,153 @@
+﻿@model IPagedList<C.Core.Model.shAboutu>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.Customer.Helper;
+<div class="form-group">
+
+    @Html.Grid(Model).Columns(column =>
+        {
+            column.For(m => Html.htmlCheckBox_DataToggle("cbxOne", m.AboutGuid, "Mở rộng")).Named(Html.htmlCheckBox("cbxOneList").ToString()).Attributes(style => "width:5%;text-align:center;");
+            column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+            column.Custom(@<div>
+                <ul class="task-icon">
+                    <li>
+                        <a class="css-coment" href="javascript:HienThiBaiViet('@item.AboutGuid')"
+                           data-toggle="tooltip" title="" data-original-title="Xem chi tiết bài viết">
+                            <i class="fa fa-file-text-o fa-lg"></i>
+                            <span aboutid="@item.AboutId" class="about-child label label-warning"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>).Named("#").Attributes(style => "text-align:center;width:5%");
+
+                    column.Custom(@<div class="dropdown">
+                        <div class="sett" data-toggle="dropdown"></div>
+                        <ul class="dropdown-menu sett_dropdown-caret">
+                            <li class="pop_arrow_new"></li>
+                            @{
+                                <li><a href="/DanhMuc/About/Create/@item.AboutGuid"><i class='fa fa-edit'> Hiệu chỉnh </i></a></li>
+                                <li><a href="javascript:DeleteAbout(@item.AboutGuid)"><i class='fa fa-trash-o'> Xóa </i></a></li>
+                            }
+                        </ul>
+                    </div>).Named("Thao tác").Attributes(style => "text-align:center;width:5%");
+
+    column.For(m => Html.AboutTitle(m.AboutGuid, m.AboutTitle)).Named("Tiêu đề").Attributes(style => "width:15%");
+    column.For(m => m.AboutName).Named("Mô tả").Attributes(style => "width:25%");
+    column.For(m => m.Year).Named("Năm").Attributes(style => "width:5%");
+    column.For(m => m.Status.GetValueOrDefault(false) ? "Hoạt động" : "Không hoạt động").Named("Trạng thái").Attributes(style => "width:10%");
+}).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.shAboutu>(C.Core.Common.Config.PAGE_SIZE_10)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ")", PagedListRenderOptions.ClassicCustomPage)
+</div>
+
+<script type="text/javascript">
+
+    $('input[name=cbxOne]').on('change', function (e) {
+        var AboutGuid = $(this).val();
+        $('.tr-about').hide();
+        $('input[name=cbxOne]').not(this).prop('checked', false);
+        var tr_current = $(this).parent().parent('tr');
+        if ($(this).is(":checked")) {
+            if (tr_current.next('tr').hasClass('tr-about')) { // đã load dữ liệu
+                $(tr_current).next('tr').show();
+                $(tr_current).next('tr').children('td').children('div').slideDown({
+                    progress: function () {
+
+                    }
+                });
+            }
+            else {  // Chưa có dữ liệu
+                $.ajax({
+                    url: '/DanhMuc/About/DsChildAbout',
+                    data: { AboutGuid: $(this).val() },
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $(tr_current).after(data);
+                        $(tr_current).next('tr').slideDown();
+                        $(tr_current).next('tr').children('td').children('div').slideDown();
+                    },
+                    error: function () {
+                        $(tr_current).after("<tr class='tr-about' style='display:none;'><td colspan='8'> <span class='required'><b>Chưa có bài viết mô tả</b></span> </td> </tr>"
+                                );
+                        $(tr_current).next('tr').slideDown('slow');
+                    }
+                });
+            }
+        } else {
+            $(tr_current).next('tr').children('td').children('div').slideUp({
+                complete: function () {
+                    $(tr_current).next('tr').hide();
+                }
+            });
+        }
+    });
+
+    function HienThiBaiViet(AboutGuid) {
+        alert('Làm form modal hiển thị bài viết ');
+    }
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+
+        $.ajax({
+            url: '@Url.Action("ListAbout")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#DanhMuc').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#loader").fadeOut();
+            }
+        });
+    }
+
+    @*$(".pagination > li >a").click(function () {
+
+        var trangthaixuly = $('#TrangThaiVanBan').val();
+            $.ajax({
+                url: '@Url.Action("VanBanLanhDaoDonVi_Partial")',
+                data: {
+                    page: $(this).html(),
+                    TrangThaiVanBan: $('#TrangThaiVanBan').val(),
+                    SoKyHieu: $('#SoKyHieu').val(),
+                    TrichYeu: $('#TrichYeu').val()
+                },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus) {
+                    $('#dsVanBan').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                },
+                complete: function (data) {
+                    $("#loader").fadeOut();
+                }
+            });
+    });*@
+
+</script>

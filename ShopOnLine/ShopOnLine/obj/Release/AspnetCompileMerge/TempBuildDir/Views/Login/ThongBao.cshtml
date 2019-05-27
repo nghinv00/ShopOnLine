@@ -1,0 +1,77 @@
+﻿@model IPagedList<C.Core.Model.ThongBao>
+@using MvcContrib.UI.Grid;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Membership.Helper;
+@using C.QuanTri.Helper;
+@using C.Core.Service;
+@using C.DanhMuc.Helper;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<style>
+    /* Custom  css phan trang */
+    .pagination > .active > a,
+    .pagination > .active > a:focus,
+    .pagination > .active > a:hover,
+    .pagination > .active > span,
+    .pagination > .active > span:focus,
+    .pagination > .active > span:hover {
+        color: #fff;
+        background-color: #eb268f;
+        border-color: #eb268f;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        padding: 20px 20px;
+    }
+</style>
+<div class="form-group">
+    @Html.Grid(Model).Columns(column =>
+{
+     column.For(m => Html.htmlCheckBox("cbxItem", m.ThongBaoId)).Named(Html.htmlCheckBox("cbxList").ToString()).Attributes(style => "width:5%;text-align:center;");
+    column.For(m => Html.OrderField(Model.PageNumber, Model.PageSize, Model.Count)).Named("STT").Attributes(style => "text-align:center;width:5%");
+    column.For(m => m.NoiDungThongBao).Named("Nội dung thông báo").Attributes(style => "width:20%");
+    column.For(m => m.NoiDungThongBao).Named("Nội dung công việc").Attributes(style => "width:25%");
+    column.For(m => Html.ThongTinDonhang(m.OrderGuid)).Named("Đơn hàng").Attributes(style => "width:25%");
+    column.For(m => Html.GiaTriDonhang(m.OrderGuid) + " VNĐ").Named("Tổng giá trị").Attributes(style => "width:15%");
+    column.For(m => m.ThoiGian.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy HH:mm")).Named("Thời gian").Attributes(style => "width:15%");
+}).RenderUsing(new CustomHtmlTableGridRenderer<C.Core.Model.ThongBao>(C.Core.Common.Config.PAGE_SIZE_10)).Attributes(style => "width:100%").Empty("Chưa có dữ liệu")
+
+</div>
+
+<div class="form-group">
+    @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ")", PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>
+
+<script type="text/javascript">
+
+    if ('@Model.Count' > 0)
+    {
+        $('.grid tbody tr').first().addClass('active');
+
+        $('.grid tbody tr').on('click', function (e) {
+            $('.grid tbody tr').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
+    function changepage(page) {
+        $("#loader").fadeIn();
+        $.ajax({
+            url: '@Url.Action("ThongBao")',
+            data: {
+                page: page
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data, textStatus) {
+                $('#Member').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            complete: function (data) {
+                $("#Member").html("Dữ liệu không tìm thấy");
+            }
+        });
+    }
+</script>

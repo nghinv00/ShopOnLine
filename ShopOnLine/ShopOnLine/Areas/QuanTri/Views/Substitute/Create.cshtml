@@ -1,0 +1,154 @@
+﻿@model C.Core.Model.qtSubstitute
+@using C.UI.Helpers;
+
+@{
+    ViewBag.Title = "Cấu hình nhóm người dùng theo phòng ban";
+}
+<section class="content-header">
+    <h1>
+        Cấu hình người dùng theo phòng ban
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Quản trị</a></li>
+        <li class="active">Cấu hình người dùng</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary"  id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/QuanTri/Substitute/Index");
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.SubstituteId)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Tên nhóm sử dụng")
+                        <span class="required">*</span>
+                        @Html.TextBox("AppName", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Mã nhóm sử dụng")
+                        <span class="required">*</span>
+                        @Html.TextBox("AppCode", null, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Đơn vị")
+
+                        @Html.DropDownList("UnitId", null, "-- Chọn đơn vị---", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Thuộc phòng")
+                        <span class="required">*</span>
+                        <div class="department-drop" id="dsphong">
+                            @Html.DropDownList("DepartmentId", null, "-- Chọn phòng ban---", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        @Html.CheckBox("IsActive", true)
+                        @Html.Label("Còn sử dụng")
+
+
+                    </div>
+                    <div id="loader" class="loading loading-hide"></div>
+                    <div class="form-group" id="dsnguoidung">
+
+                        @Html.Raw(ViewBag.dsNguoiDung)
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="box-footer">
+                            @Html.Button("Ghi lại", "btn btn-primary", "btnCreate", "fa fa-save")
+                            @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        }
+    </div>
+</section>
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $('#formview form').validate({
+            messages: {
+                AppName: {
+                    required: 'Tên nhóm không được bỏ trống'
+                },
+                AppCode: {
+                    required: 'Mã nhóm nhập không được bỏ trống'
+                },
+                DepartmentId: {
+                    required: 'Chưa chọn phòng ban'
+                }
+            },
+            rules: {
+
+                AppName: {
+                    required: true
+                },
+                AppCode: {
+                    required: true
+                },
+                DepartmentId: {
+                    required: true
+                }
+            }
+        });
+        $(document).ready(function () {
+
+            $('#btnCreate').click(function () {
+                $("#formview form").attr('action', '@Url.Action("Save")');
+                $("#formview form").submit();
+            });
+            $('#UnitId').select2();
+
+            $('#UnitId').change(function () {
+                $.ajax({
+                    url: '@Url.Action("GetDepartment")',
+                    data: { unitId: $(this).val(), depId: null },
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $("#dsphong").html(data);
+                    },
+                    error: function () {
+                        ThongBao("Có lỗi xảy ra")
+                    }
+                })
+            });
+
+            $("#DepartmentId").select2();
+
+            $('#DepartmentId').change(function () {
+                if ($("#DepartmentId").val() != "") {
+                    $("#loader").show();
+                    $.ajax({
+                        url: '@Url.Action("LoadDanhSachNguoiDung")',
+                        data: { phongid: $(this).val(), SubstituteId: $("#SubstituteId").val() },
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#dsnguoidung").html(data);
+                        },
+                        complete: function (){
+                            $("#loader").fadeOut("fast");
+                        },
+                        error: function () {
+                            ThongBao("Có lỗi xảy ra")
+                        }
+                    })
+                }
+            });
+        });
+
+    </script>
+}

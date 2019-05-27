@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = " Quản lý Bộ sản phẩm";
+}
+
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+<style>
+    .modal-dialog {
+        width: 800px;
+        margin: 30px auto;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Quản lý Bộ sản phẩm
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Quản lý Bộ sản phẩm</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Product/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="row">
+                <div class="col-md-12 no-padding">
+                    <div class="col-md-3" style="min-height: 470px; overflow: auto;">
+                        <ul id="tree" class="ztree"></ul>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                                    @*@Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")*@
+                                </div>
+                            </div>
+                        </div>
+                        <div id="DanhMuc">
+                            @{
+                                Html.RenderPartial("ListProduct", (IPagedList<C.Core.Model.shProduct>)ViewBag.ListProduct);
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</section>
+
+<div>
+    <div class="modal" id="dialog-Product">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Chi tiết sản phẩm</h4>
+                </div>
+                <div class="modal-body" id="dialogProduct">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        function ViewImages(ProductGuid) {
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("Preview")',
+                data: {
+                    ProductGuid: ProductGuid
+                },
+                type: 'POST',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogProduct").html(data);
+                    $('#dialog-Product').modal('toggle');
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+        function category(id) {
+
+        }
+
+        var zTreeObj;
+
+        var setting = {
+            view: {
+                //showIcon: showIconForTree
+                dblClickExpand: false,
+
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 0
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent &&!treeNode.children ;
+        };
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            zTree.expandNode(treeNode);
+        }
+
+        $.ajax({
+            url: '@Url.Action("CategoryTreeview", "DanhMuc")',
+            type: 'POST',
+            data: {
+                isProduct: false
+            },
+            dataType: "json",
+            success: function (data) {
+                var zNodes = data;
+                zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+
+            },
+            error: function (data) {
+
+            },
+            complete: function (data, response) {
+
+            }
+        });
+
+        $(document).ready(function () {
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

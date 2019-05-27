@@ -1,0 +1,86 @@
+﻿@using C.Core.Model;
+@model shCategory
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.Core.Common;
+@using C.UI.PagedList;
+@{
+    ViewBag.Title = Model.CategoryName + " - ";
+}
+
+<link rel="stylesheet" href="~/SongHongVn/modules/product/css/product.css" type="text/css" />
+<script type="text/javascript" src="~/SongHongVn/modules/product/js/product.js"></script>
+<script type="text/javascript" src="~/SongHongVn/js/slideSlick/js/jquery.elevateZoom-3.0.8.min.js"></script>
+
+<div id="vnt-content">
+    @{
+        Html.RenderAction("Banner", "Banner", new { Position = PositionBanner.Position_SanPham });
+    }
+
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation">
+                <ul>
+                    <li><a href='/'>Trang chủ</a></li>
+                    <li><a href='/@Model.CategoryId@Model.MetaTitle'>Sản phẩm</a></li>
+                    <li>@Model.CategoryName </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="box_mid">
+        <div class="mid-title">
+            <div class="wrapper">
+                <div class="titleL">
+                    <h1>@Model.CategoryName</h1>
+                </div>
+                <div class="titleR"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="mid-content">
+            <div class="mod-content">
+                <div class="wrapper">
+                    <div id="vnt-siderbar">
+                        @{
+                            Html.RenderAction("CategoryLeft", "Common", new { IsMenuChild = true });
+                        }
+
+
+                    </div>
+
+                    <div id="vnt-main">
+                        <div class="aboutProd">
+                            <div class="i-images">
+                                <img src="@Model.FileName"
+                                     alt='@Model.CategoryName' title='@Model.CategoryName' />
+                            </div>
+                            <div class="i-desc">
+                                <div class="i-title"> @Model.CategoryName</div>
+                                @Model.Description
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div id="formview" class="main-view">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.Hidden("page")
+                                @Html.Hidden("CategoryGuid")
+                                @Html.Hidden("hdurl", "/san-pham")
+                                <div id="dsProduct">
+                                    @{
+                                        Html.RenderPartial("dsProduct", (IPagedList<shProduct>)ViewBag.dsProduct);
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

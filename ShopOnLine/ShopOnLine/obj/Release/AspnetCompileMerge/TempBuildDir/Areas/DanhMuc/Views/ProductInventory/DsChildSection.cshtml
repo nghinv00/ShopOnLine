@@ -1,0 +1,59 @@
+﻿@model IEnumerable<C.Core.Model.shProductSet>
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Common;
+@using C.UI.Helpers;
+
+@{
+    if (Model != null && Model.Count() > 0)
+    {
+        <tr class="tr-Two" style="display: table-row;">
+            <td colspan="4" style="padding:10px; background:#fff">
+                <div class="box box-success" style="margin-bottom: 0px; display: block;">
+                    <div class="box-header with-border" style="padding:5px;">
+                        <h4 style="font-size:15px" class="box-title">Danh mục con  </h4>
+                        <div class="box-tools pull-right" style="top:0px">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="">
+                            <div class="form-group">
+                                <table class="grid">
+                                    <thead>
+                                        <tr>
+                                            <th width="24%;">#</th>
+                                            <th width="63%;">Sản phẩm cấp dưới</th>
+                                            <th width="13%;"> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in Model as IEnumerable<shProductSet>)
+                                            {
+                                                <tr id="tr_childabout_@item.SectionGuid" class="data" aboutid="@item.SectionGuid">
+                                                    <td class="text-align-center"></td>
+                                                    <td class="native">
+                                                        @item.SectionName
+                                                    </td>
+                                                    <td class="native" style="text-align:left"></td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class='tr-Two' style='display:none;'><td colspan='8'> <span class='required'><b>Chưa có thông sản phẩm con</b></span> </td> </tr>
+    }
+}

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Danh mục tin tức - bài viết";
+}
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+<section class="content-header">
+    <h1>
+        Quản lý tin tức - bài viết 
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Danh mục</a></li>
+        <li class="active">Quản lý tin tức - bài viết </li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/New/Index")
+            @Html.Hidden("page")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Button("Thêm mới", "btn btn-primary", "Create", "fa fa-plus-square")
+                            @Html.Button("Xóa", "btn btn-danger", "Delete", "fa fa-trash-o")
+                        </div>
+                    </div>
+                </div>
+                <div id="News">
+                    @{
+                        Html.RenderPartial("ListNews", (IPagedList<C.Core.Model.shNew>)ViewBag.ListNews);
+                    }
+                </div>
+            </div>
+
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+
+            $('#Create').click(function (e) {
+                window.location.href = '@Url.Action("Create" )';
+            });
+
+        });
+    </script>
+}

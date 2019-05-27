@@ -1,0 +1,124 @@
+﻿@using C.UI.Helpers;
+@using C.Core.Model;
+@{
+    ViewBag.Title = "Thêm mới Sản phẩm theo mục";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm mới loại sản phẩm
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Product/Index">Danh mục</a></li>
+        <li class="active">Thêm mới loại sản phẩm </li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Product/Index")
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("ProductGuid")
+            @Html.Hidden("SectionGuid")
+            @Html.Hidden("p")
+            <div class="form-horizontal">
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Sản phẩm : ") (<span class="required">*</span>)
+                                @Html.TextBox("SectionName", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Danh mục cấp cha:", new { @class = "control-label" })
+                                <style>
+                                    .parent-product {
+                                        width: 100%;
+                                        color: #2B2B2B;
+                                        border: 2px none #d1d1d1;
+                                        border-style: solid;
+                                        border-collapse: separate;
+                                        padding: 10px;
+                                        margin-left: 10px;
+                                    }
+                                </style>
+                                <div class="parent-product">
+                                    @Html.RadioButton("parent", "0", true, new { @id = "parent-product" })
+                                    <label for="parent-product"> @ViewBag.ProductName  </label>
+                                    @Html.TextBox("ProductName", null, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                                    <br />
+                                    @Html.RadioButton("parent", "1", new { @id = "parent-section" })
+                                    
+                                    <label for="parent-section"> Danh mục  </label>
+                                    @Html.DropDownList("ParentId", ViewBag.dsSection as SelectList, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Số thứ tự hiển thị : ")
+                                @Html.TextBox("SortOrder", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-8">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6" style="margin-top:10pt">
+                        @Html.CheckBox("Status", true)
+                        <label for="Status">Còn sử dụng</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                    @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        $(document).ready(function () {
+
+            $('#formview form').validate({
+                messages: {
+                    SectionName: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                    SortOrder: {
+                        digits: 'Số thứ tự hiển thị là số nguyên dương'
+                    }
+                },
+                rules: {
+                    SectionName: {
+                        required: true
+                    },
+                    SortOrder: {
+                        digits: true
+                    }
+                }
+            });
+
+
+
+        });
+    </script>
+}

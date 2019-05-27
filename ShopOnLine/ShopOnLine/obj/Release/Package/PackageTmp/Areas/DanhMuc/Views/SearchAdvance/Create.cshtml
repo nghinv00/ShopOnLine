@@ -1,0 +1,203 @@
+﻿@model C.Core.Model.shMember
+@using C.UI.Helpers;
+
+@{
+    ViewBag.Title = "Thêm mới người dùng";
+}
+
+<section class="content-header">
+    <h1>
+        Thêm và hiệu chỉnh thông tin Người dùng
+        <small>Index</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Member/Index">Quản trị</a></li>
+        <li class="active">Hiệu chỉnh thông tin Người dùng</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-horizontal">
+                <hr />
+                @Html.Hidden("hdurl", "/DanhMuc/Member/Index")
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+                @Html.Hidden("MemberGuiId")
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Tên thành viên :") (<span class="required">*</span>)
+                                @Html.TextBox("MemberName", null, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.Label("Tên đăng nhập:") (<span class="required">*</span>)
+                                @Html.TextBox("MemberLogin", null, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.Label("Mật khẩu: ") (<span class="required">*</span>)
+
+                                @{
+                                    if (Model.MemberId > 0)
+                                    {
+                                        @Html.Password("Password", Model.Password, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.Password("Password", null, new { @class = "form-control" })
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Địa chỉ:")
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </div> @Html.TextBox("Address", null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.Label("Giới tính: ")
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>  
+                                    @Html.DropDownList("Sex", (SelectList)ViewBag.Sex as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                @Html.Label("Email: ")
+                                @Html.TextBox("Email", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.Label("Số điện thoại: ")
+                                <div id="drl_UnitId">
+                                    @Html.TextBox("Phone", null, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                @Html.Label("Chú thích: ")
+                                <div id="drl_Department">
+                                    @Html.TextArea("Notes", null, new { @class = "form-control textarea-noresize-vertical" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div id="image">
+                            <div class="file" style="margin: 10px auto; width: inherit; height: inherit;">
+                                <img src="~/Content/Images/background.jpg" style="width:inherit; height: inherit;" id="img-file" />
+                                @Html.Hidden("ImageFile")
+                            </div>
+                            <input type="file" value="Chọn file" id="FileUploader" name="FileUploader" accept="image/x-png,image/gif,image/jpeg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3" style="margin-top:10pt; margin-left: 30px;">
+                        @{
+                            if (Model.MemberId > 0)
+                            {
+                                @Html.CheckBox("Status")
+                            }
+                            else
+                            {
+                                @Html.CheckBox("Status", true)
+                            }
+                        }
+                        <label for="Status">Còn sử dụng</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Ghi lại", "btn btn-primary", "btnGhiLai", "fa fa-floppy-o")
+                        @Html.Button("Quay lại", "btn btn-default", "btnBack", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+
+
+    $(document).ready(function () {
+        $('#Sex').select2();
+
+        if ('@Model.MemberId' > 0)
+        {
+            $('#img-file').attr('src', '@Model.ImageFile');
+        }
+
+        $('#formview form').validate({
+            messages: {
+                MemberName: {
+                    required: 'Tên thành viên không được bỏ trống'
+                },
+                MemberLogin: {
+                    required: 'Tên đăng nhập không được bỏ trống'
+                },
+                Password: {
+                    required: 'Mật khẩu thành viên không được bỏ trống'
+                }
+
+            },
+            rules: {
+                MemberName: {
+                    required: true
+                },
+                MemberLogin: {
+                    required: true
+                },
+                Password: {
+                    required: true
+                }
+            }
+        });
+
+        $('#FileUploader').on('change', function (e) {
+            var data = new FormData();
+            var files = $("#FileUploader").get(0).files;
+
+            // Add the uploaded image content to the form data collection
+            if (files.length > 0) {
+                data.append("PreviewImage", files[0]);
+            }
+            // call ajax
+            $.ajax({
+                url: '/api/FileUpload/Preview',
+                data: data,
+                type: 'POST',
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false, // NEEDED, DON'T OMIT THIS
+                success: function (response) {
+                    $('#img-file').attr('src', response);
+                    $('#ImageFile').val(response);
+
+                }, error: function (response) {
+
+                },
+                complete: function (response) {
+
+                }
+            });
+        });
+    });
+    </script>
+}

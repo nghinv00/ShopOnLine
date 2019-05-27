@@ -1,0 +1,339 @@
+﻿@using C.Core.Model;
+@using MvcContrib.UI.Grid;
+@using C.UI.Helpers;
+@using C.UI.PagedList;
+
+@{
+    ViewBag.Title = "Sản phẩm theo mục ";
+}
+<style>
+    .form-group-btnCreate {
+        margin-bottom: 10px;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Sản phẩm theo mục
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="/DanhMuc/Product/Index">Danh mục</a></li>
+        <li class="active">Sản phẩm theo mục</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="main-view box box-primary" id="formview">
+        @using (Html.BeginForm(null, null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("hdurl", "/DanhMuc/Product/Index")
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+            @Html.Hidden("ProductGuid")
+            @Html.Hidden("SectionGuid")
+            @Html.Hidden("SizeGuid")
+            @Html.Hidden("p")
+            <div id="loader" class="loading loading-hide"></div>
+            <div class="form-horizontal">
+                @*<hr />*@
+                <div class="form-group form-group-btnCreate" style="margin-top: 5px;">
+                    <div class="col-md-12 ">
+                        @Html.Button("Thêm mới sản phẩm theo mục", "btn btn-primary", "btnCreate", "fa fa-plus-square")
+                        <span id="edit-section" style="display: none;">
+                            @Html.Button("Chỉnh sửa", "btn btn-warning", "btnEdit", "fa fa-plus-square")
+                            @Html.Button("Xóa", "btn btn-danger", "btnDelete", "fa fa-plus-square")
+                        </span>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="table-roll">
+                            <div class="table-roll container-treeview" style="">
+                                <div class="product-child-title header-treeview">Tên sản phẩm</div>
+
+                                <div class="body-treeview">
+                                    <ul id="tree" class="ztree"></ul>
+                                </div>
+                                <div class="product-child-title footer-treeview"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="table-roll">
+                            <div class="table-roll" style="">
+                                <div class="product-child-title">Danh sách kích thước - giá theo Sản Phẩm (Đơn vị giá : VND)</div>
+                                <div class="form-group form-group-btnCreate">
+                                    <div class="col-md-12" style="margin-left: 20px; margin-top: 5px;">
+                                        @Html.Button("Thêm mới kích thước ", "btn btn-success", "btnCreateSize", "fa fa-plus-square")
+                                    </div>
+                                </div>
+                                <div id="dsSize">
+
+                                    @{
+                                        Html.RenderPartial("ListSize", (IPagedList<shSetSize>)ViewBag.ListSize);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.Button("Quay lại", "btn btn-default", "btnQuayLai", "fa fa-arrow-left")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<div>
+    <div class="modal" id="dialog-EditSize">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Cập nhật kích thước sản phẩm </h4>
+                </div>
+                <div class="modal-body" id="dialogEditSize">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" language="javascript">
+
+        // 1. Insert - Update - Delete shSize
+        function Edit(SizeGuid, SectionGuid) {
+            $('#loader').fadeIn();
+            $.ajax({
+                url: '@Url.Action("EditSize", "Section")',
+                data: {
+                    SizeGuid: SizeGuid,
+                    SectionGuid: SectionGuid,
+                    ProductGuid: $('#formview #ProductGuid').val()
+                },
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    $("#dialogEditSize").html(data);
+                    $('#dialog-EditSize').modal('toggle');
+                    $('#EditSize #SectionGuid').val(SectionGuid).trigger("change");
+                    $('#EditSize #ProductGuid').val($('#formview #ProductGuid').val());
+                    $('#EditSize #SizeGuid').val(SizeGuid);
+
+                },
+                complete: function (data) {
+                    $('#loader').fadeOut('fast');
+                }
+            });
+        }
+
+        function Delete(SizeGuid, SectionGuid) {
+            var ketqua = confirm('Bạn có chắc chắn muốn xóa bản ghi này không ? ')
+            if (ketqua == true) {
+                $('#loader').fadeIn('slow');
+                $.ajax({
+                    url: '@Url.Action("DeleteSize", "Section")',
+                    data: {
+                        SizeGuid: SizeGuid,
+                        SectionGuid: SectionGuid,
+                        ProductGuid: $('#formview #ProductGuid').val()
+                    },
+                    type: 'POST',
+                    dataType: "json",
+                    success: function (data) {
+                        //$('#dialog-EditSize').modal('toggle');
+                        LoadDsSize($('#formview #ProductGuid').val(), SectionGuid, SizeGuid);
+                    },
+                    complete: function (data) {
+                        $('#loader').fadeOut('fast');
+                    }
+                });
+            }
+        }
+
+        $('#btnCreateSize').on('click', function (e) {
+            Edit(null, null);
+        });
+
+        // THE END 1. Insert - Update - Delete shSize
+
+
+        // 2. LOAD DS ShSize(TABLE-RIGHT)
+        function shProduct(ProductGuid, SectionGuid, SizeGuid, edit) {
+            // check if exist SectionGuid
+            if (edit == '1' || edit == 1) {
+                $('#edit-section').css('display', 'inline');
+            }
+            else {
+                $('#edit-section').css('display', 'none');
+            }
+            LoadDsSize(ProductGuid, SectionGuid, SizeGuid, null);
+            $('#SectionGuid').val(SectionGuid);
+            $('#SizeGuid').val(SizeGuid);
+        }
+
+        //  2. THE END load ds ShSize(TABLE-RIGHT)
+
+        // 3. function load ds shSize
+        function LoadDsSize(ProductGuid, SectionGuid, SizeGuid, page) {
+            $("#loader").fadeIn();
+
+            $.ajax({
+                url: '@Url.Action("ListSize")',
+                data: {
+                    page: page,
+                    ProductGuid: ProductGuid,
+                    SectionGuid: SectionGuid,
+                    SizeGuid: SizeGuid
+                },
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus) {
+                    $('#dsSize').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                },
+                complete: function (data) {
+                    $("#loader").fadeOut();
+                }
+            });
+
+        }
+
+        // 3. THE END  function load ds shSize
+
+
+        // 4. Treeview shSection & shSize (TABLE-LEFT)
+        var zTreeObj;
+
+        var setting = {
+            view: {
+                //showIcon: showIconForTree
+                dblClickExpand: false,
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pId",
+                    rootPId: 0
+                }
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            var value = !treeNode.isParent && !treeNode.children;
+            console.log(value);
+            return value;
+        };
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            zTree.expandNode(treeNode);
+        }
+
+        if ('@ViewBag.ProductGuid' != null && '@ViewBag.ProductGuid' != '') {
+            LoadTreeView('@ViewBag.ProductGuid');
+        }
+
+
+        function LoadTreeView(ProductGuid) {
+            $.ajax({
+                url: '@Url.Action("ProductTreeview", "DanhMuc")',
+                type: 'POST',
+                data: {
+                    isSection: true,
+                    ProductGuid: ProductGuid
+                },
+                dataType: "json",
+                success: function (data) {
+                    var zNodes = data;
+                    zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+
+                },
+                error: function (data) {
+
+                },
+                complete: function (data, response) {
+
+                }
+            });
+        }
+        // 4. THE END Treeview shSection & shSize (TABLE-LEFT)
+
+
+
+        $(document).ready(function () {
+
+            $('#formview form').validate({
+                messages: {
+                    citySel: {
+                        required: 'Tên danh mục không được bỏ trống'
+                    },
+                    ProductName: {
+                        required: 'Mã sản phẩm không được bỏ trống'
+                    }
+                },
+                rules: {
+                    citySel: {
+                        required: true
+                    },
+                    ProductName: {
+                        required: true
+                    }
+                }
+            });
+
+            $('#btnQuayLai').on('click', function (e) {
+                window.location.href = '@Url.Action("Index", "Product")?page=' + $('#p').val();
+            });
+
+            $('#btnCreate').on('click', function (e) {
+                window.location.href = '@Url.Action("Create", "Section")/' + $('#ProductGuid').val();
+            });
+
+            $('#btnEdit').on('click', function (e) {
+                window.location.href = '@Url.Action("Create", "Section")/' + $('#ProductGuid').val() + '?s=' + $('#SectionGuid').val();
+            });
+
+            $('#btnDelete').on('click', function (e) {
+
+                var ketqua = confirm('Bạn có chắc chắn muốn xóa bản ghi này không ? ');
+
+                if (ketqua == true) {
+                    $('#loader').fadeIn('slow');
+                    $.ajax({
+                        url: '@Url.Action("DeleteSection", "Section")',
+                        data: {
+                            SectionGuid: $('#formview #SectionGuid').val(),
+                            ProductGuid: $('#formview #ProductGuid').val()
+                        },
+                        type: 'POST',
+                        dataType: "json",
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        complete: function (data) {
+                            $('#loader').fadeOut('fast');
+                        }
+                    });
+                    }
+
+            });
+
+        });
+    </script>
+}

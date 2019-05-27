@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Tìm kiếm nâng cao";
+}
+@using C.Core.Common;
+@using C.UI.PagedList;
+@using C.UI.Helpers;
+@using C.Core.Model;
+@using C.Customer.Helper;
+@model  IPagedList<TimKiemNangCao>
+
+<link href="~/SongHongVn/modules/search/css/search.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .wrapper > .sliderProd .slick-dots li {
+        margin: 0 10px
+    }
+
+    .wrapper > .sliderProd .item, .sliderProd .item .item_img {
+        margin-bottom: 8px
+    }
+
+    .newsLeft > .divNews .item .i-desc {
+        height: 125px
+    }
+</style>
+<div id="vnt-content">
+    <div class="vnt-banner"></div>
+    <div class="wrapper">
+        <div id="vnt-navation" class="breadcrumb" itemscope="" itemtype="">
+            <div class="navation"></div>
+        </div>
+    </div>
+    <div class="mod-content">
+        <div class="wrapper">
+            <div class="box_mid">
+                <div class="mid-title">
+                    <div class="wrapper">
+                        <div class="titleL">Kết quả tìm kiếm</div>
+                        <div class="titleR"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="mid-content">
+                    @Html.Hidden("keyword")
+                    <p>Kết quả tìm kiếm <b class=font_err>tất cả</b> với từ khóa  <span class="font_keyword">@ViewBag.font_keyword</span> </p>
+                    <p class="mess_result">Tổng cộng tìm thấy <b class=font_err> @ViewBag.TongSoKetQua </b> kết quả trong <b> @ViewBag.SoTrang </b> trang</p>
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        foreach (var item in Model as IPagedList<TimKiemNangCao>)
+                        {
+                            <div class="box-item">
+                                <h3>
+                                    [@item.Category]
+                                    <a href="@item.MetaTitle">
+                                        @Html.FormatTimKiemNangCao(item.Name, item.keyword)
+                                    </a>
+                                    <span class="date_post">@item.CreatedDate.GetValueOrDefault(DateTime.Now).ToString("dd/MM/yyyy")</span>
+                                </h3>
+                                <div class='short'>
+                                    @Html.Raw(item.Description)
+                                </div>
+                                <br class="clear">
+
+                            </div>
+                        }
+                    }
+
+                    <div class="pagination">
+                        @Html.PagedListPager(Model, page => "javascript:changepage(" + page + ", '" + ViewBag.font_keyword + "')", PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                    </div>
+
+                    @*<div class="box-item">
+                            <h3>
+                                [Sản phẩm]
+                                <a href="https://changagoisonghong.vn/vn/bo-chan-ga-goi-tre-em-te-06.html">
+                                    Bộ chăn ga gối
+                                    <font class="font_keyword"><font class="font_keyword">trẻ em</font></font> TE 06
+                                </a>
+                                <span class="date_post">(14:02, 03/07/2018)</span>
+                            </h3>
+                            <div class='short'>
+                                Bộ sản phẩm có kết cấu và giá sản phẩm:&nbsp;&nbsp;
+                                Kích ...
+                            </div>
+                            <br class="clear">
+                        </div>
+
+                        <div class="box-item">
+                            <h3>
+                                [Tin tức]
+                                <a href="https://changagoisonghong.vn/vn/trao-tang-cap-phao-cuu-sinh-cho-tre-em-vung-song-nuoc-quang-binh.html">
+                                    Trao tặng cặp phao cứu sinh cho
+                                    <font class="font_keyword"><font class="font_keyword">trẻ em</font></font> vùng sông nước Quảng Bình
+                                </a>
+                                <span class="date_post">(12:59, 13/07/2014)</span>
+                            </h3>
+                            <div class='short'>
+                                <h4 style="margin: 10px 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit;
+                                                font-size: 13px; font-family: arial; vertical-align: baseline; line-height: 15px;
+                                                color: rgb(49, 49, 49); text-align: justify;">
+                                    <span style="font-size:14px;">
+                                        <span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit;
+                                                font-style: inherit; font-family: arial, helvetica, sans-serif; vertical-align: baseline;">
+                                            <span style="margin: 0px; padding: 0px; border: 0px; outline: 0px; font-weight: inherit;
+                                                            font-style: inherit; font-family: inherit; vertical-align: baseline;
+                                                            color: rgb(0, 0, 0); line-height: 22px; background-color: transparent;">
+                                                Ng&agrave;y 7/5/2010, Đo&agrave;n thanh ni&ecirc;n C&ocirc;ng ty cổ phần may S&ocirc;ng HồngTM
+                                                phối hợp với tỉnh đo&agrave;n Nam Định trao 2000 chiếc cặp phao cứu sinh cho tỉnh đo&agrave;n
+                                                Quảng B&igrave;nh.
+                                            </span>
+                                        </span>
+                                    </span>
+                                </h4>
+                            </div>
+                            <br class="clear">
+                        </div>*@
+
+                </div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+    function changepage(page, font_keyword) {
+
+        window.location.href = '/tim-kiem?page=' + page + '&keyword=' + font_keyword;
+       
+    }
+
+</script>

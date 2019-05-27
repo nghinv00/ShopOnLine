@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0ABE2F57-A8EF-45F0-AAD3-921275C75907}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C.DanhMuc</RootNamespace>
+    <AssemblyName>C.DanhMuc</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TV.DbHelper">
+      <HintPath>..\..\TV.DbHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\BaoCao\DoanhThuController.cs" />
+    <Compile Include="Controllers\BaoCao\BaoCaoController.cs" />
+    <Compile Include="Controllers\DonHang\OrderController.cs" />
+    <Compile Include="Controllers\DanhMuc\AboutController.cs" />
+    <Compile Include="Controllers\DanhMuc\CategoryHighlightController.cs" />
+    <Compile Include="Controllers\QuanLyKho\ProductInventoryController.cs" />
+    <Compile Include="Controllers\QuanLyKho\ProductManageController.cs" />
+    <Compile Include="Controllers\SanPham\SearchAdvanceController.cs" />
+    <Compile Include="Controllers\SanPham\ProductHighLightController.cs" />
+    <Compile Include="Controllers\SanPham\SaleController.cs" />
+    <Compile Include="Controllers\DanhMuc\BannerController.cs" />
+    <Compile Include="Controllers\ThanhVien\CommentController.cs" />
+    <Compile Include="Controllers\DanhMuc\ColorController.cs" />
+    <Compile Include="Controllers\SanPham\SectionController.cs" />
+    <Compile Include="Controllers\SanPham\ProductController.cs" />
+    <Compile Include="Controllers\DanhMuc\NewController.cs" />
+    <Compile Include="Controllers\ThanhVien\MemberController.cs" />
+    <Compile Include="Controllers\DanhMuc\CategoryController.cs" />
+    <Compile Include="Controllers\DanhMuc\DanhMucController.cs" />
+    <Compile Include="Helper\CategoryImageHelper.cs" />
+    <Compile Include="Helper\GoodReceiptIsuueHelper.cs" />
+    <Compile Include="Helper\OrderHelper.cs" />
+    <Compile Include="Helper\SectionHelper.cs" />
+    <Compile Include="Helper\ProductHelper.cs" />
+    <Compile Include="Helper\BannerHelper.cs" />
+    <Compile Include="Helper\MemberHelper.cs" />
+    <Compile Include="Helper\SaleHelper.cs" />
+    <Compile Include="Helper\SizeHelper.cs" />
+    <Compile Include="Helper\SexHelper.cs" />
+    <Compile Include="Helper\CategoryHelper.cs" />
+    <Compile Include="MapRoute\DanhMucAreaRegistration.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="Common\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Release\TempPE\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C.Core\C.Core.csproj">
+      <Project>{1a2d8b32-b88f-45ad-aa97-a61bf0c917cd}</Project>
+      <Name>C.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C.Membership\C.Membership.csproj">
+      <Project>{a0c1d099-5f59-4c28-866d-7e44afb40bf0}</Project>
+      <Name>C.Membership</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C.UI\C.UI.csproj">
+      <Project>{7d25dd11-130a-4397-939b-2df759538ff4}</Project>
+      <Name>C.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\C.Core.dll.config" />
+    <None Include="bin\Debug\C.Membership.dll.config" />
+    <None Include="bin\Debug\C.UI.dll.config" />
+    <None Include="obj\Debug\C.DanhMuc.csproj.CopyComplete" />
+    <None Include="obj\Debug\C.DanhMuc.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\C.DanhMuc.csprojResolveAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\build.force" />
+    <None Include="obj\Release\C.DanhMuc.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Release\C.DanhMuc.csprojResolveAssemblyReference.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\C.Core.dll" />
+    <Content Include="bin\Debug\C.Core.pdb" />
+    <Content Include="bin\Debug\C.DanhMuc.dll" />
+    <Content Include="bin\Debug\C.DanhMuc.pdb" />
+    <Content Include="bin\Debug\C.Membership.dll" />
+    <Content Include="bin\Debug\C.Membership.pdb" />
+    <Content Include="bin\Debug\C.UI.dll" />
+    <Content Include="bin\Debug\C.UI.pdb" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Debug\Microsoft.Web.Infrastructure.xml" />
+    <Content Include="bin\Debug\Microsoft.Web.Mvc.dll" />
+    <Content Include="bin\Debug\MvcContrib.dll" />
+    <Content Include="bin\Debug\System.Web.Mvc.dll" />
+    <Content Include="bin\Debug\System.Web.Mvc.xml" />
+    <Content Include="bin\Debug\System.Web.Razor.dll" />
+    <Content Include="bin\Debug\System.Web.Razor.xml" />
+    <Content Include="bin\Debug\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\Debug\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\Debug\TV.DbHelper.dll" />
+    <Content Include="obj\Debug\C.DanhMuc.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\C.DanhMuc.dll" />
+    <Content Include="obj\Debug\C.DanhMuc.pdb" />
+    <Content Include="obj\Release\C.DanhMuc.csproj.FileListAbsolute.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

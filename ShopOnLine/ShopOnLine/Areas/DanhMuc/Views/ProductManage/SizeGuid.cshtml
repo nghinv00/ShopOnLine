@@ -1,0 +1,7 @@
+﻿
+@model SelectList
+@Html.DropDownList("SizeGuid", Model as SelectList, "--- Gõ để tìm kiếm ---", new { @class = "form-control" })
+
+<script>
+    $('#SizeGuid').select2();
+</script>

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<C.Core.Model.shSetSize>
+@using C.DanhMuc.Helper;
+@using C.Core.Model;
+@using C.Core.Common;
+@using C.UI.Helpers;
+@{
+    if (Model != null && Model.Count() > 0)
+    {
+        <tr class="tr-about" style="display: table-row;">
+            <td colspan="5" style="padding:10px; background:#fff">
+                <div class="box box-success" style="margin-bottom: 0px; display: block;">
+                    <div class="box-header with-border" style="padding:5px;">
+                        <h4 style="font-size:15px" class="box-title">Danh sách chi tiết sản phẩm theo mục </h4>
+                        <div class="box-tools pull-right" style="top:0px">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="">
+                            <div class="form-group">
+                                <table class="grid">
+                                    <thead>
+                                        <tr>
+                                            <th width="7%;">#</th>
+                                            <th width="10%;">STT </th>
+                                            <th width="40%;">Sản phẩm cấp dưới</th>
+                                            <th width="10%;"> Giá tiền</th>
+                                            <th width="10%;"> Tác vụ </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int i = 1;
+                                            foreach (var item in Model as IEnumerable<shSetSize>)
+                                            {
+                                                <tr id="tr_childabout_@item.SectionGuid" class="data" aboutid="@item.SectionGuid">
+                                                    <td class="text-align-center"></td>
+                                                    <td class="text-align-center">
+                                                        <span>@i</span>
+                                                    </td>
+                                                    <td class="native">
+                                                        @Html.ChatLieu_KichThuoc_TenSection(@item.SizeGuid, @item.SizeName, @item.Stuff, @item.ParentId, @item.SectionGuid)
+                                                    </td>
+                                                    <td class="native" style="text-align:left">
+                                                        @Html.FormatDecimalToString(@item.PriceCurrent)
+                                                    </td>
+                                                    <td class="native" style="text-align:left">
+                                                        @Html.IconUpdate_Delete(@item.SizeGuid)
+                                                    </td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class='tr-about' style='display:none;'><td colspan='5'> <span class='required'><b>Chưa có kích thước cấp dưới </b></span> </td> </tr>
+    }
+}

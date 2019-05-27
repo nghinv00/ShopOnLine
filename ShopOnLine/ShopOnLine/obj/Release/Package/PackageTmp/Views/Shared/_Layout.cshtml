@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Chăn ga gối đệm cao cấp, hàng đẹp chính hãng giá tốt</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <link rel="SHORTCUT ICON" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="~/favicon.ico" type="image/gif" />
+
+    <link href="~/SongHongVn/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/SongHongVn/skins/default/style/font/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/SongHongVn/js/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    <link href="~/SongHongVn/skins/default/style/screen.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="~/SongHongVn/js/jquery.min.js"></script>
+    <script async type="text/javascript" src="~/SongHongVn/js/jquery-migrate.min.js"></script>
+    <script async type="text/javascript" src="~/SongHongVn/js/bootstrap/js/bootstrap.min.js"></script>
+    <script async type="text/javascript" src="~/SongHongVn/js/core.js"></script>
+    <script async type="text/javascript" src="~/SongHongVn/js/fancybox/jquery.fancybox.js"></script>
+    <script async type="text/javascript" src="~/SongHongVn/js/masonry/jquery.masonry.min.js"></script>
+
+    <link rel="stylesheet" href="~/SongHongVn/modules/main/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="~/SongHongVn/js/slideSlick/css/slick.css" type="text/css" />
+    <link rel="stylesheet" href="~/SongHongVn/js/slideSlick/css/slick-theme.css" type="text/css" />
+    <script type="text/javascript" src="~/SongHongVn/js/slideSlick/js/slick.js"></script>
+    <script type="text/javascript" src="~/SongHongVn/js/lazingloading/jquery.lazyscrollloading.js"></script>
+    <script type="text/javascript" src="~/SongHongVn/modules/main/js/main.js"></script>
+
+    <script async type="text/javascript" src="~/SongHongVn/js/javascript.js"></script>
+    <script async type="text/javascript" src="~/SongHongVn/js/floater_xlib.js"></script>
+
+    <link href="~/AdminLTE/plugins/select2/select2.css" rel="stylesheet" />
+    <script src="~/AdminLTE/plugins/select2/select2.full.min.js"></script>
+
+    <style type="text/css">
+        .wrapper > .sliderProd .slick-dots li {
+            margin: 0 10px
+        }
+
+        .wrapper > .sliderProd .item, .sliderProd .item .item_img {
+            margin-bottom: 8px
+        }
+
+        .newsLeft > .divNews .item .i-desc {
+            height: 125px
+        }
+
+        .fancybox-margin {
+            margin-right: 17px;
+        }
+
+        /* Custom  css phan trang */
+        .pagination > .active > a,
+        .pagination > .active > a:focus,
+        .pagination > .active > a:hover,
+        .pagination > .active > span,
+        .pagination > .active > span:focus,
+        .pagination > .active > span:hover {
+            color: #fff;
+            background-color: #eb268f;
+            border-color: #eb268f;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Subiz -->
+    <script>
+        (function (s, u, b, i, z) {
+            u[i] = u[i] || function () {
+                u[i].t = +new Date();
+                (u[i].q = u[i].q || []).push(arguments);
+            };
+            z = s.createElement('script');
+            var zz = s.getElementsByTagName('script')[0];
+            z.async = 1; z.src = b; z.id = 'subiz-script';
+            zz.parentNode.insertBefore(z, zz);
+        })(document, window, 'https://widgetv4.subiz.com/static/js/app.js', 'subiz');
+        subiz('setAccount', 'acqdymosryhilzcnxkva');
+    </script>
+    <!-- End Subiz -->
+
+    <div id="vnt-wrapper">
+        <div id="vnt-container">
+
+            <!-- _TopPartial -->
+            @Html.Partial("_TopPartial")
+            <!-- The end _TopPartial -->
+            <!-- Content  -->
+            @RenderBody()
+            <!-- The end  Content  -->
+            <!-- Footer -->
+            @Html.Partial("_Footer")
+            <!--  The end Footer -->
+
+        </div>
+        <div id="maskmenu"></div>
+    </div>
+    <div id="floating_banner_left" style="overflow: hidden; position: absolute; top: 0px; ">
+        <div id="floating_banner_left_content"></div>
+    </div>
+    <div id="floating_banner_right" style="overflow: hidden; position: absolute; top: 0px;">
+        <div id="floating_banner_right_content"></div>
+    </div>
+    <div id="loader" class="loading loading-hide"></div>
+
+    <script type="text/javascript">
+        $(window).load(function () {
+            initLoaded();
+            ActiveMenu();
+        });
+
+        var slideTime = 700;
+        var rootWidth = 1000;
+        var floatAtBottom = false;
+        function Ad_floating_init() {
+            xMoveTo('floating_banner_right', rootWidth - (rootWidth - screen.width), 0);
+            xMoveTo('floating_banner_left', rootWidth - (screen.width), 0);
+            winOnResize(); // set initial position
+            xAddEventListener(window, 'resize', winOnResize, false);
+            xAddEventListener(window, 'scroll', winOnScroll, false);
+        }
+        function winOnResize() {
+            checkScreenWidth();
+            winOnScroll(); // initial slide
+        }
+        function winOnScroll() {
+            var y = xScrollTop();
+            if (y <= 135) y = 135;
+            if (floatAtBottom) {
+                y += xClientHeight() - xHeight('floating_banner_left');
+            }
+            xSlideTo('floating_banner_left', (screen.width - rootWidth) / 2 - (110 + 15), y, slideTime);
+            xSlideTo('floating_banner_right', (screen.width + rootWidth) / 2 - 2, y, slideTime);
+        }
+        function checkScreenWidth() {
+            if (screen.width <= 1230) {
+                document.getElementById('floating_banner_left').style.display = 'none';
+                document.getElementById('floating_banner_right').style.display = 'none';
+            }
+        }
+
+        Ad_floating_init();
+
+
+    </script>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
